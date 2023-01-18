@@ -1,6 +1,5 @@
 package com.thschmitz.realstate.domain.services;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.domain.services.exception.ObjectNotFoundException;
+import com.thschmitz.realstate.domain.services.exception.ParametersNotPassedException;
 import com.thschmitz.realstate.dto.UserDTO;
 import com.thschmitz.realstate.repository.UserRepository;
 
@@ -33,8 +33,34 @@ public class UserService {
 		return repository.insert(obj);
 	}
 	
-	public User fromDTO(UserDTO objDto) {
+	public void delete(String id) {
+		findById(id);
+		repository.deleteById(id);
+	}
+	
+	public User update(User obj) {
+		User newObj = findById(obj.getId());
+		
+		System.out.println(newObj.getName());
+		
+		updateData(newObj, obj);
+		
+		return repository.save(newObj);
+	}
+	
+	public void updateData(User newObj, User obj) {
+		if(obj.getName() == null || obj.getEmail() == null || obj.getPassword() == null) {
+			throw new ParametersNotPassedException("You need to inform all the parameters to update!");
+		} else {
+			newObj.setName(obj.getName());
+			newObj.setEmail(obj.getEmail());
+			newObj.setPassword(obj.getPassword());	
+		}
+		
+	}
+	
+	/*public User fromDTO(UserDTO objDto) {
 		
 		return new User(objDto.getId(), objDto.getName(), objDto.getEmail(), null, objDto.getCreated_at());
-	}
+	}*/
 }

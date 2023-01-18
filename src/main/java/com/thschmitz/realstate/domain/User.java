@@ -1,7 +1,7 @@
 package com.thschmitz.realstate.domain;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,16 +15,18 @@ public class User implements Serializable {
 	private String name;
 	private String email;
 	private String password;
+	private Date created_at;
 	
 	public User() {
 		
 	}
 	
-	public User(String id, String name, String email, String password) {
+	public User(String id, String name, String email, String password, Date created_at) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
+		this.created_at = created_at;
 	}
 
 	public String getId() {
@@ -57,6 +59,14 @@ public class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Date getCreated_at() {
+		return created_at;
+	}
+
+	public void setCreated_at(Date created_at) {
+		this.created_at = created_at;
 	}
 
 	@Override

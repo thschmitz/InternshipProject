@@ -16,17 +16,19 @@ public class User implements Serializable {
 	private String email;
 	private String password;
 	private Date created_at;
+	private String image;
 	
 	public User() {
 		
 	}
 	
-	public User(String id, String name, String email, String password, Date created_at) {
+	public User(String id, String name, String email, String password, Date created_at, String image) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.created_at = created_at;
+		this.image = image;
 	}
 
 	public String getId() {
@@ -68,6 +70,14 @@ public class User implements Serializable {
 	public void setCreated_at(Date created_at) {
 		this.created_at = created_at;
 	}
+	
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
 
 	@Override
 	public int hashCode() {
@@ -92,4 +102,6 @@ public class User implements Serializable {
 			return false;
 		return true;
 	}
+
+
 }

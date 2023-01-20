@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.thschmitz.realstate.dto.AuthorDTO;
 import com.thschmitz.realstate.dto.CommentDTO;
+import com.thschmitz.realstate.dto.LikeDTO;
 
 @Document
 public class Post implements Serializable {
@@ -22,24 +23,23 @@ public class Post implements Serializable {
 	private String title;
 	private String body;
 	private String image;
-	private Integer likes;
 	private String status;
 	private AuthorDTO author;
 	
 	private List<CommentDTO> comments = new ArrayList<>();
+	private List<LikeDTO> likes = new ArrayList<>();
 	
 	public Post() {
 		
 	}
 
-	public Post(String id, Date created_at, String title, String body, String image, Integer likes, String status, AuthorDTO author) {
+	public Post(String id, Date created_at, String title, String body, String image, String status, AuthorDTO author) {
 		super();
 		this.id = id;
 		this.created_at = created_at;
 		this.title = title;
 		this.body = body;
 		this.image = image;
-		this.likes = likes;
 		this.status = status;
 		this.author = author;
 	}
@@ -84,14 +84,6 @@ public class Post implements Serializable {
 		this.image = image;
 	}
 
-	public Integer getLikes() {
-		return likes;
-	}
-
-	public void setLikes(Integer likes) {
-		this.likes = likes;
-	}
-
 	public String getStatus() {
 		return status;
 	}
@@ -112,6 +104,14 @@ public class Post implements Serializable {
 		return comments;
 	}
 
+	public List<LikeDTO> getLikes() {
+		return likes;
+	}
+
+	public void setLikes(List<LikeDTO> likes) {
+		this.likes = likes;
+	}
+	
 	public void setComments(List<CommentDTO> comments) {
 		this.comments = comments;
 	}
@@ -132,4 +132,5 @@ public class Post implements Serializable {
 		Post other = (Post) obj;
 		return Objects.equals(id, other.id);
 	}
+
 }

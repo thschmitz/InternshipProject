@@ -10,7 +10,9 @@ import com.thschmitz.realstate.domain.Post;
 @Repository
 public interface PostRepository extends MongoRepository<Post, String> {
 
-	List<Post> findByTitleContainingIgnoreCase(String text);
+	// https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#repositores.query-methods
+	// Para ver todos os metodos ja prontos do spring
 	
+	List<Post> findByTitleContainingIgnoreCase(String text);
 	
 }

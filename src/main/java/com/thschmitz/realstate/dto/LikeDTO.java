@@ -3,30 +3,20 @@ package com.thschmitz.realstate.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-public class CommentDTO implements Serializable{
+public class LikeDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	private String text;
 	private Date created_at;
 	private AuthorDTO author;
 	
-	public CommentDTO() {
+	public LikeDTO() {
 		
 	}
-
-	public CommentDTO(String text, Date created_at, AuthorDTO author) {
+	
+	public LikeDTO(Date created_at, AuthorDTO author) {
 		super();
-		this.text = text;
 		this.created_at = created_at;
 		this.author = author;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
 	}
 
 	public Date getCreated_at() {
@@ -44,5 +34,7 @@ public class CommentDTO implements Serializable{
 	public void setAuthor(AuthorDTO author) {
 		this.author = author;
 	}
+	
+	
 	
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.thschmitz.realstate.domain.Post;
 import com.thschmitz.realstate.domain.services.PostService;
+import com.thschmitz.realstate.resource.util.Session;
 import com.thschmitz.realstate.resource.util.URL;
 
 @RestController
@@ -34,4 +37,11 @@ public class PostResource {
 		List<Post> list = service.findByTitle(text);
 		return ResponseEntity.ok().body(list);
 	}
+	
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Post> insert(@RequestBody Post post, @RequestHeader(value="JWT") String header) {
+		Session.session(header);
+		return ResponseEntity.ok().body(service.insert(post));
+	}
+	
 }

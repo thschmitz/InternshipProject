@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import javax.crypto.spec.SecretKeySpec;
+import javax.security.sasl.AuthenticationException;
 
 import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.domain.services.exception.ExpiredJwtException;

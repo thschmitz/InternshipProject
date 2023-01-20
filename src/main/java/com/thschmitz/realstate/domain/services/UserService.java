@@ -83,12 +83,7 @@ public class UserService {
 		return JWT.createJWT(newObj);
 		
 	}
-	
-	public Jws<Claims> session(String jwt) {
-		return JWT.validateJWT(jwt);
-	
-	}
-	
+
 	/*public User fromDTO(UserDTO objDto) {
 		
 		return new User(objDto.getId(), objDto.getName(), objDto.getEmail(), null, objDto.getCreated_at());

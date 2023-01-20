@@ -23,6 +23,7 @@ import com.thschmitz.realstate.domain.services.UserService;
 import com.thschmitz.realstate.domain.services.exception.ExpiredJwtException;
 import com.thschmitz.realstate.domain.services.exception.MissingRequestHeaderException;
 import com.thschmitz.realstate.dto.UserDTO;
+import com.thschmitz.realstate.resource.util.Session;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -97,6 +98,6 @@ public class UserResource {
 			throw new MissingRequestHeaderException("You need to inform JWT header to request!");
 		}
 		
-		return ResponseEntity.ok().body(service.session(header));
+		return ResponseEntity.ok().body(Session.session(header));
 	}
 }

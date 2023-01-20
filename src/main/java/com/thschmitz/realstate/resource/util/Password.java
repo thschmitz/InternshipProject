@@ -16,7 +16,6 @@ public class Password {
 	
 	public static Boolean matchPassword(User obj, User newObj) {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		String bCryptedPassword = bCryptPasswordEncoder.encode(obj.getPassword());
 		boolean passwordIsValid = bCryptPasswordEncoder.matches(obj.getPassword(), newObj.getPassword());
 		
 		return passwordIsValid;

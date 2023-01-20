@@ -37,4 +37,9 @@ public class PostService {
 	public Post insert(Post post) {
 		return repository.insert(post);
 	}
+	
+	public void delete(String id) {
+		findById(id);
+		repository.deleteById(id);
+	}
 }

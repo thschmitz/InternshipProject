@@ -44,4 +44,10 @@ public class PostResource {
 		return ResponseEntity.ok().body(service.insert(post));
 	}
 	
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable String id, @RequestHeader(value="JWT") String header) {
+		Session.session(header);
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+	}
 }

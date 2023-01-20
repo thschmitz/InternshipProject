@@ -1,16 +1,22 @@
 package com.thschmitz.realstate.domain.services;
 
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.thschmitz.realstate.domain.User;
+import com.thschmitz.realstate.domain.services.exception.AuthenticationException;
 import com.thschmitz.realstate.domain.services.exception.ObjectNotFoundException;
 import com.thschmitz.realstate.domain.services.exception.ParametersNotPassedException;
 import com.thschmitz.realstate.repository.UserRepository;
-import com.thschmitz.realstate.domain.services.exception.AuthenticationException;
+import com.thschmitz.realstate.resource.util.Security;
+
+import io.jsonwebtoken.Jwts;
 
 @Service
 public class UserService {
@@ -30,8 +36,10 @@ public class UserService {
 	}
 	
 	public User insert(User obj) {
-		return repository.insert(obj);
+		obj.setPassword(Security.encodePassword(obj));
+		return repository.insert(obj); // Encoding the password and sending the object
 	}
+	
 	
 	public void delete(String id) {
 		findById(id);
@@ -60,14 +68,19 @@ public class UserService {
 	}
 	
 	public User login(User obj) {
-		User newObj = repository.login(obj.getEmail(), obj.getPassword());
+		User newObj = repository.login(obj.getEmail());
 		
 		if(newObj == null) {
 			throw new AuthenticationException(null);
-		} else {
-			// Fazer um metodo que retorna um JWT;
-			return newObj;
 		}
+		
+		boolean passwordIsValid = Security.matchPassword(obj, newObj);
+		
+		if(passwordIsValid == false) {
+			throw new AuthenticationException(null);
+		}
+
+		return newObj;
 	}
 	
 	/*public User fromDTO(UserDTO objDto) {

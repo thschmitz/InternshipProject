@@ -9,6 +9,6 @@ import com.thschmitz.realstate.domain.User;
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
 
-	@Query("{ $and: [ { 'email': ?0  }, { 'password': ?1 } ] }")
-	User login(String email, String password);
+	@Query("{ 'email': ?0  }")
+	User login(String email);
 }

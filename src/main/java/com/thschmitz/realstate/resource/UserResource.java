@@ -73,8 +73,8 @@ public class UserResource {
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public ResponseEntity<User> login(@RequestBody User user) {
-		User objReturned = service.login(user);
-		return ResponseEntity.ok().body(objReturned);
+	public ResponseEntity<String> login(@RequestBody User user) {
+		String jwt = service.login(user);
+		return ResponseEntity.ok().body(jwt);
 	}
 }

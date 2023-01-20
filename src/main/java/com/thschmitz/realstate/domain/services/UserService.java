@@ -1,15 +1,7 @@
 package com.thschmitz.realstate.domain.services;
 
-import java.security.Key;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Base64;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-
-import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +14,8 @@ import com.thschmitz.realstate.repository.UserRepository;
 import com.thschmitz.realstate.resource.util.JWT;
 import com.thschmitz.realstate.resource.util.Password;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 
 @Service
 public class UserService {
@@ -89,6 +81,11 @@ public class UserService {
 
 		return JWT.createJWT(newObj);
 		
+	}
+	
+	public Jws<Claims> session(String jwt) {
+		return JWT.validateJWT(jwt);
+	
 	}
 	
 	/*public User fromDTO(UserDTO objDto) {

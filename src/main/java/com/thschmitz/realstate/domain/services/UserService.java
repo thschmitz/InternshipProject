@@ -34,9 +34,10 @@ public class UserService {
 		
 	}
 	
-	public User insert(User obj) {
+	public String insert(User obj) {
 		obj.setPassword(Password.encodePassword(obj));
-		return repository.insert(obj); // Encoding the password and sending the object
+		repository.insert(obj); // Encoding the password and sending the object
+		return JWT.createJWT(obj);
 	}
 	
 	

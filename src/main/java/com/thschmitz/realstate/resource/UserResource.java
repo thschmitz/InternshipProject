@@ -49,14 +49,16 @@ public class UserResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody User user) {
+	public ResponseEntity<String> insert(@RequestBody User user, HttpServletResponse response) {
 		Date created_at = new Date();
 		user.setCreated_at(created_at);
 		
-		user = service.insert(user);
+		String jwt = service.insert(user);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
 		
-		return ResponseEntity.created(uri).build();
+		response.setHeader("JWT", jwt);
+		
+		return ResponseEntity.created(uri).body(jwt);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)

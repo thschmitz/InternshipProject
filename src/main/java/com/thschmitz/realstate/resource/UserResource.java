@@ -49,7 +49,6 @@ public class UserResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
 		
 		return ResponseEntity.created(uri).build();
-		
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
@@ -71,5 +70,11 @@ public class UserResource {
  	public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
 		User obj = service.findById(id);
 		return ResponseEntity.ok().body(obj.getPosts());
+	}
+	
+	@RequestMapping(value="/login", method=RequestMethod.POST)
+	public ResponseEntity<User> login(@RequestBody User user) {
+		User objReturned = service.login(user);
+		return ResponseEntity.ok().body(objReturned);
 	}
 }

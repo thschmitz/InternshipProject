@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.domain.services.exception.ObjectNotFoundException;
 import com.thschmitz.realstate.domain.services.exception.ParametersNotPassedException;
-import com.thschmitz.realstate.dto.UserDTO;
 import com.thschmitz.realstate.repository.UserRepository;
+import com.thschmitz.realstate.domain.services.exception.AuthenticationException;
 
 @Service
 public class UserService {
@@ -57,6 +57,17 @@ public class UserService {
 			newObj.setPassword(obj.getPassword());	
 		}
 		
+	}
+	
+	public User login(User obj) {
+		User newObj = repository.login(obj.getEmail(), obj.getPassword());
+		
+		if(newObj == null) {
+			throw new AuthenticationException(null);
+		} else {
+			// Fazer um metodo que retorna um JWT;
+			return newObj;
+		}
 	}
 	
 	/*public User fromDTO(UserDTO objDto) {

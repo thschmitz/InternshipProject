@@ -49,7 +49,6 @@ public class UserService {
 	public User update(User obj) {
 		User newObj = findById(obj.getId());
 		
-		System.out.println(newObj.getName());
 		
 		updateData(newObj, obj);
 		

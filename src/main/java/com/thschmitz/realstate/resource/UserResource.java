@@ -50,7 +50,8 @@ public class UserResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<String> insert(@RequestBody User user, HttpServletResponse response) {
+	public ResponseEntity<String> insert(@RequestBody User user, HttpServletResponse response, @RequestHeader(value="JWT") String header) {
+		Session.session(header);
 		Date created_at = new Date();
 		user.setCreated_at(created_at);
 		
@@ -63,7 +64,8 @@ public class UserResource {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody User user, @PathVariable String id) {
+	public ResponseEntity<Void> update(@RequestBody User user, @PathVariable String id, @RequestHeader(value="JWT") String header) {
+		Session.session(header);
 		user.setId(id);
 		user = service.update(user);
 		
@@ -71,14 +73,16 @@ public class UserResource {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<UserDTO> delete(@PathVariable String id) {
+	public ResponseEntity<UserDTO> delete(@PathVariable String id, @RequestHeader(value="JWT") String header) {
+		Session.session(header);
 		service.delete(id);
 		
 		return ResponseEntity.noContent().build();
 	}
 	
 	@RequestMapping(value="/{id}/posts", method=RequestMethod.GET)
- 	public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+ 	public ResponseEntity<List<Post>> findPosts(@PathVariable String id, @RequestHeader(value="JWT") String header) {
+		Session.session(header);
 		User obj = service.findById(id);
 		return ResponseEntity.ok().body(obj.getPosts());
 	}

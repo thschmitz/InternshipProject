@@ -24,6 +24,11 @@ public class PostResource {
 	@Autowired
 	private PostService service;
 	
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<Post>> findAll() {
+		return ResponseEntity.ok().body(service.findAll());
+	}
+	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Post> findById(@PathVariable String id) {
 		Post post = service.findById(id);
@@ -49,5 +54,12 @@ public class PostResource {
 		Session.session(header);
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
+	public ResponseEntity<Post> update(@RequestBody Post post, @PathVariable String id, @RequestHeader(value="JWT") String header) {
+		Session.session(header);
+		post.setId(id);
+		return ResponseEntity.ok().body(service.update(post));
 	}
 }

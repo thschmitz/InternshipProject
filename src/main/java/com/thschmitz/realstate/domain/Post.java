@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -24,16 +25,19 @@ public class Post implements Serializable {
 	private String body;
 	private String image;
 	private String status;
+	private Double price;
+	private Double size;
 	private AuthorDTO author;
 	
 	private List<CommentDTO> comments = new ArrayList<>();
+	
 	private List<LikeDTO> likes = new ArrayList<>();
 	
 	public Post() {
 		
 	}
 
-	public Post(String id, Date created_at, String title, String body, String image, String status, AuthorDTO author) {
+	public Post(String id, Date created_at, String title, String body, String image, String status, Double price, Double size, AuthorDTO author) {
 		super();
 		this.id = id;
 		this.created_at = created_at;
@@ -41,6 +45,8 @@ public class Post implements Serializable {
 		this.body = body;
 		this.image = image;
 		this.status = status;
+		this.price = price;
+		this.size = size;
 		this.author = author;
 	}
 
@@ -116,6 +122,22 @@ public class Post implements Serializable {
 		this.comments = comments;
 	}
 
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public Double getSize() {
+		return size;
+	}
+
+	public void setSize(Double size) {
+		this.size = size;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -132,5 +154,4 @@ public class Post implements Serializable {
 		Post other = (Post) obj;
 		return Objects.equals(id, other.id);
 	}
-
 }

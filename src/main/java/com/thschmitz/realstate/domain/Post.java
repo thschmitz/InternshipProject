@@ -37,7 +37,6 @@ public class Post implements Serializable {
 	}
 
 	public Post(String id, Date created_at, String title, String body, String image, String status, Double price, Double size, AuthorDTO author) {
-		super();
 		this.id = id;
 		this.created_at = created_at;
 		this.title = title;

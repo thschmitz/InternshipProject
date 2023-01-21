@@ -77,6 +77,8 @@ public class PostService {
 		}
 	}
 	
+	
+	// Mudar
 	public Post like(String id, Jws<Claims> session) {
 		Post post = findById(id);
 
@@ -97,7 +99,7 @@ public class PostService {
 		return post;
 	}
 	
-	
+	// Mudar	
 	public Post comment(String id, Jws<Claims> session, CommentDTO comment) {
 		Post post = findById(id);
 

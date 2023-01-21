@@ -28,7 +28,7 @@ public class Like {
 	
 	
 	public static Post addLike(Post post, Date formattedDate, AuthorDTO author) {
-		post.getLikes().add(new LikeDTO(formattedDate, author));
+		// post.getLikes().add(new LikeDTO(formattedDate, author));
 		
 		return post;
 	}

@@ -9,12 +9,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import com.thschmitz.realstate.domain.Comment;
+import com.thschmitz.realstate.domain.Like;
 import com.thschmitz.realstate.domain.Post;
 import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.dto.AuthorDTO;
 import com.thschmitz.realstate.dto.CommentDTO;
 import com.thschmitz.realstate.dto.LikeDTO;
 import com.thschmitz.realstate.repository.CommentRepository;
+import com.thschmitz.realstate.repository.LikeRepository;
 import com.thschmitz.realstate.repository.PostRepository;
 import com.thschmitz.realstate.repository.UserRepository;
 
@@ -29,6 +31,9 @@ public class Instantiation implements CommandLineRunner{
 	
 	@Autowired
 	private CommentRepository commentRepository;
+	
+	@Autowired
+	private LikeRepository likeRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -52,24 +57,26 @@ public class Instantiation implements CommandLineRunner{
 		
 		Comment c1 = new Comment(null, "Post1Comment", sdf.parse("21/05/2019"), new AuthorDTO(alex), post1);
 		Comment c2 = new Comment(null, "Post2Comment", sdf.parse("19/07/2020"), new AuthorDTO(bob), post2);
-		Comment c3 = new Comment(null, "Post3Comment", sdf.parse("11/02/2021"), new AuthorDTO(maria), post2);
+		Comment c3 = new Comment(null, "Post3Comment", sdf.parse("11/02/2021"), new AuthorDTO(maria), post3);
 		
 		
 		
-		LikeDTO l1 = new LikeDTO(sdf.parse("24/02/2019"), new AuthorDTO(bob));
-		LikeDTO l2 = new LikeDTO(sdf.parse("25/03/2018"), new AuthorDTO(maria));
-		LikeDTO l3 = new LikeDTO(sdf.parse("21/09/2020"), new AuthorDTO(alex));
+		Like l1 = new Like(null, sdf.parse("24/02/2019"), new AuthorDTO(bob), post1);
+		Like l2 = new Like(null, sdf.parse("25/03/2018"), new AuthorDTO(maria), post2);
+		Like l3 = new Like(null, sdf.parse("21/09/2020"), new AuthorDTO(alex), post1);
 		
 		post1.getComments().addAll(Arrays.asList(new CommentDTO(c1)));
 		post2.getComments().addAll(Arrays.asList(new CommentDTO(c2)));
 		post3.getComments().addAll(Arrays.asList(new CommentDTO(c3)));
 		
-		post1.getLikes().addAll(Arrays.asList(l1));
-		post2.getLikes().addAll(Arrays.asList(l2));
-		post1.getLikes().addAll(Arrays.asList(l3));
+		post1.getLikes().addAll(Arrays.asList(new LikeDTO(l1)));
+		post2.getLikes().addAll(Arrays.asList(new LikeDTO(l2)));
+		post1.getLikes().addAll(Arrays.asList(new LikeDTO(l3)));
 		
 		postRepository.saveAll(Arrays.asList(post1, post2, post3));
 		commentRepository.saveAll(Arrays.asList(c1, c2, c3));
+		likeRepository.saveAll(Arrays.asList(l1, l2, l3));
+		
 		
 		maria.getPosts().addAll(Arrays.asList(post1));
 		

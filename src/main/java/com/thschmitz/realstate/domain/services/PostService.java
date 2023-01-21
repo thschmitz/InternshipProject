@@ -12,9 +12,11 @@ import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.domain.services.exception.ObjectNotFoundException;
 import com.thschmitz.realstate.domain.services.exception.ParametersNotPassedException;
 import com.thschmitz.realstate.dto.AuthorDTO;
-import com.thschmitz.realstate.dto.LikeDTO;
+import com.thschmitz.realstate.dto.CommentDTO;
 import com.thschmitz.realstate.repository.PostRepository;
+import com.thschmitz.realstate.resource.util.Comment;
 import com.thschmitz.realstate.resource.util.Like;
+import com.thschmitz.realstate.resource.util.Session;
 import com.thschmitz.realstate.resource.util.Util;
 
 import io.jsonwebtoken.Claims;
@@ -79,7 +81,7 @@ public class PostService {
 		Post post = findById(id);
 
 		
-		String author_id = session.getBody().get("id").toString();
+		String author_id = Session.getSessionId(session);
 		Date formattedDate = Util.formatDate(new Date());
 		User user = Util.toUser(author_id, service);
 		Integer alreadyLiked = Like.checkLike(post, author_id);
@@ -94,4 +96,20 @@ public class PostService {
 
 		return post;
 	}
+	
+	
+	public Post comment(String id, Jws<Claims> session, CommentDTO comment) {
+		Post post = findById(id);
+
+		String author_id = Session.getSessionId(session);
+		Date formattedDate = Util.formatDate(new Date());
+		User user = Util.toUser(author_id, service);
+	
+		post = Comment.addComment(post, formattedDate, new AuthorDTO(user), comment);
+		repository.save(post);
+		
+		return post;
+	}
+	
+
 }

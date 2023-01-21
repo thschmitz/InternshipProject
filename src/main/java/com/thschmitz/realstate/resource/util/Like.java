@@ -12,17 +12,11 @@ public class Like {
 		Integer index = 0;
 
 		for(LikeDTO author : post.getLikes()) {
-			
-			System.out.println(id);
-			System.out.println(author.getAuthor().getId());
-			
 			if(id.equals(author.getAuthor().getId())) {
 				return index;
 			}
-			
 			index += 1;
 		}
-
 		return null;
 	}
 	

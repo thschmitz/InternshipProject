@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.thschmitz.realstate.domain.Post;
 import com.thschmitz.realstate.domain.services.PostService;
+import com.thschmitz.realstate.dto.CommentDTO;
 import com.thschmitz.realstate.resource.util.Session;
 import com.thschmitz.realstate.resource.util.URL;
 
@@ -71,5 +72,12 @@ public class PostResource {
 		Jws<Claims> session = Session.session(header);
 		
 		return ResponseEntity.ok().body(service.like(id, session));
+	}
+	
+	@RequestMapping(value="/comment/{id}", method=RequestMethod.GET)
+	public ResponseEntity<Post> like(@RequestBody CommentDTO comments, @PathVariable String id, @RequestHeader(value="JWT") String header) {
+		Jws<Claims> session = Session.session(header);
+		
+		return ResponseEntity.ok().body(service.comment(id, session, comments));
 	}
 }

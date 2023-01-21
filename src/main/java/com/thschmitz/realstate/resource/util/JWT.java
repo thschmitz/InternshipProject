@@ -57,7 +57,7 @@ public class JWT {
 	    	
 	    	return jwtResponse;
 	    } catch(io.jsonwebtoken.ExpiredJwtException e) {
-	    	throw new ExpiredJwtException(e.getMessage());
+	    	throw new ExpiredJwtException("JWT has expired or doesn't exist");
 	    }
 	    
 	    

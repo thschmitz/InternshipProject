@@ -17,6 +17,9 @@ import com.thschmitz.realstate.domain.services.PostService;
 import com.thschmitz.realstate.resource.util.Session;
 import com.thschmitz.realstate.resource.util.URL;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+
 @RestController
 @RequestMapping(value="/posts")
 public class PostResource {
@@ -61,5 +64,12 @@ public class PostResource {
 		Session.session(header);
 		post.setId(id);
 		return ResponseEntity.ok().body(service.update(post));
+	}
+	
+	@RequestMapping(value="/like/{id}", method=RequestMethod.POST)
+	public ResponseEntity<Post> like(@PathVariable String id, @RequestHeader(value="JWT") String header) {
+		Jws<Claims> session = Session.session(header);
+		
+		return ResponseEntity.ok().body(service.like(id, session));
 	}
 }

@@ -2,6 +2,7 @@ package com.thschmitz.realstate.config;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +50,9 @@ public class Instantiation implements CommandLineRunner{
 		CommentDTO c2 = new CommentDTO("Post2Comment", sdf.parse("19/07/2020"), new AuthorDTO(bob));
 		CommentDTO c3 = new CommentDTO("Post3Comment", sdf.parse("11/02/2021"), new AuthorDTO(maria));
 		
-		LikeDTO l1 = new LikeDTO(sdf.parse("24/02/2019"), new AuthorDTO(maria));
-		LikeDTO l2 = new LikeDTO(sdf.parse("25/03/2018"), new AuthorDTO(bob));
+		LikeDTO l1 = new LikeDTO(sdf.parse("24/02/2019"), new AuthorDTO(bob));
+		LikeDTO l2 = new LikeDTO(sdf.parse("25/03/2018"), new AuthorDTO(maria));
+		LikeDTO l3 = new LikeDTO(sdf.parse("21/09/2020"), new AuthorDTO(alex));
 		
 		post1.getComments().addAll(Arrays.asList(c1));
 		post2.getComments().addAll(Arrays.asList(c2));
@@ -58,6 +60,7 @@ public class Instantiation implements CommandLineRunner{
 		
 		post1.getLikes().addAll(Arrays.asList(l1));
 		post2.getLikes().addAll(Arrays.asList(l2));
+		post1.getLikes().addAll(Arrays.asList(l3));
 		
 		postRepository.saveAll(Arrays.asList(post1, post2, post3));
 		

@@ -12,6 +12,7 @@ import com.thschmitz.realstate.domain.services.exception.ExpiredJwtException;
 import com.thschmitz.realstate.domain.services.exception.MissingRequestHeaderException;
 import com.thschmitz.realstate.domain.services.exception.ObjectNotFoundException;
 import com.thschmitz.realstate.domain.services.exception.ParametersNotPassedException;
+import com.thschmitz.realstate.domain.services.exception.ParseException;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
@@ -59,6 +60,15 @@ public class ResourceExceptionHandler {
 	public ResponseEntity<StandardError> expiredJwtException(ExpiredJwtException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.UNAUTHORIZED;
 		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "JWT token has expired", e.getMessage(), request.getRequestURI()); // esse request pega o caminho onde tu vai colocar o id do usuario que tu quer procurar
+		
+		
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(ParseException.class)
+	public ResponseEntity<StandardError> parseException(ParseException e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.UNSUPPORTED_MEDIA_TYPE;
+		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Exception parsing data", e.getMessage(), request.getRequestURI()); // esse request pega o caminho onde tu vai colocar o id do usuario que tu quer procurar
 		
 		
 		return ResponseEntity.status(status).body(err);

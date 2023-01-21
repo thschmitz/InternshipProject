@@ -1,0 +1,41 @@
+package com.thschmitz.realstate.resource.util;
+
+import java.util.Date;
+
+import com.thschmitz.realstate.domain.Post;
+import com.thschmitz.realstate.dto.AuthorDTO;
+import com.thschmitz.realstate.dto.LikeDTO;
+
+public class Like {
+
+	public static Integer checkLike(Post post, String id) {
+		Integer index = 0;
+
+		for(LikeDTO author : post.getLikes()) {
+			
+			System.out.println(id);
+			System.out.println(author.getAuthor().getId());
+			
+			if(id.equals(author.getAuthor().getId())) {
+				return index;
+			}
+			
+			index += 1;
+		}
+
+		return null;
+	}
+	
+	public static Post removeLike(Post post, Integer integer) {
+		post.getLikes().remove(post.getLikes().get(integer));
+		
+		return post;
+	}
+	
+	
+	public static Post addLike(Post post, Date formattedDate, AuthorDTO author) {
+		post.getLikes().add(new LikeDTO(formattedDate, author));
+		
+		return post;
+	}
+}

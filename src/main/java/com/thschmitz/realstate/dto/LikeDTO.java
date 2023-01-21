@@ -34,6 +34,12 @@ public class LikeDTO implements Serializable{
 	public void setAuthor(AuthorDTO author) {
 		this.author = author;
 	}
+
+	@Override
+	public String toString() {
+		return "LikeDTO [created_at=" + created_at + ", author=" + author + "]";
+	}
+	
 	
 	
 	

@@ -1,5 +1,6 @@
 package com.thschmitz.realstate.domain.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,10 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.thschmitz.realstate.domain.Post;
+import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.domain.services.exception.ObjectNotFoundException;
 import com.thschmitz.realstate.domain.services.exception.ParametersNotPassedException;
+import com.thschmitz.realstate.dto.AuthorDTO;
+import com.thschmitz.realstate.dto.LikeDTO;
 import com.thschmitz.realstate.repository.PostRepository;
-import com.thschmitz.realstate.resource.util.JWT;
+import com.thschmitz.realstate.resource.util.Like;
+import com.thschmitz.realstate.resource.util.Util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -20,6 +25,10 @@ public class PostService {
 
 	@Autowired
 	private PostRepository repository;
+	
+	@Autowired
+	private UserService service;
+	
 	
 	public List<Post> findAll() {
 		return repository.findAll();
@@ -64,6 +73,25 @@ public class PostService {
 			newObj.setStatus(obj.getStatus());
 			newObj.setTitle(obj.getTitle());
 		}
+	}
+	
+	public Post like(String id, Jws<Claims> session) {
+		Post post = findById(id);
 
+		
+		String author_id = session.getBody().get("id").toString();
+		Date formattedDate = Util.formatDate(new Date());
+		User user = Util.toUser(author_id, service);
+		Integer alreadyLiked = Like.checkLike(post, author_id);
+		
+		if(alreadyLiked != null) {
+			Like.removeLike(post, alreadyLiked);	
+		} else {
+			Like.addLike(post, formattedDate, new AuthorDTO(user));
+		}
+		
+		repository.save(post);
+
+		return post;
 	}
 }

@@ -54,6 +54,11 @@ public class AuthorDTO implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	@Override
+	public String toString() {
+		return "AuthorDTO [id=" + id + ", name=" + name + ", image=" + image + ", email=" + email + "]";
+	}
 	
 	
 	

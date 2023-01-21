@@ -20,7 +20,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.thschmitz.realstate.domain.Post;
 import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.domain.services.UserService;
-import com.thschmitz.realstate.domain.services.exception.ExpiredJwtException;
 import com.thschmitz.realstate.domain.services.exception.MissingRequestHeaderException;
 import com.thschmitz.realstate.dto.UserDTO;
 import com.thschmitz.realstate.resource.util.Session;

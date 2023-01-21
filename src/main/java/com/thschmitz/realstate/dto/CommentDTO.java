@@ -3,8 +3,6 @@ package com.thschmitz.realstate.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.thschmitz.realstate.domain.Comment;
-
 
 public class CommentDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -17,10 +15,10 @@ public class CommentDTO implements Serializable{
 		
 	}
 
-	public CommentDTO(Comment comment) {
-		this.text = comment.getText();
-		this.created_at = comment.getCreated_at();
-		this.author = comment.getAuthor();
+	public CommentDTO(String text, Date created_at, AuthorDTO author) {
+		this.text = text;
+		this.created_at = created_at;
+		this.author = author;
 	}
 
 	public String getText() {

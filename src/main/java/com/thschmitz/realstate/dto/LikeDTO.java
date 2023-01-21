@@ -3,8 +3,6 @@ package com.thschmitz.realstate.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.thschmitz.realstate.domain.Like;
-
 public class LikeDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -15,9 +13,9 @@ public class LikeDTO implements Serializable{
 		
 	}
 	
-	public LikeDTO(Like like) {
-		this.created_at = like.getCreated_at();
-		this.author = like.getAuthor();
+	public LikeDTO(Date created_at, AuthorDTO author) {
+		this.created_at = created_at;
+		this.author = author;
 	}
 
 	public Date getCreated_at() {

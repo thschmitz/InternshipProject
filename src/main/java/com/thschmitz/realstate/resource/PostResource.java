@@ -49,8 +49,8 @@ public class PostResource {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Post> insert(@RequestBody Post post, @RequestHeader(value="JWT") String header) {
-		Session.session(header);
-		return ResponseEntity.ok().body(service.insert(post));
+		Jws<Claims> session = Session.session(header);
+		return ResponseEntity.ok().body(service.insert(post, session));
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)

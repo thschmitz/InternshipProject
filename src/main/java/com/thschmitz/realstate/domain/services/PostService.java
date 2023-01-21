@@ -46,7 +46,13 @@ public class PostService {
 		return repository.findByTitleContainingIgnoreCase(text);
 	}
 	
-	public Post insert(Post post) {
+	public Post insert(Post post, Jws<Claims> session) {
+		
+		String author_id = Session.getSessionId(session);
+
+		User user = Util.toUser(author_id, service);
+		post.setAuthor(new AuthorDTO(user));
+		
 		return repository.insert(post);
 	}
 	

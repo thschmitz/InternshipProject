@@ -55,6 +55,9 @@ public class Instantiation implements CommandLineRunner{
 		Comment c2 = new Comment(null, "Post2Comment", sdf.parse("19/07/2020"), new AuthorDTO(bob), post2);
 		Comment c3 = new Comment(null, "Post3Comment", sdf.parse("11/02/2021"), new AuthorDTO(maria), post3);
 		
+		postRepository.saveAll(Arrays.asList(post1, post2, post3));
+		commentRepository.saveAll(Arrays.asList(c1, c2, c3));
+		
 		LikeDTO l1 = new LikeDTO(sdf.parse("24/02/2019"), new AuthorDTO(bob));
 		LikeDTO l2 = new LikeDTO(sdf.parse("25/03/2018"), new AuthorDTO(maria));
 		LikeDTO l3 = new LikeDTO(sdf.parse("21/09/2020"), new AuthorDTO(alex));
@@ -68,7 +71,7 @@ public class Instantiation implements CommandLineRunner{
 		post1.getLikes().addAll(Arrays.asList(l3));
 		
 		postRepository.saveAll(Arrays.asList(post1, post2, post3));
-		commentRepository.saveAll(Arrays.asList(c1, c2, c3));
+		
 		
 		maria.getPosts().addAll(Arrays.asList(post1));
 		

@@ -9,7 +9,7 @@ import com.thschmitz.realstate.domain.Comment;
 public class CommentDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	String id;
+	private String id;
 	private String text;
 	private Date created_at;
 	private AuthorDTO author;
@@ -19,6 +19,7 @@ public class CommentDTO implements Serializable{
 	}
 
 	public CommentDTO(Comment comment) {
+		this.id = comment.getId();
 		this.text = comment.getText();
 		this.created_at = comment.getCreated_at();
 		this.author = comment.getAuthor();
@@ -46,6 +47,14 @@ public class CommentDTO implements Serializable{
 
 	public void setAuthor(AuthorDTO author) {
 		this.author = author;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 }

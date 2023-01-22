@@ -36,6 +36,17 @@ public class CommentResource {
 	public ResponseEntity<Post> create(@RequestBody CommentDTO comments, @PathVariable String id, @RequestHeader(value="JWT") String header) {
 		Jws<Claims> session = Session.session(header);
 		
-		return ResponseEntity.ok().body(commentService.comment(id, session, comments, postService, userService));
+		return ResponseEntity.ok().body(commentService.create(id, session, comments, postService, userService));
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable String id, @RequestHeader(value="JWT") String header) {
+		Jws<Claims> session = Session.session(header);
+		
+		System.out.println(session);
+		
+		commentService.delete(id, session, postService);
+		
+		return ResponseEntity.noContent().build();
 	}
 }

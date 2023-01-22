@@ -73,12 +73,4 @@ public class PostResource {
 		
 		return ResponseEntity.ok().body(service.like(id, session));
 	}
-	
-	@RequestMapping(value="/comment/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Post> like(@RequestBody CommentDTO comments, @PathVariable String id, @RequestHeader(value="JWT") String header) {
-		Jws<Claims> session = Session.session(header);
-		
-		return ResponseEntity.ok().body(service.comment(id, session, comments));
-	}
-	
 }

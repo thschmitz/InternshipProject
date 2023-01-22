@@ -107,18 +107,4 @@ public class PostService {
 
 		return post;
 	}
-	
-	public Post comment(String id, Jws<Claims> session, CommentDTO comment) {
-		Post post = findById(id);
-
-		String author_id = Session.getSessionId(session);
-		Date formattedDate = Util.formatDate(new Date());
-		User user = Util.toUser(author_id, service);
-	
-		post = CommentCRUD.addComment(post, formattedDate, new AuthorDTO(user), comment, commentRepository, postRepository);
-		
-		return post;
-	}
-	
-
 }

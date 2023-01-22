@@ -13,8 +13,9 @@ import com.thschmitz.realstate.domain.services.exception.ObjectNotFoundException
 import com.thschmitz.realstate.domain.services.exception.ParametersNotPassedException;
 import com.thschmitz.realstate.dto.AuthorDTO;
 import com.thschmitz.realstate.dto.CommentDTO;
+import com.thschmitz.realstate.repository.CommentRepository;
 import com.thschmitz.realstate.repository.PostRepository;
-import com.thschmitz.realstate.resource.util.Comment;
+import com.thschmitz.realstate.resource.util.CommentCRUD;
 import com.thschmitz.realstate.resource.util.Like;
 import com.thschmitz.realstate.resource.util.Session;
 import com.thschmitz.realstate.resource.util.Util;
@@ -26,24 +27,27 @@ import io.jsonwebtoken.Jws;
 public class PostService {
 
 	@Autowired
-	private PostRepository repository;
+	private PostRepository postRepository;
 	
 	@Autowired
 	private UserService service;
 	
+	@Autowired
+	private CommentRepository commentRepository;
+	
 	
 	public List<Post> findAll() {
-		return repository.findAll();
+		return postRepository.findAll();
 	}
 	
 	public Post findById(String id) {
-		Optional<Post> user = repository.findById(id);
+		Optional<Post> user = postRepository.findById(id);
 		
 		return user.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 	
 	public List<Post> findByTitle(String text) {
-		return repository.findByTitleContainingIgnoreCase(text);
+		return postRepository.findByTitleContainingIgnoreCase(text);
 	}
 	
 	public Post insert(Post post, Jws<Claims> session) {
@@ -53,12 +57,12 @@ public class PostService {
 		User user = Util.toUser(author_id, service);
 		post.setAuthor(new AuthorDTO(user));
 		
-		return repository.insert(post);
+		return postRepository.insert(post);
 	}
 	
 	public void delete(String id) {
 		findById(id);
-		repository.deleteById(id);
+		postRepository.deleteById(id);
 	}
 	
 	public Post update(Post post) {
@@ -66,7 +70,7 @@ public class PostService {
 		
 		updateData(newObj, post);
 		
-		return repository.save(newObj);
+		return postRepository.save(newObj);
 	}
 	
 	
@@ -84,7 +88,6 @@ public class PostService {
 	}
 	
 	
-	// Mudar
 	public Post like(String id, Jws<Claims> session) {
 		Post post = findById(id);
 
@@ -100,12 +103,11 @@ public class PostService {
 			Like.addLike(post, formattedDate, new AuthorDTO(user));
 		}
 		
-		repository.save(post);
+		postRepository.save(post);
 
 		return post;
 	}
 	
-	// Mudar	
 	public Post comment(String id, Jws<Claims> session, CommentDTO comment) {
 		Post post = findById(id);
 
@@ -113,8 +115,7 @@ public class PostService {
 		Date formattedDate = Util.formatDate(new Date());
 		User user = Util.toUser(author_id, service);
 	
-		post = Comment.addComment(post, formattedDate, new AuthorDTO(user), comment);
-		repository.save(post);
+		post = CommentCRUD.addComment(post, formattedDate, new AuthorDTO(user), comment, commentRepository, postRepository);
 		
 		return post;
 	}

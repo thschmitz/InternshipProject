@@ -1,6 +1,7 @@
 package com.thschmitz.realstate.domain.services;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import com.thschmitz.realstate.domain.Comment;
 import com.thschmitz.realstate.domain.Post;
 import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.domain.services.exception.ObjectNotFoundException;
-import com.thschmitz.realstate.domain.services.exception.Unauthorized;
 import com.thschmitz.realstate.dto.AuthorDTO;
 import com.thschmitz.realstate.dto.CommentDTO;
 import com.thschmitz.realstate.repository.CommentRepository;
@@ -30,6 +30,10 @@ public class CommentService {
 	
 	@Autowired
 	private PostRepository postRepository;
+	
+	public List<Comment> findAll() {
+		return commentRepository.findAll();
+	}
 	
 	public Comment findById(String id) {
 		Optional<Comment> comment = commentRepository.findById(id);

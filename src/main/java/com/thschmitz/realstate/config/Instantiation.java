@@ -14,6 +14,7 @@ import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.dto.AuthorDTO;
 import com.thschmitz.realstate.dto.CommentDTO;
 import com.thschmitz.realstate.dto.LikeDTO;
+import com.thschmitz.realstate.dto.PostDTO;
 import com.thschmitz.realstate.repository.CommentRepository;
 import com.thschmitz.realstate.repository.PostRepository;
 import com.thschmitz.realstate.repository.UserRepository;
@@ -51,9 +52,11 @@ public class Instantiation implements CommandLineRunner{
 		Post post2 = new Post(null, sdf.parse("23/10/2022"), "Teste02", "Testando um novo post2", "imagemNenhuma", "A venda", 130.0, 25.0, new AuthorDTO(alex));
 		Post post3 = new Post(null, sdf.parse("05/09/2022"), "Teste03", "Testando um novo post3", "imagemNenhuma", "A venda", 150.2, 30.5, new AuthorDTO(bob));
 		
-		Comment c1 = new Comment(null, "Post1Comment", sdf.parse("21/05/2019"), new AuthorDTO(alex), post1);
-		Comment c2 = new Comment(null, "Post2Comment", sdf.parse("19/07/2020"), new AuthorDTO(bob), post2);
-		Comment c3 = new Comment(null, "Post3Comment", sdf.parse("11/02/2021"), new AuthorDTO(maria), post3);
+		postRepository.saveAll(Arrays.asList(post1, post2, post3));
+		
+		Comment c1 = new Comment(null, "Post1Comment", sdf.parse("21/05/2019"), new AuthorDTO(alex), new PostDTO(post1));
+		Comment c2 = new Comment(null, "Post2Comment", sdf.parse("19/07/2020"), new AuthorDTO(bob), new PostDTO(post2));
+		Comment c3 = new Comment(null, "Post3Comment", sdf.parse("11/02/2021"), new AuthorDTO(maria), new PostDTO(post3));
 		
 		postRepository.saveAll(Arrays.asList(post1, post2, post3));
 		commentRepository.saveAll(Arrays.asList(c1, c2, c3));

@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.thschmitz.realstate.dto.AuthorDTO;
+import com.thschmitz.realstate.dto.PostDTO;
 
 @Document
 public class Comment implements Serializable {
@@ -20,14 +21,13 @@ public class Comment implements Serializable {
 	private Date created_at;
 	private AuthorDTO author;
 
-	@DBRef(lazy=true)
-	private Post post;
+	private PostDTO post;
 
 	public Comment() {
 
 	}
 
-	public Comment(String id, String text, Date created_at, AuthorDTO author, Post post) {
+	public Comment(String id, String text, Date created_at, AuthorDTO author, PostDTO post) {
 		this.id = id;
 		this.text = text;
 		this.created_at = created_at;
@@ -67,11 +67,11 @@ public class Comment implements Serializable {
 		this.author = author;
 	}
 
-	public Post getPost() {
+	public PostDTO getPost() {
 		return post;
 	}
 
-	public void setPost(Post post) {
+	public void setPost(PostDTO post) {
 		this.post = post;
 	}
 

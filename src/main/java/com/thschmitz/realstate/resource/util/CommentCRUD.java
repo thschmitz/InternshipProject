@@ -9,6 +9,7 @@ import com.thschmitz.realstate.domain.services.exception.ParametersNotPassedExce
 import com.thschmitz.realstate.domain.services.exception.Unauthorized;
 import com.thschmitz.realstate.dto.AuthorDTO;
 import com.thschmitz.realstate.dto.CommentDTO;
+import com.thschmitz.realstate.dto.PostDTO;
 import com.thschmitz.realstate.repository.CommentRepository;
 import com.thschmitz.realstate.repository.PostRepository;
 
@@ -22,7 +23,7 @@ public class CommentCRUD {
 		comment.setAuthor(author);
 		post.getComments().add(comment);
 		
-		Comment commentDomain = new Comment(null, comment.getText(), formattedDate, author, post);
+		Comment commentDomain = new Comment(null, comment.getText(), formattedDate, author, new PostDTO(post));
 		
 		commentRepository.save(commentDomain);
 		postRepository.save(post);

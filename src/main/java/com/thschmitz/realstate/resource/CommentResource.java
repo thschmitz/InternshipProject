@@ -18,6 +18,7 @@ import com.thschmitz.realstate.domain.services.PostService;
 import com.thschmitz.realstate.domain.services.UserService;
 import com.thschmitz.realstate.dto.CommentDTO;
 import com.thschmitz.realstate.resource.util.Session;
+import com.thschmitz.realstate.resource.util.Util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -55,11 +56,11 @@ public class CommentResource {
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable String id, @RequestHeader(value="JWT") String header) {
 		Jws<Claims> session = Session.session(header);
+		String author_id = Session.getSessionId(session);
 		
-		System.out.println(session);
+		Util.isAllowed(id, author_id, postService);
 		
 		commentService.delete(id, session, postService);
-		
 		return ResponseEntity.noContent().build();
 	}
 }

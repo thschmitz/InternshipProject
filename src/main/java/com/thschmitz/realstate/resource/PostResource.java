@@ -17,6 +17,7 @@ import com.thschmitz.realstate.domain.services.PostService;
 import com.thschmitz.realstate.dto.CommentDTO;
 import com.thschmitz.realstate.resource.util.Session;
 import com.thschmitz.realstate.resource.util.URL;
+import com.thschmitz.realstate.resource.util.Util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -55,15 +56,24 @@ public class PostResource {
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable String id, @RequestHeader(value="JWT") String header) {
-		Session.session(header);
+		Jws<Claims> session = Session.session(header);
+		String author_id = Session.getSessionId(session);
+		
+		Util.isAllowed(id, author_id, service);
+		
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Post> update(@RequestBody Post post, @PathVariable String id, @RequestHeader(value="JWT") String header) {
-		Session.session(header);
+		Jws<Claims> session = Session.session(header);
+		String author_id = Session.getSessionId(session);
+		
+		Util.isAllowed(id, author_id, service);
+		
 		post.setId(id);
+		
 		return ResponseEntity.ok().body(service.update(post));
 	}
 	

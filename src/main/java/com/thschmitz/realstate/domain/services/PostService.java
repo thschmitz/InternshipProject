@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.thschmitz.realstate.domain.Comment;
 import com.thschmitz.realstate.domain.Post;
 import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.domain.services.exception.ObjectNotFoundException;
@@ -15,7 +16,6 @@ import com.thschmitz.realstate.dto.AuthorDTO;
 import com.thschmitz.realstate.dto.CommentDTO;
 import com.thschmitz.realstate.repository.CommentRepository;
 import com.thschmitz.realstate.repository.PostRepository;
-import com.thschmitz.realstate.resource.util.CommentCRUD;
 import com.thschmitz.realstate.resource.util.Like;
 import com.thschmitz.realstate.resource.util.Session;
 import com.thschmitz.realstate.resource.util.Util;
@@ -61,8 +61,14 @@ public class PostService {
 	}
 	
 	public void delete(String id) {
-		findById(id);
+		Post post = findById(id);
+		
+		for(CommentDTO comment : post.getComments()) {
+			commentRepository.deleteById(comment.getId());;
+		}
+		
 		postRepository.deleteById(id);
+		
 	}
 	
 	public Post update(Post post) {

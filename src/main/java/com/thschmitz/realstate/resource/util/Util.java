@@ -5,9 +5,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+import com.thschmitz.realstate.domain.Post;
 import com.thschmitz.realstate.domain.User;
+import com.thschmitz.realstate.domain.services.PostService;
 import com.thschmitz.realstate.domain.services.UserService;
 import com.thschmitz.realstate.domain.services.exception.ParseException;
+import com.thschmitz.realstate.domain.services.exception.Unauthorized;
 
 public class Util {
 	public static Date formatDate(Date date) {
@@ -27,5 +30,13 @@ public class Util {
 	
 	public static User toUser(String id, UserService service) {
 		return service.findById(id);
+	}
+	
+	public static void isAllowed(String id_post, String id_author, PostService service) {
+		Post post = service.findById(id_post);
+		
+		if(!post.getAuthor().getId().equals(id_author)) {
+			throw new Unauthorized("You can't do this request because you are not allowed to!");
+		}
 	}
 }

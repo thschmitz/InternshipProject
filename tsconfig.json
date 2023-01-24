@@ -19,6 +19,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/login.js", "services/auth/tokenService.js", "services/auth/authService.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/login.jsx", "services/auth/tokenService.js", "services/auth/authService.js", "src/middleware.js"],
   "exclude": ["node_modules"]
 }

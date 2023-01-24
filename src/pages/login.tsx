@@ -1,23 +1,20 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { checkSession, login } from "services/auth/authService.js";
+import {authService} from "services/auth/authService.js";
 
 function Login() {
   
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState<string>();
+  const [password, setPassword] = useState<string>();
   const router = useRouter();
 
-  async function onSubmit(e) {
+  async function onSubmit(e: any) {
     e.preventDefault();
-    await login({email: email, password: password}).then((data) => {
-      console.log(data);
-    });
+    await authService.login({email: email, password: password})
 
-    const response = await checkSession();
-    console.log(response)
-
+    router.push("/")
   }
+
   return(
     <div className="grid grid-cols-12">
         <div className="lg:col-span-5 col-span-12 text-white font-sans font-bold bg-white min-h-screen pl-7">

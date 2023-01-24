@@ -6,11 +6,8 @@ export const config = {
 
 export async function middleware(req) {
   const url = req.url;
-
   const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN_KEY';
   const token = req.cookies.get(ACCESS_TOKEN_KEY)?.value;
-
-  console.log(token)
 
   if(token) {
     const response = await fetch("http://localhost:8080/users/session", {
@@ -23,8 +20,12 @@ export async function middleware(req) {
 
     const session = await response.json();
 
+    console.log("MiddlewareSession: ", session)
+
     if(session && url.includes("/login")) {
       return NextResponse.redirect("http://localhost:3000/")
     }
+
+    return NextResponse.next();
   }
 }

@@ -1,27 +1,30 @@
 import {tokenService} from "./tokenService";
 import axios from 'axios';
 
-export const login = async (data) => {
-  try {
-    const response = await axios.post('http://localhost:8080/users/login', data, { 'Content-Type': 'application/json' });
+export const authService = {
+  async login(data){
+    try {
+      const response = await axios.post('http://localhost:8080/users/login', data, { 'Content-Type': 'application/json' });
+  
+      tokenService.save(response.data)
+  
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  
+  async session(token) {
+    console.log("Token: ", token);
+    try{
+      const response = axios.get("http://localhost:8080/users/session", {headers: {"JWT": token}}).then((resp) => resp)
 
-    tokenService.save(response.data)
+      return response;
+    } catch(error) {
+      console.log(error);
+    }
 
-    return response.data;
-  } catch (error) {
-    console.error(error);
   }
-};
-
-export const checkSession = async () => {
-  const token = tokenService.get();
-
-  const headers = {
-    "Content-Type": "application/json",
-    "JWT": token
-  }
-  /*const response = await axios.get("http://localhost:8080/users/session", headers);*/
-
-
-
 }
+
+

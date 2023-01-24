@@ -1,26 +1,26 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
-
-interface IUser {
-  email: String
-  password: String
-}
+import { checkSession, login } from "services/auth/authService.js";
 
 function Login() {
   
-  const [email, setEmail] = useState<string>();
-  const [password, setPassword] = useState<string>();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const router = useRouter();
 
-  function onSubmit(e: React.FormEvent<HTMLButtonElement>) {
+  async function onSubmit(e) {
     e.preventDefault();
-    
-    console.log(email, password);
+    await login({email: email, password: password}).then((data) => {
+      console.log(data);
+    });
 
-    
+    const response = await checkSession();
+    console.log(response)
+
   }
-
   return(
     <div className="grid grid-cols-12">
-        <div className="col-span-5 text-white font-sans font-bold bg-white min-h-screen pl-7">
+        <div className="lg:col-span-5 col-span-12 text-white font-sans font-bold bg-white min-h-screen pl-7">
           <div className="grid grid-rows-6 grid-flow-col min-h-screen items-center justify-items-center">
             <div className="row-span-4 row-start-2 text-4xl text-black">
               Sign In
@@ -73,7 +73,7 @@ function Login() {
           </div>
         </div>
 
-        <div className="col-span-7 text-white font-sans font-bold bg-cover bg-[url('https://cdn.dribbble.com/users/22815/screenshots/14343442/media/c2a2d9926b0de3f8077e80ed7cb04c96.jpg')]"></div>
+        <div className="lg:col-span-7 text-white font-sans font-bold bg-cover bg-[url('https://cdn.dribbble.com/users/22815/screenshots/14343442/media/c2a2d9926b0de3f8077e80ed7cb04c96.jpg')]"></div>
       </div>
   )
   

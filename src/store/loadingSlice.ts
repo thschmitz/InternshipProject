@@ -1,32 +1,28 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { AppState } from "./store";
-// import { HYDRATE } from "next-redux-wrapper";
+import { createSlice } from '@reduxjs/toolkit'
+import { RootState } from './store'
 
-// Type for our state
-export interface IInitialState {
-  loading: boolean;
+export interface ILoadingState {
+  loading: boolean
 }
 
-// Initial state
-const initialState: IInitialState = {
+const initialState: ILoadingState = {
   loading: false,
-};
+}
 
-// Actual Slice
 export const loadingSlice = createSlice({
-  name: "loading",
+  name: 'loading',
   initialState,
   reducers: {
-
-    // Action to set the authentication status
-    setLoading(state, action) {
+    setLoading: (state, action) => {
       state.loading = action.payload;
     }
   },
-});
+})
 
-export const { setLoading } = loadingSlice.actions;
+// Action creators are generated for each case reducer function
+export const { setLoading } = loadingSlice.actions
 
-export const selectLoading = (state: AppState) => state.loading.loading;
+// Selector
+export const selectLoading = (state: RootState) => state.loading.loading;
 
-export default loadingSlice.reducer;
+export default loadingSlice.reducer

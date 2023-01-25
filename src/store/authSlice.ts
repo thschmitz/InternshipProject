@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { AppState } from "./store";
+import { RootState } from "./store";
 // import { HYDRATE } from "next-redux-wrapper";
 
 // Type for our state
@@ -38,9 +38,10 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setAuthState, setUserInfo } = authSlice.actions;
+export const { setAuthState, setUserInfo } = authSlice.actions
 
-export const selectAuthState = (state: AppState) => state.auth.authState;
-export const selectUserInfo = (state: AppState) => state.auth;
+// Selector
+export const selectAuthState = (state: RootState) => state.auth.authState;
+export const selectUserInfo = (state: RootState) => state.auth;
 
-export default authSlice.reducer;
+export default authSlice.reducer

@@ -115,8 +115,5 @@ public class PostService {
 		return post;
 	}
 	
-	public List<Post> searchByUserId(String author_id, Jws<Claims> session) {
-		return postRepository.searchByUserId(author_id);
-		
-	}
+
 }

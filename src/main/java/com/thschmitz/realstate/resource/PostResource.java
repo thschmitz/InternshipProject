@@ -86,10 +86,4 @@ public class PostResource {
 		return ResponseEntity.ok().body(service.like(id, session));
 	}
 	
-	@RequestMapping(value="/user/{id}", method=RequestMethod.GET)
-	public ResponseEntity<List<Post>> postsByUserId(@PathVariable String id, @RequestHeader(value="JWT") String header) {
-		Jws<Claims> session = Session.session(header);
-		
-		return ResponseEntity.ok().body(service.searchByUserId(id, session));
-	}
 }

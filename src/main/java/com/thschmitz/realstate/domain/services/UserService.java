@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.thschmitz.realstate.domain.Post;
 import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.domain.services.exception.AuthenticationException;
 import com.thschmitz.realstate.domain.services.exception.ObjectNotFoundException;
@@ -83,8 +84,4 @@ public class UserService {
 		
 	}
 
-	/*public User fromDTO(UserDTO objDto) {
-		
-		return new User(objDto.getId(), objDto.getName(), objDto.getEmail(), null, objDto.getCreated_at());
-	}*/
 }

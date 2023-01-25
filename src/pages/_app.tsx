@@ -2,8 +2,12 @@ import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { wrapper } from "../store/store";
 import NotificationProvider, { useNotification } from 'use-toast-notification'
+import { ThreeDots } from  'react-loader-spinner'
 
 function App({ Component, pageProps }: AppProps) {
+
+  
+
   return (
     <NotificationProvider config={{
       position: "top-left",

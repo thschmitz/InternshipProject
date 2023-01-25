@@ -15,9 +15,13 @@ export const authService = {
   },
   
   async session(token) {
-    console.log("Token: ", token);
     try{
-      const response = axios.get("http://localhost:8080/users/session", {headers: {"JWT": token}}).then((resp) => resp)
+      const response = axios.get("http://localhost:8080/users/session", {headers: {"JWT": token}})
+      .catch(error => {
+        return error;
+      }).then((resp) => {
+        return resp;
+      })
 
       return response;
     } catch(error) {

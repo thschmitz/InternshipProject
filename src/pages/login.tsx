@@ -1,18 +1,29 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import {authService} from "services/auth/authService.js";
+import { useDispatch } from "react-redux";
+import { setAuthState } from "@/store/authSlice";
+import {Toast} from "../../services/notification/toast"
+import { useNotification } from "use-toast-notification";
 
 function Login() {
-  
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const router = useRouter();
+  const dispatch = useDispatch();
+  const notification = useNotification();
 
   async function onSubmit(e: any) {
     e.preventDefault();
-    await authService.login({email: email, password: password})
-
-    router.push("/")
+    const responseData = await authService.login({email: email, password: password})
+    if(responseData) {
+      dispatch(setAuthState(true))
+      Toast.notifySuccess(notification, "Login Sucess!", "You have logged in")
+      router.push("/")
+    } else {
+      Toast.notifyError(notification, "Login Error!", "Your credentials are wrong")
+      console.log("ERRO NO LOGIN")
+    }
   }
 
   return(

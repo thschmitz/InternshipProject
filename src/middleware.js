@@ -9,23 +9,21 @@ export async function middleware(req) {
   const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN_KEY';
   const token = req.cookies.get(ACCESS_TOKEN_KEY)?.value;
 
-  if(token) {
-    const response = await fetch("http://localhost:8080/users/session", {
-      method: "GET",
-      mode: 'cors',
-      headers: {
-        "JWT": token,
-      }
-    })
-
-    const session = await response.json();
-
-    console.log("MiddlewareSession: ", session)
-
-    if(session && url.includes("/login")) {
-      return NextResponse.redirect("http://localhost:3000/")
+  const response = await fetch("http://localhost:8080/users/session", {
+    method: "GET",
+    mode: 'cors',
+    headers: {
+      "JWT": token,
     }
+  })
+
+  const session = await response.json();
+
+  console.log("MiddlewareSession: ", session)
+
+  if(session?.body?.name && url.includes("/login")) {
+    return NextResponse.redirect("http://localhost:3000/")
+  }
 
     return NextResponse.next();
-  }
 }

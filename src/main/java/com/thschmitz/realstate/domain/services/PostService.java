@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.catalina.startup.ClassLoaderFactory.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -112,5 +113,10 @@ public class PostService {
 		postRepository.save(post);
 
 		return post;
+	}
+	
+	public List<Post> searchByUserId(String author_id, Jws<Claims> session) {
+		return postRepository.searchByUserId(author_id);
+		
 	}
 }

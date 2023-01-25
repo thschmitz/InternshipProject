@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -24,6 +25,7 @@ import io.jsonwebtoken.Jws;
 
 @RestController
 @RequestMapping(value="/posts")
+@CrossOrigin(origins = "*")
 public class PostResource {
 
 	@Autowired
@@ -82,5 +84,12 @@ public class PostResource {
 		Jws<Claims> session = Session.session(header);
 		
 		return ResponseEntity.ok().body(service.like(id, session));
+	}
+	
+	@RequestMapping(value="/user/{id}", method=RequestMethod.GET)
+	public ResponseEntity<List<Post>> postsByUserId(@PathVariable String id, @RequestHeader(value="JWT") String header) {
+		Jws<Claims> session = Session.session(header);
+		
+		return ResponseEntity.ok().body(service.searchByUserId(id, session));
 	}
 }

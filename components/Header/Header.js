@@ -8,6 +8,7 @@ import Logo from "../../public/Logo.png"
 import {FaBars} from "react-icons/fa";
 import {MdClose} from "react-icons/md";
 import {AiOutlineArrowDown} from "react-icons/ai"
+import Popup from 'reactjs-popup';
 
 export const Header = ({userState}) => {
   const authState = useSelector(selectAuthState);
@@ -54,12 +55,23 @@ export const Header = ({userState}) => {
 
       {
           authState?
+            <Popup
+            trigger={
             <div onClick={() => signOut()} className="navButton">
                 <div className="flex h-11 w-11 -mr-2">
                   <img className="rounded-full object-cover" src={userState.image} alt="imgProfile"/>
                 </div>
                 <AiOutlineArrowDown className="-ml-3"/>
-            </div>
+            </div>}
+            position="bottom center"
+            nested
+            >
+              <div className="navPopupAccount">
+                <p className="navButtonAccount">Conta</p>
+                <p className="navButtonAccount">Salvos</p>
+                <p className="navButtonAccount">Logout</p>
+              </div>
+            </Popup>
           : 
             <div className="navButton">
                 <div>

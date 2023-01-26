@@ -38,12 +38,6 @@ const Home: NextPage = (props:any) => {
     dispatch(setLoading(false));
   }, [props.cookies])
 
-  function loginButton(e:any) {
-    e.preventDefault();
-    router.push("/login")
-  }
-
-  console.log(loadingState)
   if(loadingState) {
     return (
       <ThreeDots 

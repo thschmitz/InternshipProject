@@ -7,6 +7,14 @@
     @apply hidden ml-10 rounded-3xl lg:flex md:flex items-center cursor-pointer space-x-2 p-3 transition duration-500 hover:bg-gray-200
   }
 
+  .navButtonAccount {
+    @apply flex items-center cursor-pointer space-x-2 p-5 transition duration-500 hover:bg-gray-200
+  }
+
+  .navPopupAccount {
+    @apply flex flex-col border border-l-gray-200 border-t-0 mt-3
+  }
+
   .navResponsiveButton {
     @apply rounded-3xl mt-10 cursor-pointer space-x-2 p-3 transition duration-500 hover:bg-gray-200
   }

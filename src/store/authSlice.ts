@@ -8,6 +8,7 @@ export interface IInitialState {
   name: string;
   email: string;
   id: string;
+  image: string;
 }
 
 // Initial state
@@ -16,6 +17,7 @@ const initialState: IInitialState = {
   name: "",
   email: "",
   id: "",
+  image: "",
 };
 
 // Actual Slice
@@ -34,6 +36,7 @@ export const authSlice = createSlice({
       state.name = action.payload.name;
       state.email = action.payload.email;
       state.id = action.payload.id;
+      state.image = action.payload.image
     },
   },
 });

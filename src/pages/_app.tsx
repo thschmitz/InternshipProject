@@ -9,7 +9,7 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <NotificationProvider config={{
-        position: "top-left",
+        position: "top-right",
         isCloseable: false,
         showTitle: true,
         showIcon: true,

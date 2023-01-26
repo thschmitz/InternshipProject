@@ -2,23 +2,32 @@ import React, { useEffect, useState } from 'react'
 import Link from "next/link";
 import Image from 'next/image';
 import { tokenService } from 'services/auth/tokenService';
-import { selectAuthState } from "../../src/store/authSlice";
-import { useSelector } from "react-redux";
+import { selectAuthState, setAuthState } from "../../src/store/authSlice";
+import { useSelector, useDispatch } from "react-redux";
 import Logo from "../../public/Logo.png"
 import {FaBars} from "react-icons/fa";
 import {MdClose} from "react-icons/md";
 import {AiOutlineArrowDown} from "react-icons/ai"
 import Popup from 'reactjs-popup';
+import Skeleton from '@mui/material/Skeleton';
+import { useNotification } from "use-toast-notification";
+import { Toast } from 'services/notification/toast';
 
-export const Header = ({userState}) => {
+export const Header = ({userState, loadingState}) => {
   const authState = useSelector(selectAuthState);
   const [barsOpen, setBarsOpen] = useState(false);
+  const dispatch = useDispatch();
+  const notification = useNotification();
 
-  function signOut() {
+  function signOut(e) {
+    e.preventDefault();
+    setBarsOpen(false);
+    dispatch(setAuthState(false))
     tokenService.delete(null);
+    Toast.notifySuccess(notification, "Logout Sucess!", "You have logged out!")
   }
 
-  console.log("barsOpen: ", barsOpen)
+  console.log(userState.image)
   if(barsOpen === true) {
     return (
       <div className="text-center flex h-screen justify-center items-center flex-col">
@@ -59,7 +68,11 @@ export const Header = ({userState}) => {
             trigger={
             <div onClick={() => signOut()} className="navButton">
                 <div className="flex h-11 w-11 -mr-2">
-                  <img className="rounded-full object-cover" src={userState.image} alt="imgProfile"/>
+                  {loadingState?
+                    <Skeleton variant="circular" width={40} height={40} />
+                  :
+                    <img className="rounded-full object-cover" src={userState.image} alt="imgProfile"/>
+                  }
                 </div>
                 <AiOutlineArrowDown className="-ml-3"/>
             </div>}
@@ -69,7 +82,7 @@ export const Header = ({userState}) => {
               <div className="navPopupAccount">
                 <p className="navButtonAccount">Conta</p>
                 <p className="navButtonAccount">Salvos</p>
-                <p className="navButtonAccount">Logout</p>
+                <p className="navButtonAccount" onClick={(e) => signOut(e)}>Logout</p>
               </div>
             </Popup>
           : 

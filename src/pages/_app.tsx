@@ -1,8 +1,7 @@
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { store } from "../store/store";
-import NotificationProvider, { useNotification } from 'use-toast-notification'
-import { ThreeDots } from  'react-loader-spinner'
+import NotificationProvider from 'use-toast-notification'
 import {Provider} from 'react-redux'
 
 function App({ Component, pageProps }: AppProps) {

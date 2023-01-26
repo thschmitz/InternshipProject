@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import {authService} from "services/auth/authService.js";
+import { authService } from "services/auth/authService.js";
 import { useDispatch } from "react-redux";
 import { setAuthState } from "@/store/authSlice";
 import {Toast} from "../../services/notification/toast"
 import { useNotification } from "use-toast-notification";
+import Link from "next/link";
 
 function Login() {
   const [email, setEmail] = useState<string>();
@@ -68,12 +69,11 @@ function Login() {
                 </button>
               </div>
               <div className="mt-4">
-                <a
-                  href=""
+                <Link href="/signup"><p
                   className="text-sm font-sans font-medium text-gray-600 underline"
                 >
                   Don´t have an account? Sign up
-                </a>
+                </p></Link>
               </div>
               
             </div>

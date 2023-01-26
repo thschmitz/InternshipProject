@@ -1,17 +1,13 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import nookies from "nookies";
 import {authService} from "../../services/auth/authService.js"
-import { useRouter } from "next/router.js";
 import type { NextPage } from "next";
 import { selectUserInfo, setAuthState, setUserInfo } from "../store/authSlice";
 import { setLoading, selectLoading } from "../store/loadingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {Header} from "../../components/Header/Header"
-import { ThreeDots } from  'react-loader-spinner'
 
 const Home: NextPage = (props:any) => {
-
-  const router = useRouter();
   const userState = useSelector(selectUserInfo);
   const loadingState = useSelector(selectLoading);
   const dispatch = useDispatch();
@@ -38,23 +34,9 @@ const Home: NextPage = (props:any) => {
     dispatch(setLoading(false));
   }, [props.cookies])
 
-  if(loadingState) {
-    return (
-      <ThreeDots 
-        height="80" 
-        width="80" 
-        radius="9"
-        color="#4fa94d" 
-        ariaLabel="three-dots-loading"
-        wrapperStyle={{}}
-        visible={true}
-      />
-    )
-  }
-
   return (
     <div>    
-      <Header userState={userState}/>
+      <Header userState={userState} loadingState={loadingState}/>
     </div>  
   )
 }

@@ -28,6 +28,20 @@ export const authService = {
       console.log(error);
     }
 
+  },
+
+  async signUp(data) {
+    try {
+      const response = await axios.post('http://localhost:8080/users', data, { 'Content-Type': 'application/json' });
+
+      tokenService.save(response.data);
+
+      console.log("Response.data: ", response.data);
+
+      return response.data;
+    } catch(error){
+      console.log(error);
+    }
   }
 }
 

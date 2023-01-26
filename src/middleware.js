@@ -21,8 +21,10 @@ export async function middleware(req) {
 
   console.log("MiddlewareSession: ", session)
 
-  if(session?.body?.name && url.includes("/login")) {
-    return NextResponse.redirect("http://localhost:3000/")
+  if(session?.body?.name) {
+    if(url.includes("/login") || url.includes("/signup")) {
+      return NextResponse.redirect("http://localhost:3000/")
+    }
   }
 
     return NextResponse.next();

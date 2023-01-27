@@ -32,7 +32,6 @@ public class JWT {
 		        .claim("name", newObj.getName())
 		        .claim("email", newObj.getEmail())
 		        .claim("id", newObj.getId())
-		        .claim("image", newObj.getImage())
 		        .setSubject(newObj.getName())
 		        .setId(UUID.randomUUID().toString())
 		        .setIssuedAt(Date.from(now))

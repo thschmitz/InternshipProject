@@ -64,7 +64,6 @@ public class UserService {
 			newObj.setEmail(obj.getEmail());
 			newObj.setPassword(obj.getPassword());	
 		}
-		
 	}
 	
 	public String login(User obj) {

@@ -51,17 +51,13 @@ public class UserResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<String> insert(@RequestBody User user, HttpServletResponse response, @RequestHeader(value="JWT") String header) {
-		Session.session(header);
+	public ResponseEntity<String> insert(@RequestBody User user, HttpServletResponse response){
 		Date created_at = new Date();
 		user.setCreated_at(created_at);
 		
 		String jwt = service.insert(user);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
 		
-		response.setHeader("JWT", jwt);
-		
-		return ResponseEntity.created(uri).body(jwt);
+		return ResponseEntity.ok().body(jwt);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)

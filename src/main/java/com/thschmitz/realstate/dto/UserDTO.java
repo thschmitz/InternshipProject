@@ -12,6 +12,7 @@ public class UserDTO implements Serializable{
 	private String name;
 	private String email;
 	private Date created_at;
+	private String image;
 	
 	public UserDTO() {
 		
@@ -22,7 +23,7 @@ public class UserDTO implements Serializable{
 		name = obj.getName();
 		email = obj.getEmail();
 		created_at = obj.getCreated_at();
-		
+		setImage(obj.getImage());
 	}
 
 	public String getId() {
@@ -55,5 +56,13 @@ public class UserDTO implements Serializable{
 
 	public void setCreated_at(Date created_at) {
 		this.created_at = created_at;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 }

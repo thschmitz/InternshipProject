@@ -2,27 +2,32 @@ import { useEffect } from "react";
 import nookies from "nookies";
 import {authService} from "../../services/auth/authService.js"
 import type { NextPage } from "next";
-import { selectUserInfo, setAuthState, setUserInfo } from "../store/authSlice";
+import { setAuthState } from "../store/authSlice";
 import { setLoading, selectLoading } from "../store/loadingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {Header} from "../../components/Header/Header"
+import { setUserData, selectUserData } from "../store/userSlice";
 
 const Home: NextPage = (props:any) => {
-  const userState = useSelector(selectUserInfo);
   const loadingState = useSelector(selectLoading);
   const dispatch = useDispatch();
+
+  async function userDataFetcher(resp:any) {
+    const response = await authService.userData(resp.data.body.id)
+    dispatch(setUserData(response));
+  }
 
   useEffect(() => {
     dispatch(setLoading(true));
     try {
       if(props.cookies != "") {
         authService.session(props.cookies).then((resp:any) => {
-          console.log("Here: ", resp);
+          console.log("Session: ", resp);
           if(resp?.response?.status == 401 || resp?.status != 200) {
             dispatch(setAuthState(false))
           } else {
             dispatch(setAuthState(true))
-            dispatch(setUserInfo(resp.data.body))
+            userDataFetcher(resp);
           }
         })
       } else {
@@ -36,7 +41,7 @@ const Home: NextPage = (props:any) => {
 
   return (
     <div>    
-      <Header userState={userState} loadingState={loadingState}/>
+      <Header loadingState={loadingState}/>
     </div>  
   )
 }

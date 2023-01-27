@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { authService } from "../../services/auth/authService";
 import { useDispatch } from "react-redux";
 import { setAuthState } from "../store/authSlice";
@@ -11,22 +11,21 @@ function SignUp() {
   const [name, setName] = useState<string>();
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
-  const [image, setImage] = useState();
+  const [image, setImage] = useState<string>();
   const router = useRouter();
   const dispatch = useDispatch();
   const notification = useNotification();
 
-  function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
-    if(e.target.files) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-      }
-      reader.readAsDataURL(file);
-    }
+  function handleFile(e: any) {
+    e.preventDefault();
+    const file = e.target.files[0];
+    let reader = new FileReader();
 
-    console.log(image);
+    reader.onload = (e) => {
+      const {result} = e.target
+      setImage(result);
+    }
+    reader.readAsDataURL(file)
   }
 
   async function onSubmit(e: any) {
@@ -55,7 +54,7 @@ function SignUp() {
                 type="text"
                 name="username"
                 placeholder="Write your name"
-                className="w-full bg-white py-3 px-12 border hover: border-gray-400 rounded shadow text-base font-sans"
+                className="signUpInput"
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
@@ -66,7 +65,7 @@ function SignUp() {
                 type="text"
                 name="email"
                 placeholder="Write your email"
-                className="w-full bg-white py-3 px-12 border hover: border-gray-400 rounded shadow text-base font-sans"
+                className="signUpInput"
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
@@ -76,7 +75,7 @@ function SignUp() {
                 type="password"
                 name="password"
                 placeholder="Write your password"
-                className=" w-full bg-white py-3 px-12 border hover: border-gray-500 rounded shadow text-base font-sans"
+                className="signUpInput"
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
@@ -85,8 +84,9 @@ function SignUp() {
               <input
                 type="file"
                 name="image"
-                className=" w-full bg-white py-3 px-12 border hover: border-gray-500 rounded shadow text-base font-sans"
-                onChange={(e) => handleFileChange(e)}
+                placeholder="Write your image URL (OPTIONAL)"
+                className="signUpInput"
+                onChange={(e) => handleFile(e)}
               />
             </div>
 

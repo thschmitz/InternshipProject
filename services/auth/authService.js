@@ -30,13 +30,23 @@ export const authService = {
 
   },
 
+  async userData(id) {
+    try{
+      const response = await axios.get(`http://localhost:8080/users/${id}`);
+
+      return response.data;
+    } catch(error) {
+      console.log(error);
+    }
+  },
+
   async signUp(data) {
+    console.log(data);
     try {
       const response = await axios.post('http://localhost:8080/users', data, { 'Content-Type': 'application/json' });
+      console.log("Response.data: ", response);
 
       tokenService.save(response.data);
-
-      console.log("Response.data: ", response.data);
 
       return response.data;
     } catch(error){

@@ -22,4 +22,8 @@
   .navResponsiveButtonClose {
     @apply rounded-3xl mt-10 cursor-pointer p-3 transition duration-500 hover:bg-red-400
   }
+
+  .signUpInput {
+    @apply w-full bg-white py-3 px-12 border hover:border-gray-400 rounded shadow text-base font-sans
+  }
 }

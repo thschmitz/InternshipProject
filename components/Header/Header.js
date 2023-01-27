@@ -12,22 +12,26 @@ import Popup from 'reactjs-popup';
 import Skeleton from '@mui/material/Skeleton';
 import { useNotification } from "use-toast-notification";
 import { Toast } from 'services/notification/toast';
+import { selectUserData, cleanUserData } from '../../src/store/userSlice';
 
-export const Header = ({userState, loadingState}) => {
-  const authState = useSelector(selectAuthState);
+export const Header = ({loadingState}) => {
+  const userData = useSelector(selectUserData);
   const [barsOpen, setBarsOpen] = useState(false);
   const dispatch = useDispatch();
   const notification = useNotification();
+  const authState = useSelector(selectAuthState)
 
   function signOut(e) {
     e.preventDefault();
-    setBarsOpen(false);
+
     dispatch(setAuthState(false))
+    dispatch(cleanUserData())
+
     tokenService.delete(null);
     Toast.notifySuccess(notification, "Logout Sucess!", "You have logged out!")
+    setBarsOpen(false);
   }
 
-  console.log(userState.image)
   if(barsOpen === true) {
     return (
       <div className="text-center flex h-screen justify-center items-center flex-col">
@@ -71,7 +75,7 @@ export const Header = ({userState, loadingState}) => {
                   {loadingState?
                     <Skeleton variant="circular" width={40} height={40} />
                   :
-                    <img className="rounded-full object-cover" src={userState.image} alt="imgProfile"/>
+                    <img className="rounded-full object-cover" src={userData.image} alt="imgProfile"/>
                   }
                 </div>
                 <AiOutlineArrowDown className="-ml-3"/>

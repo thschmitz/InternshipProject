@@ -4,7 +4,9 @@ import axios from 'axios';
 export const authService = {
   async login(data){
     try {
-      const response = await axios.post('http://localhost:8080/users/login', data, { 'Content-Type': 'application/json' });
+      const response = await axios.post('http://localhost:8080/users/login', data, { 'Content-Type': 'application/json' }).catch(err => {
+        console.log("ERR:", err)
+      });
   
       tokenService.save(response.data)
   
@@ -19,7 +21,7 @@ export const authService = {
       const response = axios.get("http://localhost:8080/users/session", {headers: {"JWT": token}})
       .catch(error => {
         return error;
-      }).then((resp) => {
+      }).then(resp => {
         return resp;
       })
 

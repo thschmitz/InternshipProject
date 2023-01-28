@@ -11,7 +11,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@heroicons/react": "^2.0.14",
+    "@heroicons/react": "^1.0.6",
     "@mui/material": "^5.11.6",
     "@next/font": "13.1.5",
     "@reduxjs/toolkit": "^1.9.1",
@@ -31,6 +31,7 @@
     "react-loader-spinner": "^5.3.4",
     "react-notifications": "^1.7.4",
     "react-shimmer-skeleton": "^1.0.3",
+    "react-timeago": "^7.1.0",
     "reactjs-popup": "^2.0.5",
     "redux-logger": "^3.0.6",
     "typescript": "4.9.4",

@@ -12,14 +12,16 @@ import Popup from 'reactjs-popup';
 import Skeleton from '@mui/material/Skeleton';
 import { useNotification } from "use-toast-notification";
 import { Toast } from 'services/notification/toast';
-import { selectUserData, cleanUserData } from '../../src/store/userSlice';
+import { cleanUserData, selectUserData } from '../../src/store/userSlice';
+import { selectLoading } from '@/store/loadingSlice';
 
-export const Header = ({loadingState}) => {
-  const userData = useSelector(selectUserData);
+export const Header = () => {
   const [barsOpen, setBarsOpen] = useState(false);
   const dispatch = useDispatch();
   const notification = useNotification();
   const authState = useSelector(selectAuthState)
+  const user = useSelector(selectUserData)
+  const loadingState = useSelector(selectLoading)
 
   function signOut(e) {
     e.preventDefault();
@@ -75,7 +77,7 @@ export const Header = ({loadingState}) => {
                   {loadingState?
                     <Skeleton variant="circular" width={40} height={40} />
                   :
-                    <img className="rounded-full object-cover" src={userData.image} alt="imgProfile"/>
+                    <img className="rounded-full object-cover" src={user.image} alt="imgProfile"/>
                   }
                 </div>
                 <AiOutlineArrowDown className="-ml-3"/>
@@ -84,7 +86,7 @@ export const Header = ({loadingState}) => {
             nested
             >
               <div className="navPopupAccount">
-                <p className="navButtonAccount">Conta</p>
+                <Link href={`/profile/${user.id}`}><p className="navButtonAccount">Conta</p></Link>
                 <p className="navButtonAccount">Salvos</p>
                 <p className="navButtonAccount" onClick={(e) => signOut(e)}>Logout</p>
               </div>

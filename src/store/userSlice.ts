@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-// import { HYDRATE } from "next-redux-wrapper";
+import { HYDRATE } from "next-redux-wrapper";
 
 // Type for our state
 export interface IInitialState {
@@ -40,7 +40,8 @@ export const userSlice = createSlice({
       state.email= "";
       state.created_at= "";
       state.image= "";
-    }
+    },
+
   },
 });
 

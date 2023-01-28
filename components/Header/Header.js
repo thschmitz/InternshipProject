@@ -78,35 +78,35 @@ export const Header = () => {
       </div>
 
       {
-          authState?
-            <Popup
-            trigger={
-            <div onClick={() => signOut()} className="navButton">
-                <div className="flex h-11 w-11 -mr-2">
-                  {loadingState?
-                    <Skeleton variant="circular" width={40} height={40} />
-                  :
-                    <img className="rounded-full object-cover" src={user.image} alt="imgProfile"/>
-                  }
-                </div>
-                <AiOutlineArrowDown className="-ml-3"/>
-            </div>}
-            position="bottom center"
-            nested
-            >
-              <div className="navPopupAccount">
-                <Link href={`/profile/${user.id}`}><p className="navButtonAccount">Conta</p></Link>
-                <p className="navButtonAccount">Salvos</p>
-                <p className="navButtonAccount" onClick={(e) => signOut(e)}>Logout</p>
+        authState?
+          <Popup
+          trigger={
+          <div onClick={() => signOut()} className="navButton">
+              <div className="flex h-11 w-11 -mr-2">
+                {loadingState?
+                  <Skeleton variant="circular" width={40} height={40} />
+                :
+                  <img className="rounded-full object-cover" src={user.image} alt="imgProfile"/>
+                }
               </div>
-            </Popup>
-          : 
-            <div className="navButton">
-                <div>
-                  <Link href="/login"><p className="text-black">Sign In</p></Link>
-                </div>
-
+              <AiOutlineArrowDown className="-ml-3"/>
+          </div>}
+          position="bottom center"
+          nested
+          >
+            <div className="navPopupAccount">
+              <Link href={`/profile/${user.id}`}><p className="navButtonAccount">Conta</p></Link>
+              <p className="navButtonAccount">Salvos</p>
+              <p className="navButtonAccount" onClick={(e) => signOut(e)}>Logout</p>
             </div>
+          </Popup>
+        : 
+          <div className="navButton">
+              <div>
+                <Link href="/login"><p className="text-black">Sign In</p></Link>
+              </div>
+
+          </div>
       }
     </div>
   )

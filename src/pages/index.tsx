@@ -3,14 +3,14 @@ import nookies from "nookies";
 import {authService} from "../../services/auth/authService.js"
 import type { NextPage } from "next";
 import { selectAuthState, setAuthState } from "../store/authSlice";
-import { setLoading, selectLoading } from "../store/loadingSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {Header} from "../../components/Header/Header"
 import { setUserData } from "../store/userSlice";
 import { store } from "../store/store";
+import { Feed } from "../../components/Feed/Feed"
+import {postService} from "../../services/post/postService.js"
 
 const Home: NextPage = (props:any) => {
-  const loadingState = useSelector(selectLoading);
   const authState = useSelector(selectAuthState);
   console.log("Logado? ", authState)
 
@@ -27,6 +27,7 @@ const Home: NextPage = (props:any) => {
   return (
     <div>    
       <Header/>
+      <Feed posts={props.posts}/>
     </div>  
   )
 }
@@ -39,12 +40,12 @@ export const getServerSideProps = async(ctx:any) => {
   authResponse = authResponse?.data?.body;
 
   const response = await authService.userData(authResponse?.id);
-  
-  console.log(response);
+  const posts = await postService.searchAllPosts();
 
   return {
     props: {
-      user: response || ""
+      user: response || "",
+      posts: posts
     }
   }
 }

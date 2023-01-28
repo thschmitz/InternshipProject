@@ -14,6 +14,7 @@ import { useNotification } from "use-toast-notification";
 import { Toast } from 'services/notification/toast';
 import { cleanUserData, selectUserData } from '../../src/store/userSlice';
 import { selectLoading } from '@/store/loadingSlice';
+import {SearchIcon} from "@heroicons/react/solid"
 
 export const Header = () => {
   const [barsOpen, setBarsOpen] = useState(false);
@@ -43,7 +44,6 @@ export const Header = () => {
         </div>
         <div className="flex flex-col">
           <p className="navResponsiveButton">Registre um apartamento</p>
-          <p className="navResponsiveButton">Carrinho</p>
           <p className="navResponsiveButton">Conta</p>
         </div>
       </div>
@@ -54,14 +54,23 @@ export const Header = () => {
   return (
     <div className="sticky flex justify-between top-0 z-100 bg-white px-4 py-5 shadow-sm items-center ">
       <div className="relative h-13 w-13 flex-shrink-0 cursor-pointer">
-        <Image src={Logo} width={150} height={150} alt="RealStateLogo" />
+        <Link href="/"><Image src={Logo} width={150} height={150} alt="RealStateLogo" /></Link>
       </div>
+
+      <form className="max-w-lg flex items-center sm:space-x-2 border-gray-200 border rounded-3xl bg-gray-100 sm:flex-1 px-7 py-2 lg:ml-10">
+        <input type="text" placeholder="Begin your search" className="flex-1 bg-transparent outline-none" />
+        <Link href={`/search/`}>
+            <button type="submit" hidden/>
+        </Link>
+        <div className="bg-red-400 rounded-full p-2">
+          <SearchIcon className="h-5 w-5 text-white"/>
+        </div>
+      </form>
 
       <div className="navButton">
         <p className="">Registre um apartamento</p>
       </div>
       <div className="navButton">
-        <p className="">Carrinho</p>
       </div>
 
       <div onClick={() => setBarsOpen(true)} className="lg:hidden md:hidden flex w-10 cursor-pointer">

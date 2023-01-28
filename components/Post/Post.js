@@ -39,7 +39,7 @@ export const Post = ({ post, user }) => {
 
             <div className="py-4">
               <h2 className="text-xl font-semibold">{post.title}</h2>
-              <p className="mt-2 text-sm font-light">{post.body}</p>
+              <p className="mt-2 text-sm font-light">{post.body.length > 100? post.body.slice(0, 100) + "..." : post.body}</p>
             </div>
 
             {/*Image*/}

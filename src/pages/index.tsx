@@ -6,6 +6,7 @@ import {Header} from "../../components/Header/Header"
 import { cleanUserData, selectUserData, setUserData } from "../store/userSlice";
 import {postService} from "../../services/post/postService.js"
 import {util} from "../../services/util/util.js"
+import {Feed} from "../../components/Feed/Feed.js"
 
 const Home: NextPage = (props:any) => {
   const authState = useSelector(selectAuthState);
@@ -28,6 +29,7 @@ const Home: NextPage = (props:any) => {
   return (
     <div>    
       <Header/>
+      <Feed posts={props?.posts} />
     </div>  
   )
 }

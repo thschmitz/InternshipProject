@@ -9,8 +9,17 @@ import React from "react";
 import TimeAgo from "react-timeago";
 import Link from "next/link";
 import {FaHeart} from "react-icons/fa"
+import { useSelector } from "react-redux"
+import { selectUserData } from "@/store/userSlice";
 
-export const Post = ({ post, user }) => {
+export const Post = ({post}) => {
+
+  const user = useSelector(selectUserData);
+
+  console.log("USERPOST: ", user);
+
+  console.log("POST: ", post)
+
   return (
     <div className="flex rounded-md cursor-pointer border border-gray-300 bg-white shadow-sm hover:border hover:border-gray-600">
       {/*Votes*/}
@@ -22,24 +31,24 @@ export const Post = ({ post, user }) => {
         <div className="items-center space-x-2 flex ml-4 pt-4">
           <div className="text-xs text-gray-400">
             <span className="text-black font-bold hover:text-blue-400 hover:underline">
-              {post.status}
+              {post?.status}
             </span>{" "}
             • Posted by{" "}
-            <Link href={`/user/${post.author.id}`}>
+            <Link href={`/user/${post?.author?.id}`}>
               <span className="hover:text-blue-400 hover:underline">
-                u/{post.author.name}
+                u/{post?.author?.name}
               </span>
             </Link>{" "}
-            <TimeAgo date={post.created_at} />
+            <TimeAgo date={post?.created_at} />
           </div>
         </div>
-        <Link href={`/post/${post.id}`}>
+        <Link href={`/post/${post?.id}`}>
           <div className="p-3 pb-1">
             {/*Body*/}
 
             <div className="py-4">
-              <h2 className="text-xl font-semibold">{post.title}</h2>
-              <p className="mt-2 text-sm font-light">{post.body.length > 100? post.body.slice(0, 100) + "..." : post.body}</p>
+              <h2 className="text-xl font-semibold">{post?.title}</h2>
+              <p className="mt-2 text-sm font-light">{post?.body?.length > 100? post?.body?.slice(0, 100) + "..." : post?.body}</p>
             </div>
 
             {/*Image*/}
@@ -52,9 +61,9 @@ export const Post = ({ post, user }) => {
               <div className="postButtons">
                 <ChatAltIcon className="h-6 w-6"></ChatAltIcon>
                 <p className="hidden sm:inline ml-3">
-                  {post.comments.length} Comments
+                  {post?.comments?.length} Comments
                 </p>
-                <p className="inline sm:hidden">{post.comments.length}</p>
+                <p className="inline sm:hidden">{post?.comments?.length}</p>
               </div>
               <div onClick={(e) => markedFunction(e)} className="postButtons">
                 {/*<BookmarkIcon className={`h-6 w-6 ${marked? "text-yellow-500" : ""}`}></BookmarkIcon>*/}

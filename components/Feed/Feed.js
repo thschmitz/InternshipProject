@@ -1,18 +1,23 @@
-import { selectUserData } from "@/store/userSlice"
 import { Post } from "components/Post/Post"
-import {useDispatch} from "react-redux"
 
-export const Feed = (posts) => {
-  const dispatch = useDispatch();
-  const user = dispatch(selectUserData)
+export const Feed = ({posts}) => {
+
   console.log("FEEDPOSTS: ", posts)
+
+  posts?.map((post) => {
+    console.log(post?.title)
+  })
   return (
-    <>
+    <div>
       {
-        posts?.posts?.map((post) => {
-          <Post post={post} user={user} />
-        })
+        posts?.map((post) => (
+          <>
+            <Post post={post} />
+          </>
+        ))
+
+
       }
-    </>
+    </div>
   )
 }

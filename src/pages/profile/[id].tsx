@@ -6,7 +6,6 @@ import {Post} from "../../../components/Post/Post.js"
 import { setUserData, cleanUserData } from "@/store/userSlice"
 import { useDispatch } from "react-redux";
 import { useEffect } from "react"
-import nookies from "nookies";
 import { setAuthState } from "@/store/authSlice"
 import {util} from "../../../services/util/util.js"
 
@@ -63,7 +62,7 @@ const Profile = (props:any) => {
               {
                 props?.profile?.posts?.length > 0?
                   props?.profile?.posts?.map((post: any) => (
-                    <Post key={post.id} post={post} user={props?.user}/>
+                    <Post key={post.id} post={post} />
                   ))
                 :
                   <div className="flex w-full items-center justify-center p-20 text-xl">

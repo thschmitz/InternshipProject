@@ -1,12 +1,11 @@
 import { useEffect } from "react";
-import nookies from "nookies";
-import {authService} from "../../services/auth/authService.js"
 import type { NextPage } from "next";
 import { selectAuthState, setAuthState } from "../store/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import {Header} from "../../components/Header/Header"
-import { selectUserData, setUserData } from "../store/userSlice";
+import { cleanUserData, selectUserData, setUserData } from "../store/userSlice";
 import {postService} from "../../services/post/postService.js"
+import {util} from "../../services/util/util.js"
 
 const Home: NextPage = (props:any) => {
   const authState = useSelector(selectAuthState);
@@ -16,11 +15,12 @@ const Home: NextPage = (props:any) => {
 
   useEffect(() => {
     console.log("PROPS: ", props)
-    if(props?.user?.id) {
-      dispatch(setUserData(props.user))
+    if(props?.session?.id) {
+      dispatch(setUserData(props.session))
       dispatch(setAuthState(true));
     } else {
       dispatch(setAuthState(false))
+      dispatch(cleanUserData());
     }
     console.log("USER: ", user)
   })
@@ -33,18 +33,13 @@ const Home: NextPage = (props:any) => {
 }
 
 export const getServerSideProps = async(ctx:any) => {
-  const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN_KEY';
-  const cookies = nookies.get(ctx)[ACCESS_TOKEN_KEY];
-  
-  let authResponse = await authService.session(cookies)
-  authResponse = authResponse?.data?.body;
 
-  const response = await authService.userData(authResponse?.id);
   const posts = await postService.searchAllPosts();
+  const session = await util.sessionUserData(ctx)
 
   return {
     props: {
-      user: response || {},
+      session: session || {},
       posts: posts || [],
     }
   }

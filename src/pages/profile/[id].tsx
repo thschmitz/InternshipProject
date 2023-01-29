@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react"
 import nookies from "nookies";
 import { setAuthState } from "@/store/authSlice"
+import {util} from "../../../services/util/util.js"
 
 const Profile = (props:any) => {
   const router = useRouter();
@@ -79,21 +80,16 @@ const Profile = (props:any) => {
 }
 
 export const getServerSideProps = async(ctx:any) => {
-  const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN_KEY';
-  const cookies = nookies.get(ctx)[ACCESS_TOKEN_KEY];
-  
-  let authResponse = await authService.session(cookies)
-  authResponse = authResponse?.data?.body;
-
-  const session = await authService.userData(authResponse?.id);
+  const session = await util.sessionUserData(ctx);
 
   const profile = await authService.userData(ctx.query.id)
 
+  console.log("SESSION: ", session)
 
   return {
     props: {
-      session: session || "",
-      profile: profile || "",
+      session: session || {},
+      profile: profile || {},
     }
   }
 

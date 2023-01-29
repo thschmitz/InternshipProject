@@ -22,7 +22,6 @@ export const Header = () => {
   const notification = useNotification();
   const authState = useSelector(selectAuthState)
   const user = useSelector(selectUserData)
-  const loadingState = useSelector(selectLoading)
 
   function signOut(e) {
     e.preventDefault();
@@ -34,6 +33,11 @@ export const Header = () => {
     Toast.notifySuccess(notification, "Logout Sucess!", "You have logged out!")
     setBarsOpen(false);
   }
+
+  useEffect(() => {
+    console.log("HEADERUSER: ", user)
+  }, [])
+
 
   if(barsOpen === true) {
     return (
@@ -83,10 +87,10 @@ export const Header = () => {
           trigger={
           <div onClick={() => signOut()} className="navButton">
               <div className="flex h-11 w-11 -mr-2">
-                {loadingState?
-                  <Skeleton variant="circular" width={40} height={40} />
+                {user.image?
+                  <img className="rounded-full object-cover" src={user.image}/>
                 :
-                  <img className="rounded-full object-cover" src={user.image} alt="imgProfile"/>
+                  <Skeleton variant="circular" width={40} height={40} />
                 }
               </div>
               <AiOutlineArrowDown className="-ml-3"/>

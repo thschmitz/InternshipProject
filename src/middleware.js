@@ -25,7 +25,7 @@ export async function middleware(req) {
     if(url.includes("/login") || url.includes("/signup")) {
       return NextResponse.redirect("http://localhost:3000/")
     }
-  }
+  } 
 
     return NextResponse.next();
 }

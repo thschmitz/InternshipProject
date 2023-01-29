@@ -3,31 +3,31 @@ import nookies from "nookies";
 import {authService} from "../../services/auth/authService.js"
 import type { NextPage } from "next";
 import { selectAuthState, setAuthState } from "../store/authSlice";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {Header} from "../../components/Header/Header"
-import { setUserData } from "../store/userSlice";
-import { store } from "../store/store";
-import { Feed } from "../../components/Feed/Feed"
+import { selectUserData, setUserData } from "../store/userSlice";
 import {postService} from "../../services/post/postService.js"
 
 const Home: NextPage = (props:any) => {
   const authState = useSelector(selectAuthState);
+  const user = useSelector(selectUserData)
+  const dispatch = useDispatch();
   console.log("Logado? ", authState)
 
   useEffect(() => {
     console.log("PROPS: ", props)
     if(props?.user?.id) {
-      store.dispatch(setAuthState(true));
-      store.dispatch(setUserData(props.user));
+      dispatch(setUserData(props.user))
+      dispatch(setAuthState(true));
     } else {
-      store.dispatch(setAuthState(false))
+      dispatch(setAuthState(false))
     }
-  }, [])
+    console.log("USER: ", user)
+  })
 
   return (
     <div>    
       <Header/>
-      <Feed posts={props.posts}/>
     </div>  
   )
 }
@@ -44,10 +44,11 @@ export const getServerSideProps = async(ctx:any) => {
 
   return {
     props: {
-      user: response || "",
-      posts: posts
+      user: response || {},
+      posts: posts || [],
     }
   }
 }
 
 export default Home;
+

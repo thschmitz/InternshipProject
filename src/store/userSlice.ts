@@ -8,7 +8,7 @@ export interface IInitialState {
   name:string,
   email:string,
   created_at:string,
-  image: string,
+  image: string
 }
 
 // Initial state
@@ -27,6 +27,7 @@ export const userSlice = createSlice({
   reducers: {
     // Action to set the authentication status
     setUserData(state, action) {
+      console.log("PAYLOAD: ", action.payload)
       state.id = action.payload.id;
       state.name = action.payload.name;
       state.email = action.payload.email;
@@ -34,7 +35,7 @@ export const userSlice = createSlice({
       state.image = action.payload.image;
     },
 
-    cleanUserData(state, action) {
+    cleanUserData(state) {
       state.id= "";
       state.name= "";
       state.email= "";

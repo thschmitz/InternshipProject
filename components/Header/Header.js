@@ -5,23 +5,22 @@ import { tokenService } from 'services/auth/tokenService';
 import { selectAuthState, setAuthState } from "../../src/store/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Logo from "../../public/Logo.png"
-import {FaBars} from "react-icons/fa";
-import {MdClose} from "react-icons/md";
-import {AiOutlineArrowDown} from "react-icons/ai"
+import { FaBars } from "react-icons/fa";
+import { MdClose } from "react-icons/md";
+import { AiOutlineArrowDown } from "react-icons/ai"
 import Popup from 'reactjs-popup';
 import Skeleton from '@mui/material/Skeleton';
 import { useNotification } from "use-toast-notification";
 import { Toast } from 'services/notification/toast';
-import { cleanUserData, selectUserData } from '../../src/store/userSlice';
-import { selectLoading } from '@/store/loadingSlice';
-import {SearchIcon} from "@heroicons/react/solid"
+import { cleanUserData } from '../../src/store/userSlice';
+import { SearchIcon } from "@heroicons/react/solid"
 
-export const Header = () => {
+export const Header = ({user}) => {
   const [barsOpen, setBarsOpen] = useState(false);
   const dispatch = useDispatch();
   const notification = useNotification();
   const authState = useSelector(selectAuthState)
-  const user = useSelector(selectUserData)
+  const [search, setSearch] = useState();
 
   function signOut(e) {
     e.preventDefault();
@@ -32,6 +31,11 @@ export const Header = () => {
     tokenService.delete(null);
     Toast.notifySuccess(notification, "Logout Sucess!", "You have logged out!")
     setBarsOpen(false);
+  }
+
+  function handleTyping(e) {
+    e.preventDefault();
+    setSearch(e?.target?.value);
   }
 
   useEffect(() => {
@@ -62,8 +66,8 @@ export const Header = () => {
       </div>
 
       <form className="max-w-lg flex items-center sm:space-x-2 border-gray-200 border rounded-3xl bg-gray-100 sm:flex-1 px-7 py-2 lg:ml-10">
-        <input type="text" placeholder="Begin your search" className="flex-1 bg-transparent outline-none" />
-        <Link href={`/search/`}>
+        <input type="text" placeholder="Begin your search" onChange={(e) => handleTyping(e)} className="flex-1 bg-transparent outline-none" />
+        <Link href={`/search/${search}`}>
             <button type="submit" hidden/>
         </Link>
         <div className="bg-red-400 rounded-full p-2">

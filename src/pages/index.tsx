@@ -16,20 +16,23 @@ const Home: NextPage = (props:any) => {
 
   useEffect(() => {
     console.log("PROPS: ", props)
-    if(props?.session?.id) {
+    console.log("AUTHSTATE: ", props.session)
+/*    if(props?.session?.id) {
       dispatch(setUserData(props.session))
       dispatch(setAuthState(true));
     } else {
       dispatch(setAuthState(false))
       dispatch(cleanUserData());
-    }
+    }*/
     console.log("USER: ", user)
   })
 
   return (
     <div>    
-      <Header/>
-      <Feed posts={props?.posts} />
+      <Header user={props.session}/>
+      <div className="max-w-5xl my-7 mx-auto">
+        <Feed posts={props?.posts} />
+      </div>
     </div>  
   )
 }

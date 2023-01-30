@@ -30,7 +30,7 @@ const Profile = (props:any) => {
 
   return(
     <>
-      <Header />
+      <Header user={props.session}/>
       <div>
         <div>
           <div className="mt-12 bg-white text-center">

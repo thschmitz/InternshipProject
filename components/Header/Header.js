@@ -12,14 +12,15 @@ import Popup from 'reactjs-popup';
 import Skeleton from '@mui/material/Skeleton';
 import { useNotification } from "use-toast-notification";
 import { Toast } from 'services/notification/toast';
-import { cleanUserData } from '../../src/store/userSlice';
+import { cleanUserData, selectUserData } from '../../src/store/userSlice';
 import { SearchIcon } from "@heroicons/react/solid"
 
-export const Header = ({user}) => {
+export const Header = () => {
   const [barsOpen, setBarsOpen] = useState(false);
   const dispatch = useDispatch();
   const notification = useNotification();
   const authState = useSelector(selectAuthState)
+  const user = useSelector(selectUserData)
   const [search, setSearch] = useState();
 
   function signOut(e) {
@@ -39,6 +40,7 @@ export const Header = ({user}) => {
   }
 
   useEffect(() => {
+    console.log("AUTHSTATE: ", authState)
     console.log("HEADERUSER: ", user)
   }, [])
 

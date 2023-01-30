@@ -1,36 +1,33 @@
 import {useRouter} from "next/router"
-import React from 'react'
-import {authService} from "../../../services/auth/authService"
+import React, { useEffect } from 'react'
 import {Header} from "../../../components/Header/Header.js"
 import {Post} from "../../../components/Post/Post.js"
-import { setUserData, cleanUserData } from "@/store/userSlice"
-import { useDispatch } from "react-redux";
-import { useEffect } from "react"
+import { cleanUserData, setUserData } from "@/store/userSlice"
 import { setAuthState } from "@/store/authSlice"
 import {util} from "../../../services/util/util.js"
+import { store } from "@/store/store"
+import { useDispatch } from "react-redux"
+import { authService } from "services/auth/authService.js"
 
 const Profile = (props:any) => {
   const router = useRouter();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const createdHour = `${props?.profile?.created_at?.[8]}${props?.profile?.created_at?.[9]}/${props?.profile?.created_at?.[5]}${props?.profile?.created_at?.[6]}/${props?.profile?.created_at?.[0]}${props?.profile?.created_at?.[1]}${props?.profile?.created_at?.[2]}${props?.profile?.created_at?.[3]}`
+  console.log(props)
 
   useEffect(() => {
     if(props?.session?.id) {
-      console.log(props.session)
       dispatch(setUserData(props.session))
-      dispatch(setAuthState(true))
+      dispatch(setAuthState(true));
     } else {
-      dispatch(cleanUserData());
       dispatch(setAuthState(false))
+      dispatch(cleanUserData());
     }
   })
 
-
-  console.log(props)
-
   return(
     <>
-      <Header user={props.session}/>
+      <Header/>
       <div>
         <div>
           <div className="mt-12 bg-white text-center">
@@ -79,19 +76,16 @@ const Profile = (props:any) => {
 }
 
 export const getServerSideProps = async(ctx:any) => {
-  const session = await util.sessionUserData(ctx);
 
   const profile = await authService.userData(ctx.query.id)
-
-  console.log("SESSION: ", session)
+  const session = await util.sessionUserData(ctx);
 
   return {
     props: {
-      session: session || {},
       profile: profile || {},
+      session: session,
     }
   }
-
 }
 
 export default Profile;

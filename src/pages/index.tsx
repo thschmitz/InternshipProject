@@ -7,6 +7,7 @@ import { cleanUserData, selectUserData, setUserData } from "../store/userSlice";
 import {postService} from "../../services/post/postService.js"
 import {util} from "../../services/util/util.js"
 import {Feed} from "../../components/Feed/Feed.js"
+import { store } from "../store/store"
 
 const Home: NextPage = (props:any) => {
   const authState = useSelector(selectAuthState);
@@ -15,21 +16,18 @@ const Home: NextPage = (props:any) => {
   console.log("Logado? ", authState)
 
   useEffect(() => {
-    console.log("PROPS: ", props)
-    console.log("AUTHSTATE: ", props.session)
-/*    if(props?.session?.id) {
+    if(props?.session?.id) {
       dispatch(setUserData(props.session))
       dispatch(setAuthState(true));
     } else {
       dispatch(setAuthState(false))
       dispatch(cleanUserData());
-    }*/
-    console.log("USER: ", user)
+    }
   })
 
   return (
     <div>    
-      <Header user={props.session}/>
+      <Header/>
       <div className="max-w-5xl my-7 mx-auto">
         <Feed posts={props?.posts} />
       </div>

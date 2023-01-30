@@ -15,6 +15,17 @@ export const postService = {
       console.error(error);
     }
   },
+
+  async searchPostsByQuery(search) {
+    try{
+      const response = await axios.get(`http://localhost:8080/posts/titlesearch?text=${search}`)
+
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 

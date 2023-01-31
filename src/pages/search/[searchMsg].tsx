@@ -4,13 +4,15 @@ import {util} from "../../../services/util/util.js"
 import {useRouter} from "next/router"
 import { setAuthState } from '../../store/authSlice';
 import { cleanUserData, setUserData } from '../../store/userSlice';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postService } from "../../../services/post/postService.js"
-import { Post } from "../../../components/Post/Post"
+import { Feed } from 'components/Feed/Feed.js';
 
 const Search = (props:any) => {
   const dispatch = useDispatch();
   const router = useRouter();
+
+  console.log("QUERIES2: ", router.query);
 
   useEffect(() => {
     if(props?.session?.id) {
@@ -22,17 +24,10 @@ const Search = (props:any) => {
     }
   })
 
-  console.log(props.search)
-
   return (
     <>
       <Header />
-      {
-        props?.search?.map((post:any) => {
-          <Post post={post} />
-        })
-      }
-      <p>{router.query.searchMsg}</p>
+      <Feed posts={props?.search}/>
     </>
   )
 }
@@ -43,9 +38,8 @@ export const getServerSideProps = async(ctx:any) => {
 
   const session = await util.sessionUserData(ctx)
 
+  console.log("QUERIES: ", Object.values(ctx.query))
   const search = await postService.searchPostsByQuery(ctx.query.searchMsg);
-
-  console.log("SEARCHPOSTS: ", search)
 
   return {
     props: {

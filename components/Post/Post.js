@@ -1,6 +1,4 @@
 import {
-  ArrowDownIcon,
-  ArrowUpIcon,
   BookmarkIcon,
   ChatAltIcon,
   DotsHorizontalIcon,
@@ -12,7 +10,7 @@ import {FaHeart} from "react-icons/fa"
 import { useSelector } from "react-redux"
 import { selectUserData } from "@/store/userSlice";
 
-export const Post = (post) => {
+export const Post = ({post}) => {
 
   const user = useSelector(selectUserData);
   console.log("DENTRO DO POST")

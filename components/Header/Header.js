@@ -8,12 +8,29 @@ import Logo from "../../public/Logo.png"
 import { FaBars } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import { AiOutlineArrowDown } from "react-icons/ai"
+import { RiToolsFill } from "react-icons/ri"
 import Popup from 'reactjs-popup';
 import Skeleton from '@mui/material/Skeleton';
 import { useNotification } from "use-toast-notification";
 import { Toast } from 'services/notification/toast';
 import { cleanUserData, selectUserData } from '../../src/store/userSlice';
-import { SearchIcon } from "@heroicons/react/solid"
+import {useRouter} from "next/router"
+
+export const Checkbox = (text) => {
+  const [isChecked, setIsChecked] = useState(false)
+
+  const checkHandler = () => {
+    setIsChecked(!isChecked)
+  }
+
+  return (
+    <div>
+      <input id="checkbox" type="checkbox" onChange={checkHandler} checked={isChecked} className="navButtonAccount" />
+      <label htmlFor='checkbox' className="ml-2">{text}</label>
+      <p>The checkbox is {isChecked ? "checked" : "unchecked"}</p>
+    </div>
+  )
+}
 
 export const Header = () => {
   const [barsOpen, setBarsOpen] = useState(false);
@@ -22,6 +39,17 @@ export const Header = () => {
   const authState = useSelector(selectAuthState)
   const user = useSelector(selectUserData)
   const [search, setSearch] = useState();
+  const searchFields = ["Title", "Body", "User"]
+  const [checkedState, setCheckedState] = useState(new Array(searchFields.length).fill(false))
+  const router = useRouter();
+
+  function handleOnChangeCheckBox(e, position) {
+    e.preventDefault();
+    const updatedCheckedState = checkedState.map((item, index) =>
+      index === position ? !item : item
+    );
+    setCheckedState(updatedCheckedState);
+  }
 
   function signOut(e) {
     e.preventDefault();
@@ -40,9 +68,9 @@ export const Header = () => {
   }
 
   useEffect(() => {
-    console.log("AUTHSTATE: ", authState)
-    console.log("HEADERUSER: ", user)
-  }, [])
+    setSearch(router?.query?.searchMsg)
+    console.log(checkedState)
+  }, [checkedState])
 
 
   if(barsOpen === true) {
@@ -68,13 +96,21 @@ export const Header = () => {
       </div>
 
       <form className="max-w-lg flex items-center sm:space-x-2 border-gray-200 border rounded-3xl bg-gray-100 sm:flex-1 px-7 py-2 lg:ml-10">
-        <input type="text" placeholder="Begin your search" onChange={(e) => handleTyping(e)} className="flex-1 bg-transparent outline-none" />
-        <Link href={`/search/${search}`}>
+        <input type="text" value={search} placeholder="Begin your search" onChange={(e) => handleTyping(e)} className="flex-1 bg-transparent outline-none" />
+        <Link href={{pathname:`/search/${search}`, query: checkedState}}>
             <button type="submit" hidden/>
         </Link>
-        <div className="bg-red-400 rounded-full p-2">
-          <SearchIcon className="h-5 w-5 text-white"/>
-        </div>
+        
+          <Popup trigger={<div className="bg-red-400 rounded-full p-2 cursor-pointer"><RiToolsFill className="h-7 w-7 text-gray-100"/></div>} position="bottom right" nested>
+            <div className="navPopup">
+              {searchFields.map((field, index) => (
+                <label key={field} className="p-3">
+                  <input onChange={(e) => handleOnChangeCheckBox(e, index)} value={field} checked={checkedState[index]} type="checkbox" name="title" className="mr-2"/>
+                  {field}
+                </label>
+              ))}
+            </div>
+          </Popup>
       </form>
 
       <div className="navButton">
@@ -91,7 +127,7 @@ export const Header = () => {
         authState?
           <Popup
           trigger={
-          <div onClick={() => signOut()} className="navButton">
+          <div className="navButton">
               <div className="flex h-11 w-11 -mr-2">
                 {user.image?
                   <img className="rounded-full object-cover" src={user.image}/>
@@ -103,8 +139,9 @@ export const Header = () => {
           </div>}
           position="bottom center"
           nested
+          className="bg-white"
           >
-            <div className="navPopupAccount">
+            <div className="navPopup">
               <Link href={`/profile/${user.id}`}><p className="navButtonAccount">Conta</p></Link>
               <p className="navButtonAccount">Salvos</p>
               <p className="navButtonAccount" onClick={(e) => signOut(e)}>Logout</p>

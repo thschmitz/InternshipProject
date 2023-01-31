@@ -11,8 +11,8 @@
     @apply flex items-center cursor-pointer space-x-2 p-5 transition duration-500 hover:bg-gray-200
   }
 
-  .navPopupAccount {
-    @apply flex flex-col border border-l-gray-200 border-t-0 mt-3
+  .navPopup {
+    @apply flex flex-col border border-l-gray-200 border-t-0 mt-3 bg-white
   }
 
   .navResponsiveButton {

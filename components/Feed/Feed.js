@@ -1,6 +1,8 @@
 import { Post } from "components/Post/Post"
+import {useRouter} from "next/router"
 
 export const Feed = ({posts}) => {
+  const router = useRouter();
 
   console.log("FEEDPOSTS: ", posts)
 
@@ -8,15 +10,17 @@ export const Feed = ({posts}) => {
     console.log(post?.title)
   })
   return (
-    <div>
+    <div className="max-w-5xl my-7 mx-auto">
       {
-        posts?.map((post) => (
-          <>
-            <Post post={post} />
-          </>
-        ))
-
-
+        posts?.length > 0?
+          posts?.map((post) => (
+            <>
+              <Post post={post} />
+            </>
+          ))
+        :
+        // eslint-disable-next-line react/no-unescaped-entities
+        <p className="text-center text-lg bold">There is no posts with search "{router.query.searchMsg}"</p>
       }
     </div>
   )

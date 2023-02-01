@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import { setUserData } from '../../src/store/userSlice';
 import { setAuthState } from '../../src/store/authSlice';
 
-
 export function useLocalStorage(key, initialValue={}) {
   const dispatch = useDispatch();
   const [state, setState] = useState(async () => {
@@ -16,8 +15,6 @@ export function useLocalStorage(key, initialValue={}) {
       const session = await authService.session(token);
 
       const userData = await authService.userData(session.data.body.id);
-
-      console.log("USERDATALOCALSTORAGE: ", userData)
 
       if(session.data.body.id) {
         dispatch(setAuthState(true))
@@ -33,9 +30,8 @@ export function useLocalStorage(key, initialValue={}) {
 
   const setValue = useCallback((value) => {
     try {
-      console.log("TA DENTRO DO SETVALUE")
       setState(value);
-
+      dispatch(setUserData(value))
       localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
       console.log(error);

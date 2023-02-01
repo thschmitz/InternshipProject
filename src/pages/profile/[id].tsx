@@ -2,27 +2,23 @@ import {useRouter} from "next/router"
 import React, { useEffect } from 'react'
 import {Header} from "../../../components/Header/Header.js"
 import {Post} from "../../../components/Post/Post.js"
-import { cleanUserData, setUserData } from "@/store/userSlice"
-import { setAuthState } from "@/store/authSlice"
-import {util} from "../../../services/util/util.js"
-import { store } from "@/store/store"
-import { useDispatch } from "react-redux"
+import { selectUserData } from "@/store/userSlice"
+import { useSelector } from "react-redux"
 import { authService } from "services/auth/authService.js"
+import { useLocalStorage } from "../../../services/localStorage/user.js"
 
 const Profile = (props:any) => {
   const router = useRouter();
-  const dispatch = useDispatch();
   const createdHour = `${props?.profile?.created_at?.[8]}${props?.profile?.created_at?.[9]}/${props?.profile?.created_at?.[5]}${props?.profile?.created_at?.[6]}/${props?.profile?.created_at?.[0]}${props?.profile?.created_at?.[1]}${props?.profile?.created_at?.[2]}${props?.profile?.created_at?.[3]}`
-  console.log(props)
+  const [user] = useLocalStorage("user", {});
+  const session = useSelector(selectUserData);
 
   useEffect(() => {
-    if(props?.session?.id) {
-      dispatch(setUserData(props.session))
-      dispatch(setAuthState(true));
-    } else {
-      dispatch(setAuthState(false))
-      dispatch(cleanUserData());
+    const fetch = async () => {
+      await user;
     }
+
+    fetch();
   })
 
   return(
@@ -48,7 +44,7 @@ const Profile = (props:any) => {
           {
             <div className="text-2xl text-center bg-white rounded-lg mt-10 p-4 flex-1 space-y-4 max-w-5xl my-7 mx-auto">
                 {
-                    props?.session?.id === router.query.id ?
+                    session?.id === router.query.id ?
                         <h1>See <span className="text-red-400">{props?.profile?.posts?.length} announce(s)</span> that <span className="underline">you</span> have already posted</h1>
                     :
                         <h1>See <span className="text-red-400">{props?.profile?.posts?.length} announce(s)</span> that <span className="underline">{props?.profile?.name}</span> has already posted</h1>
@@ -78,12 +74,10 @@ const Profile = (props:any) => {
 export const getServerSideProps = async(ctx:any) => {
 
   const profile = await authService.userData(ctx.query.id)
-  const session = await util.sessionUserData(ctx);
 
   return {
     props: {
       profile: profile || {},
-      session: session,
     }
   }
 }

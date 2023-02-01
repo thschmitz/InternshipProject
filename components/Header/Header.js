@@ -14,7 +14,7 @@ import Skeleton from '@mui/material/Skeleton';
 import { useNotification } from "use-toast-notification";
 import { Toast } from 'services/notification/toast';
 import { cleanUserData, selectUserData } from '../../src/store/userSlice';
-import {useRouter} from "next/router"
+import {useRouter} from "next/router";
 
 export const Checkbox = (text) => {
   const [isChecked, setIsChecked] = useState(false)
@@ -38,18 +38,7 @@ export const Header = () => {
   const notification = useNotification();
   const authState = useSelector(selectAuthState)
   const [search, setSearch] = useState();
-  const searchFields = ["Title", "Body", "User"]
-  const [checkedState, setCheckedState] = useState(new Array(searchFields.length).fill(false))
-  const router = useRouter();
   const user = useSelector(selectUserData)
-
-  function handleOnChangeCheckBox(e, position) {
-    e.preventDefault();
-    const updatedCheckedState = checkedState.map((item, index) =>
-      index === position ? !item : item
-    );
-    setCheckedState(updatedCheckedState);
-  }
 
   function signOut(e) {
     e.preventDefault();
@@ -66,12 +55,6 @@ export const Header = () => {
     e.preventDefault();
     setSearch(e?.target?.value);
   }
-
-  useEffect(() => {
-    setSearch(router?.query?.searchMsg)
-    console.log("USER:", user)
-  }, [checkedState])
-
 
   if(barsOpen === true) {
     return (
@@ -97,20 +80,12 @@ export const Header = () => {
 
       <form className="max-w-lg flex items-center sm:space-x-2 border-gray-200 border rounded-3xl bg-gray-100 sm:flex-1 px-7 py-2 lg:ml-10">
         <input type="text" value={search} placeholder="Begin your search" onChange={(e) => handleTyping(e)} className="flex-1 bg-transparent outline-none" />
-        <Link href={{pathname:`/search/${search}`, query: checkedState}}>
+        <Link href={{pathname:`/search/${search}`}}>
             <button type="submit" hidden/>
         </Link>
         
-          <Popup trigger={<div className="bg-red-400 rounded-full p-2 cursor-pointer"><RiToolsFill className="h-7 w-7 text-gray-100"/></div>} position="bottom right" nested>
-            <div className="navPopup">
-              {searchFields.map((field, index) => (
-                <label key={field} className="p-3">
-                  <input onChange={(e) => handleOnChangeCheckBox(e, index)} value={field} checked={checkedState[index]} type="checkbox" name="title" className="mr-2"/>
-                  {field}
-                </label>
-              ))}
-            </div>
-          </Popup>
+        <div className="bg-red-400 rounded-full p-2 cursor-pointer"><RiToolsFill className="h-7 w-7 text-gray-100"/></div>
+        
       </form>
 
       <div className="navButton">

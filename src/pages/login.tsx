@@ -6,7 +6,7 @@ import { setAuthState } from "@/store/authSlice";
 import {Toast} from "../../services/notification/toast"
 import { useNotification } from "use-toast-notification";
 import Link from "next/link";
-import { useLocalStorage } from "services/util/localStorage";
+import { useLocalStorage } from "../../services/localStorage/user.js";
 
 function Login() {
   const [email, setEmail] = useState<string>();

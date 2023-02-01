@@ -15,7 +15,6 @@ import { useNotification } from "use-toast-notification";
 import { Toast } from 'services/notification/toast';
 import { cleanUserData, selectUserData } from '../../src/store/userSlice';
 import {useRouter} from "next/router"
-import { useLocalStorage } from 'services/util/localStorage';
 
 export const Checkbox = (text) => {
   const [isChecked, setIsChecked] = useState(false)

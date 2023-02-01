@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import {useState, useCallback} from 'react';
 import { authService } from 'services/auth/authService';
 import { tokenService } from 'services/auth/tokenService';
 import { useDispatch } from "react-redux";
@@ -16,6 +16,8 @@ export function useLocalStorage(key, initialValue={}) {
       const session = await authService.session(token);
 
       const userData = await authService.userData(session.data.body.id);
+
+      console.log("USERDATALOCALSTORAGE: ", userData)
 
       if(session.data.body.id) {
         dispatch(setAuthState(true))

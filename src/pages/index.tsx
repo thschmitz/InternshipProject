@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import type { NextPage } from "next";
-import { setAuthState } from "../store/authSlice";
 import { useDispatch } from "react-redux";
 import { Header } from "../../components/Header/Header";
-import { cleanUserData, setUserData } from "../store/userSlice";
 import { postService } from "../../services/post/postService.js";
 import { util } from "../../services/util/util.js";
 import { Feed } from "../../components/Feed/Feed.js";
@@ -20,7 +18,6 @@ const Home: NextPage = (props: any) => {
     }
 
     fetch();
-
   }, []);
 
 

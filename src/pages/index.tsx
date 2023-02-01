@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import { setAuthState } from "../store/authSlice";
 import { useDispatch } from "react-redux";
@@ -7,20 +7,22 @@ import { cleanUserData, setUserData } from "../store/userSlice";
 import { postService } from "../../services/post/postService.js";
 import { util } from "../../services/util/util.js";
 import { Feed } from "../../components/Feed/Feed.js";
+import { useLocalStorage } from "../../services/util/localStorage.js"
 
 const Home: NextPage = (props: any) => {
   const dispatch = useDispatch();
   console.log("POSTS: ", props.posts);
+  const [user, setUser] = useLocalStorage("user", {});
 
   useEffect(() => {
-    if (props?.session?.id) {
-      dispatch(setUserData(props.session));
-      dispatch(setAuthState(true));
-    } else {
-      dispatch(setAuthState(false));
-      dispatch(cleanUserData());
+    const fetch = async () => {
+      await user;
     }
-  });
+
+    fetch();
+
+  }, []);
+
 
   return (
     <div>

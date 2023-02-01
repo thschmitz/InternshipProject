@@ -6,6 +6,7 @@ import { setAuthState } from "@/store/authSlice";
 import {Toast} from "../../services/notification/toast"
 import { useNotification } from "use-toast-notification";
 import Link from "next/link";
+import { useLocalStorage } from "services/util/localStorage";
 
 function Login() {
   const [email, setEmail] = useState<string>();
@@ -13,12 +14,14 @@ function Login() {
   const router = useRouter();
   const dispatch = useDispatch();
   const notification = useNotification();
+  const [user, setUser] = useLocalStorage("user", {});
 
   async function onSubmit(e: any) {
     e.preventDefault();
     const responseData = await authService.login({email: email, password: password})
     if(responseData) {
       dispatch(setAuthState(true))
+      await setUser(responseData);
       Toast.notifySuccess(notification, "Login Sucess!", "You have logged in")
       router.push("/")
     } else {

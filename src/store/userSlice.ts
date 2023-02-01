@@ -42,7 +42,6 @@ export const userSlice = createSlice({
       state.created_at= "";
       state.image= "";
     },
-
   },
 });
 

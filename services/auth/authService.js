@@ -9,8 +9,11 @@ export const authService = {
       });
   
       tokenService.save(response.data)
+
+      const session = await this.session(response.data);
+      const userData = await this.userData(session.data.body.id);
   
-      return response.data;
+      return userData;
     } catch (error) {
       console.error(error);
     }

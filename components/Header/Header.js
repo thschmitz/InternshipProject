@@ -15,6 +15,7 @@ import { useNotification } from "use-toast-notification";
 import { Toast } from 'services/notification/toast';
 import { cleanUserData, selectUserData } from '../../src/store/userSlice';
 import {useRouter} from "next/router"
+import { useLocalStorage } from 'services/util/localStorage';
 
 export const Checkbox = (text) => {
   const [isChecked, setIsChecked] = useState(false)
@@ -37,11 +38,11 @@ export const Header = () => {
   const dispatch = useDispatch();
   const notification = useNotification();
   const authState = useSelector(selectAuthState)
-  const user = useSelector(selectUserData)
   const [search, setSearch] = useState();
   const searchFields = ["Title", "Body", "User"]
   const [checkedState, setCheckedState] = useState(new Array(searchFields.length).fill(false))
   const router = useRouter();
+  const user = useSelector(selectUserData)
 
   function handleOnChangeCheckBox(e, position) {
     e.preventDefault();
@@ -69,7 +70,7 @@ export const Header = () => {
 
   useEffect(() => {
     setSearch(router?.query?.searchMsg)
-    console.log(checkedState)
+    console.log("USER:", user)
   }, [checkedState])
 
 

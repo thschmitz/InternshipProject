@@ -21,7 +21,6 @@ export const Header = (props) => {
   const dispatch = useDispatch();
   const notification = useNotification();
   const authState = useSelector(selectAuthState)
-  const router = useRouter();
   const [search, setSearch] = useState(props.searchText);
   const user = useSelector(selectUserData)
 
@@ -29,7 +28,8 @@ export const Header = (props) => {
     if(props.searchText) {
       setSearch(props.searchText)
     }
-  })
+    console.log("USER: ", user)
+  }, [])
 
   function signOut(e) {
     e.preventDefault();
@@ -96,7 +96,11 @@ export const Header = (props) => {
           <div className="navButton">
               <div className="flex h-11 w-11 -mr-2">
                 {user.image?
-                  <img className="rounded-full object-cover" src={user.image}/>
+                  <>
+                    <img className="rounded-full object-cover" src={user.image}/>
+                    <p>{user.name}</p>
+                  </>
+                
                 :
                   <Skeleton variant="circular" width={40} height={40} />
                 }

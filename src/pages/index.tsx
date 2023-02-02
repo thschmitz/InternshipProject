@@ -6,17 +6,6 @@ import { Feed } from "../../components/Feed/Feed.js";
 import { useLocalStorage } from "../../services/localStorage/user"
 
 const Home: NextPage = (props: any) => {
-  const [user] = useLocalStorage("user", {});
-
-  useEffect(() => {
-    const fetch = async () => {
-      await user;
-    }
-
-    fetch();
-  });
-
-
   return (
     <div>
       <Header />

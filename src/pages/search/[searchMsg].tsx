@@ -7,18 +7,8 @@ import { useRouter } from 'next/router.js';
 import { postService } from 'services/post/postService.js';
 
 const Search = (props:any) => {
-  const [user] = useLocalStorage("user", {});
   const router = useRouter();
   const [postData, setPostData] = useState();
-
-  useEffect(() => {
-    const fetch = async () => {
-      await user;
-    }
-
-    fetch();
-
-  })
 
   return (
     <>

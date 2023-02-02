@@ -10,16 +10,7 @@ import { useLocalStorage } from "../../../services/localStorage/user.js"
 const Profile = (props:any) => {
   const router = useRouter();
   const createdHour = `${props?.profile?.created_at?.[8]}${props?.profile?.created_at?.[9]}/${props?.profile?.created_at?.[5]}${props?.profile?.created_at?.[6]}/${props?.profile?.created_at?.[0]}${props?.profile?.created_at?.[1]}${props?.profile?.created_at?.[2]}${props?.profile?.created_at?.[3]}`
-  const [user] = useLocalStorage("user", {});
   const session = useSelector(selectUserData);
-
-  useEffect(() => {
-    const fetch = async () => {
-      await user;
-    }
-
-    fetch();
-  })
 
   return(
     <>

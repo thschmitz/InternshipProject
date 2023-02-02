@@ -6,16 +6,13 @@ export const Feed = ({posts}) => {
 
   console.log("FEEDPOSTS: ", posts)
 
-  posts?.map((post) => {
-    console.log(post?.title)
-  })
   return (
     <div className="max-w-5xl my-7 mx-auto">
       {
         posts?.length > 0?
           posts?.map((post) => (
             <>
-              <Post post={post} />
+              <Post post={post[0] || post} />
             </>
           ))
         :

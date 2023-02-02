@@ -20,9 +20,21 @@ export const postService = {
     try{
       const response = await axios.get(`http://localhost:8080/posts/titlesearch?text=${search}`)
 
-
       return response.data;
     } catch (error) {
+      console.log(error);
+    }
+  },
+
+  async searchPostsByBody(body) {
+    try {
+      console.log("BODY: ", body)
+      const response = await axios.get(`http://localhost:8080/posts/bodysearch?text=${body}`)
+
+      console.log("RESPONSEPOSTSBODY: ", response)
+
+      return response.data;
+    } catch(error) {
       console.log(error);
     }
   }

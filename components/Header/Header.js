@@ -14,31 +14,22 @@ import Skeleton from '@mui/material/Skeleton';
 import { useNotification } from "use-toast-notification";
 import { Toast } from 'services/notification/toast';
 import { cleanUserData, selectUserData } from '../../src/store/userSlice';
-import {useRouter} from "next/router";
 
-export const Checkbox = (text) => {
-  const [isChecked, setIsChecked] = useState(false)
-
-  const checkHandler = () => {
-    setIsChecked(!isChecked)
-  }
-
-  return (
-    <div>
-      <input id="checkbox" type="checkbox" onChange={checkHandler} checked={isChecked} className="navButtonAccount" />
-      <label htmlFor='checkbox' className="ml-2">{text}</label>
-      <p>The checkbox is {isChecked ? "checked" : "unchecked"}</p>
-    </div>
-  )
-}
-
-export const Header = () => {
+export const Header = (props) => {
   const [barsOpen, setBarsOpen] = useState(false);
   const dispatch = useDispatch();
   const notification = useNotification();
   const authState = useSelector(selectAuthState)
   const [search, setSearch] = useState();
   const user = useSelector(selectUserData)
+  
+  useEffect(() => {
+    if(props.searchText != "") {
+      setSearch(props.searchText);
+    }
+
+    setSearch(props?.searchText)
+  }, [])
 
   function signOut(e) {
     e.preventDefault();

@@ -14,22 +14,20 @@ import Skeleton from '@mui/material/Skeleton';
 import { useNotification } from "use-toast-notification";
 import { Toast } from 'services/notification/toast';
 import { cleanUserData, selectUserData } from '../../src/store/userSlice';
+import { useRouter } from 'next/router';
 
 export const Header = (props) => {
   const [barsOpen, setBarsOpen] = useState(false);
   const dispatch = useDispatch();
   const notification = useNotification();
   const authState = useSelector(selectAuthState)
-  const [search, setSearch] = useState();
+  const router = useRouter();
+  const [search, setSearch] = useState(props.searchText);
   const user = useSelector(selectUserData)
-  
-  useEffect(() => {
-    if(props.searchText != "") {
-      setSearch(props.searchText);
-    }
 
-    setSearch(props?.searchText)
-  }, [])
+  useEffect(() => {
+    setSearch(props.searchText)
+  })
 
   function signOut(e) {
     e.preventDefault();

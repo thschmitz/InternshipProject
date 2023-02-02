@@ -17,26 +17,20 @@ export const Filters = ({setPostsData, postData, searchText}) => {
     if(titleClick || !bodyClick && !userClick) {
       // postData
       const titleResponse = await postService.searchPostsByQuery(searchText);
-      console.log("POSTDATA: ", postData)
-      if(titleResponse != []) {
-        posts.push(titleResponse)
-      }
+      console.log("titleResponse: ", titleResponse)
+      posts.push(titleResponse)
     }
 
     if(bodyClick) {
       const bodyResponse = await postService.searchPostsByBody(searchText);
       console.log("BODYRESPONSE: ", bodyResponse)
-      if(bodyResponse != []) {
-        posts.push(bodyResponse)
-      }
+      posts.push(bodyResponse)
     }
 
     if(userClick) {
       const userResponse = await userService.searchUserByName(searchText);
       console.log("USERRESPONSE: ", userResponse)
-      if(userResponse != []) {
-        posts.push(userResponse)
-      }
+      posts.push(userResponse)
     }
 
     setPostsData(util.removeDuplicatesFromArray(posts));

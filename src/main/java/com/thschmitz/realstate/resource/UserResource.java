@@ -1,6 +1,5 @@
 package com.thschmitz.realstate.resource;
 
-import java.net.URI;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.thschmitz.realstate.domain.Post;
 import com.thschmitz.realstate.domain.User;
@@ -24,6 +23,7 @@ import com.thschmitz.realstate.domain.services.UserService;
 import com.thschmitz.realstate.domain.services.exception.MissingRequestHeaderException;
 import com.thschmitz.realstate.dto.UserDTO;
 import com.thschmitz.realstate.resource.util.Session;
+import com.thschmitz.realstate.resource.util.URL;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -100,6 +100,14 @@ public class UserResource {
 		}
 		System.out.println(header);
 		return ResponseEntity.ok().body(Session.session(header));
+	}
+	
+	@RequestMapping(value="/namesearch", method=RequestMethod.GET)
+	public ResponseEntity<List<User>> findByText(@RequestParam(value="text", defaultValue="") String text) {
+		text = URL.decodeParam(text);
+		List<User> list = service.findbyText(text);
+		
+		return ResponseEntity.ok().body(list);
 	}
 	
 }

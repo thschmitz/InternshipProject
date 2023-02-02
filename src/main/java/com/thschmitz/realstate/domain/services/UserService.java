@@ -6,17 +6,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.thschmitz.realstate.domain.Post;
 import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.domain.services.exception.AuthenticationException;
 import com.thschmitz.realstate.domain.services.exception.ObjectNotFoundException;
 import com.thschmitz.realstate.domain.services.exception.ParametersNotPassedException;
+import com.thschmitz.realstate.dto.UserDTO;
 import com.thschmitz.realstate.repository.UserRepository;
 import com.thschmitz.realstate.resource.util.JWT;
 import com.thschmitz.realstate.resource.util.Password;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 
 @Service
 public class UserService {
@@ -81,6 +78,11 @@ public class UserService {
 
 		return JWT.createJWT(newObj);
 		
+	}
+	
+	public List<User> findbyText(String text) {
+		System.out.println("Dentro do findByText");
+		return repository.findByNameContainingIgnoreCase(text);
 	}
 
 }

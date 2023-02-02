@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { postService } from '../../services/post/postService.js';
 import { userService } from "../../services/users/userService.js"
 import { util } from "../../services/util/util.js"
 
-export const Filters = ({setPostsData, postData, searchText}) => {
+export const Filters = ({setUserData, setPostsData, postData, searchText}) => {
   const [titleClick, setTitleClick] = useState(true);
   const [bodyClick, setBodyClick] = useState(false);
   const [userClick, setUserClick] = useState(false);
@@ -26,11 +26,14 @@ export const Filters = ({setPostsData, postData, searchText}) => {
       console.log("BODYRESPONSE: ", bodyResponse)
       posts.push(bodyResponse)
     }
+    
 
     if(userClick) {
       const userResponse = await userService.searchUserByName(searchText);
       console.log("USERRESPONSE: ", userResponse)
-      posts.push(userResponse)
+      setUserData(userResponse)
+    } else {
+      setUserData([])
     }
 
     setPostsData(util.removeDuplicatesFromArray(posts));

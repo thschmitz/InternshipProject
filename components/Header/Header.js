@@ -14,7 +14,6 @@ import Skeleton from '@mui/material/Skeleton';
 import { useNotification } from "use-toast-notification";
 import { Toast } from 'services/notification/toast';
 import { cleanUserData, selectUserData } from '../../src/store/userSlice';
-import { useRouter } from 'next/router';
 
 export const Header = (props) => {
   const [barsOpen, setBarsOpen] = useState(false);
@@ -98,7 +97,6 @@ export const Header = (props) => {
                 {user.image?
                   <>
                     <img className="rounded-full object-cover" src={user.image}/>
-                    <p>{user.name}</p>
                   </>
                 
                 :

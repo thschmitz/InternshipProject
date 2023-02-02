@@ -26,7 +26,9 @@ export const Header = (props) => {
   const user = useSelector(selectUserData)
 
   useEffect(() => {
-    setSearch(props.searchText)
+    if(props.searchText) {
+      setSearch(props.searchText)
+    }
   })
 
   function signOut(e) {

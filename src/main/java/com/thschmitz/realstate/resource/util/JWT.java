@@ -29,11 +29,8 @@ public class JWT {
 		
 		Instant now = Instant.now();
 		String jwtToken = Jwts.builder()
-		        .claim("name", newObj.getName())
-		        .claim("email", newObj.getEmail())
 		        .claim("id", newObj.getId())
 		        .setSubject(newObj.getName())
-		        .setId(UUID.randomUUID().toString())
 		        .setIssuedAt(Date.from(now))
 		        .setExpiration(Date.from(now.plus(10l, ChronoUnit.MINUTES)))
 		        .signWith(hmacKey)

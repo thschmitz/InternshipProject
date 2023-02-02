@@ -51,6 +51,10 @@ public class PostService {
 		return postRepository.findByTitleContainingIgnoreCase(text);
 	}
 	
+	public List<Post> findByBody(String body) {
+		return postRepository.findByBodyContainingIgnoreCase(body);
+	}
+	
 	public Post insert(Post post, Jws<Claims> session) {
 		
 		String author_id = Session.getSessionId(session);

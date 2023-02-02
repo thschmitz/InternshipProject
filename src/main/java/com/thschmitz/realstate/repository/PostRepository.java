@@ -15,4 +15,6 @@ public interface PostRepository extends MongoRepository<Post, String> {
 	// Para ver todos os metodos ja prontos do spring
 	
 	List<Post> findByTitleContainingIgnoreCase(String text);
+	
+	List<Post> findByBodyContainingIgnoreCase(String body);
 }

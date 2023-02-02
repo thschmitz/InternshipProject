@@ -44,10 +44,10 @@ public class UserResource {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
+	public ResponseEntity<User> findById(@PathVariable String id) {
 		User user = service.findById(id);
 		
-		return ResponseEntity.ok().body(new UserDTO(user));
+		return ResponseEntity.ok().body(user);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
@@ -98,7 +98,7 @@ public class UserResource {
 		if(header == null) {
 			throw new MissingRequestHeaderException("You need to inform JWT header to request!");
 		}
-		
+		System.out.println(header);
 		return ResponseEntity.ok().body(Session.session(header));
 	}
 	

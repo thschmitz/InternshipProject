@@ -81,7 +81,6 @@ public class UserService {
 	}
 	
 	public List<User> findbyText(String text) {
-		System.out.println("Dentro do findByText");
 		return repository.findByNameContainingIgnoreCase(text);
 	}
 

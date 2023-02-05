@@ -7,30 +7,32 @@
 - "sudo mongod" on terminal
 - Run the main file of the spring application
 
+## Documentation
+
 | Request | RequestMethod | Description | Body | Header |
 | --- | :---: | :---: | :---: | :---: |
 | **User** | --- | --- | --- | --- |
 | `/users` | `GET` |  List all users registered | --- | --- |
 | `/users` | `POST` | Create a new user | Name, Password, Email, Image | --- |
-| `/users/{id}` | `GET` | Show the user that has the mentioned id | Id | --- |
-| `/users/{id}` | `PUT` | Update the user that has the mentioned id | Id, Name, Password, Email, Image | JWT |
-| `/users/{id}` | `DELETE` | Delete the user that has the mentioned id | Id | JWT |
-| `/users/{id}/posts` | `GET` | Show all the posts from the user that has the mentioned id | Id | JWT |
-| `/users/login` | `POST` | Make the loggin for an determinate user | Email, Password |
+| `/users/{id}` | `GET` | Show the user that has the mentioned id | --- | --- |
+| `/users/{id}` | `PUT` | Update the user that has the mentioned id | Name, Password, Email, Image | JWT |
+| `/users/{id}` | `DELETE` | Delete the user that has the mentioned id | --- | JWT |
+| `/users/{id}/posts` | `GET` | Show all the posts from the user that has the mentioned id | --- | JWT |
+| `/users/login` | `POST` | Make the loggin for an determinate user | Email, Password | --- |
 | `/users/session` | `GET` | Take the session for a user according to it's token | --- | JWT |
 | `/users/namesearch?text={text}` | `GET` | Search for a user which has the name passed | Text | --- |
 | **Post** | --- | --- | --- |
 | `/posts` | `GET` | List all posts registered | --- | --- |
 | `/posts` | `POST` | Create a new post | Title, Body, Imagem, Status, Price, Size | JWT |
-| `/posts/{id}` | `GET` | Show the posts that has the mentioned id | Id | --- |
-| `/posts/{id}` | `DELETE` | Delete the post that has the mentioned id | Id | JWT |
-| `/posts/{id}` | `PUT` | Update the posts that has the mentioned id | Id, Title, Body, Imagem, Status, Price, Size | JWT |
-| `/posts/like/{id}` | `POST` | Like the posts that has the mentioned id | Id | JWT |
-| `/posts/{id}/comments` | `POST` | Like the posts that has the mentioned id | Id | JWT |
+| `/posts/{id}` | `GET` | Show the posts that has the mentioned id | --- | --- |
+| `/posts/{id}` | `DELETE` | Delete the post that has the mentioned id | --- | JWT |
+| `/posts/{id}` | `PUT` | Update the posts that has the mentioned id | Title, Body, Imagem, Status, Price, Size | JWT |
+| `/posts/like/{id}` | `POST` | Like the posts that has the mentioned id | --- | JWT |
+| `/posts/{id}/comments` | `POST` | Like the posts that has the mentioned id | --- | JWT |
 | `/posts/titlesearch` | `GET` | Search for a post which has the title passsed | Title | --- |
 | `/posts/bodysearch` | `GET` | Search for a post which has the body passsed | Body | --- |
 | **Comment** | --- | --- | --- |
 | `/comments` | `GET` | List all comments registered | --- | --- |
-| `/comments/{id}` | `GET` | Show the comment that has the mentioned id | Id | --- |
-| `/comments/{id}` | `POST` | Create a new comment and put it into the post that has the mentioned id | Id | JWT |
-| `/comments/{id}` | `DELETE` | Delete the comment that has the mentioned id | Id | JWT |
+| `/comments/{id}` | `GET` | Show the comment that has the mentioned id | --- | --- |
+| `/comments/{id}` | `POST` | Create a new comment and put it into the post that has the mentioned id | --- | JWT |
+| `/comments/{id}` | `DELETE` | Delete the comment that has the mentioned id | --- | JWT |

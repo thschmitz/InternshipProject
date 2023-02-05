@@ -56,7 +56,22 @@ export const Header = (props) => {
         </div>
         <div className="flex flex-col">
           <p className="navResponsiveButton">Registre um apartamento</p>
-          <p className="navResponsiveButton">Conta</p>
+          <Link href={`/profile/${user.id}`}><p className="navResponsiveButton">Conta</p></Link>
+          {authState?
+            <p className="navResponsiveButton" onClick={(e) => signOut(e)}>
+              <div className="flex h-11 w-11 ml-6">
+                <img className="rounded-full object-cover" src={user.image}/>
+                <p className="ml-5 mt-2">Logout</p>
+              </div>
+            </p>
+
+            :
+
+            <Link href="/login"><p className="navResponsiveButton">Sign In</p></Link>
+
+          }
+
+
         </div>
       </div>
       

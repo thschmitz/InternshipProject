@@ -84,7 +84,7 @@ export const Header = (props) => {
         <Link href="/"><Image src={Logo} width={150} height={150} alt="RealStateLogo" /></Link>
       </div>
 
-      <form className="max-w-lg flex items-center sm:space-x-2 border-gray-200 border rounded-3xl bg-gray-100 sm:flex-1 px-7 py-2 lg:ml-10">
+      <form className="max-w-lg hidden md:flex lg:flex items-center border-gray-200 border rounded-3xl bg-gray-100 px-7 py-2 lg:ml-10">
         <input type="text" value={search} placeholder="Begin your search" onChange={(e) => handleTyping(e)} className="flex-1 bg-transparent outline-none" />
         <Link href={{pathname:`/search/${search}`}}>
             <button type="submit" hidden/>
@@ -100,7 +100,7 @@ export const Header = (props) => {
       <div className="navButton">
       </div>
 
-      <div onClick={() => setBarsOpen(true)} className="lg:hidden md:hidden flex w-10 cursor-pointer">
+      <div onClick={() => setBarsOpen(true)} className="xl:hidden lg:hidden flex w-10 cursor-pointer">
         <FaBars size={25}/>
       </div>
 

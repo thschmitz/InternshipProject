@@ -16,10 +16,13 @@ async function session(cookies:any) {
 function App({ Component, pageProps }: AppProps) {
 
   const cookies = tokenService.get(null);
-  const sessionUser = session(cookies).then((resp) => {
+  console.log(cookies);
+  session(cookies).then((resp) => {
     if(!resp?.data?.body?.id) {
-      localStorage.clear();
-      tokenService.delete();
+      if(tokenService.get(null) != "") {
+        localStorage.clear();
+        tokenService.delete();
+      }
     }
   });
 

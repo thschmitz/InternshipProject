@@ -4,7 +4,7 @@
 
 @layer components {
   .navButton {
-    @apply hidden ml-10 rounded-3xl lg:flex md:flex items-center cursor-pointer space-x-2 p-3 transition duration-500 hover:bg-gray-200
+    @apply hidden ml-10 rounded-3xl lg:flex items-center cursor-pointer space-x-2 p-3 transition duration-500 hover:bg-gray-200
   }
 
   .navButtonAccount {

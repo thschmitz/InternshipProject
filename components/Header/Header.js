@@ -27,8 +27,9 @@ export const Header = (props) => {
     if(props.searchText) {
       setSearch(props.searchText)
     }
-    console.log("USER: ", user)
+    console.log("USER HEADER: ", user)
   }, [])
+
 
   function signOut(e) {
     e.preventDefault();

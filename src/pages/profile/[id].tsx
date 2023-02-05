@@ -5,7 +5,6 @@ import {Post} from "../../../components/Post/Post.js"
 import { selectUserData } from "@/store/userSlice"
 import { useSelector } from "react-redux"
 import { authService } from "services/auth/authService.js"
-import { useLocalStorage } from "../../../services/localStorage/user.js"
 
 const Profile = (props:any) => {
   const router = useRouter();

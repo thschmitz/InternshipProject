@@ -1,6 +1,3 @@
-import {tokenService} from "../auth/tokenService";
-import axios from 'axios';
-
 export const util = {
   removeDuplicatesFromArray(array){
     console.log(array);

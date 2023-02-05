@@ -3,13 +3,12 @@ import type { NextPage } from "next";
 import { Header } from "../../components/Header/Header";
 import { postService } from "../../services/post/postService.js";
 import { Feed } from "../../components/Feed/Feed.js";
-import { useLocalStorage } from "../../services/localStorage/user"
 
 const Home: NextPage = (props: any) => {
   return (
     <div>
       <Header />
-      <div>
+      <div className="flex justify-center">
         <Feed posts={props?.posts} />
       </div>
     </div>

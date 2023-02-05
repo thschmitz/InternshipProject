@@ -3,7 +3,7 @@ import { postService } from '../../services/post/postService.js';
 import { userService } from "../../services/users/userService.js"
 import { util } from "../../services/util/util.js"
 
-export const Filters = ({setUserData, setPostsData, postData, searchText}) => {
+export const Filters = ({setUserData, setPostsData, searchText}) => {
   const [titleClick, setTitleClick] = useState(true);
   const [bodyClick, setBodyClick] = useState(false);
   const [userClick, setUserClick] = useState(false);

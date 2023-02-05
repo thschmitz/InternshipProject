@@ -4,11 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.catalina.startup.ClassLoaderFactory.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.thschmitz.realstate.domain.Comment;
 import com.thschmitz.realstate.domain.Post;
 import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.domain.services.exception.ObjectNotFoundException;
@@ -119,5 +117,9 @@ public class PostService {
 		return post;
 	}
 	
-
+	public List<CommentDTO> commentsByPost(String id) {
+		Post post = findById(id);
+		
+		return post.getComments();
+	}
 }

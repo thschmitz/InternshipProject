@@ -43,7 +43,6 @@ public class CommentCRUD {
 			for(CommentDTO i : post.getComments()) {
 				System.out.println(i.getId().equals(new CommentDTO(comment).getId()));
 				if(i.getId().equals(new CommentDTO(comment).getId())) {
-					System.out.println("AQUI OH " + index);
 					localeIndex = index;
 				}
 				index+= 1;

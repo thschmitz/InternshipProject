@@ -96,6 +96,10 @@ public class PostResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-
-	
+	@RequestMapping(value="/{id}/comments", method=RequestMethod.GET)
+	public ResponseEntity<List<CommentDTO>> commentsByPost(@PathVariable String id) {
+		List<CommentDTO> comments = service.commentsByPost(id);
+		
+		return ResponseEntity.ok().body(comments);
+	}
 }

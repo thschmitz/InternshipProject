@@ -64,14 +64,9 @@ export const Header = (props) => {
                 <p className="ml-5 mt-2">Logout</p>
               </div>
             </p>
-
             :
-
             <Link href="/login"><p className="navResponsiveButton">Sign In</p></Link>
-
           }
-
-
         </div>
       </div>
       
@@ -114,7 +109,6 @@ export const Header = (props) => {
                   <>
                     <img className="rounded-full object-cover" src={user.image}/>
                   </>
-                
                 :
                   <Skeleton variant="circular" width={40} height={40} />
                 }

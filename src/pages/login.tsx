@@ -7,6 +7,7 @@ import {Toast} from "../../services/notification/toast"
 import { useNotification } from "use-toast-notification";
 import Link from "next/link";
 import { useLocalStorage } from "../../services/localStorage/user.js";
+import { tokenService } from "services/auth/tokenService";
 
 function Login() {
   const [email, setEmail] = useState<string>();
@@ -22,8 +23,8 @@ function Login() {
     if(responseData) {
       dispatch(setAuthState(true))
       await setUser(responseData);
-      Toast.notifySuccess(notification, "Login Sucess!", "You have logged in")
-      router.push("/")
+
+      window.location.reload();
     } else {
       Toast.notifyError(notification, "Login Error!", "Your credentials are wrong")
       console.log("ERRO NO LOGIN")
@@ -63,13 +64,13 @@ function Login() {
                 </a>
               </div>
               <div className="text-sm font-sans font-medium w-full pr-20 pt-14">
-                <button
+                <Link href="/"><button
                   type="button"
                   className="text-center w-full py-4 bg-blue-700 hover:bg-blue-400 rounded-md text-white"
                   onClick={(e) => onSubmit(e)}
                 >
                   SIGN IN
-                </button>
+                </button></Link>
               </div>
               <div className="mt-4">
                 <Link href="/signup"><p

@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { HYDRATE } from "next-redux-wrapper";
+import { authService } from "services/auth/authService";
+import { tokenService } from "services/auth/tokenService";
 
 // Type for our state
 export interface IInitialState {
@@ -26,9 +28,19 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setAuthState} = authSlice.actions
+export const { setAuthState } = authSlice.actions
+
+async function verifySession(token:any) {
+  const session = await authService.session(token);
+
+
+  return await session;
+}
+
+const token = tokenService.get(null);
+const session = await verifySession(token);
 
 // Selector
-export const selectAuthState = (state: RootState) => state.auth.authState;
+export const selectAuthState = (state: RootState) => session?.data?.body?.id ? state.auth.authState : false;
 
 export default authSlice.reducer

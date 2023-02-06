@@ -19,13 +19,11 @@ export async function middleware(req) {
 
   const session = await response.json();
 
-  console.log("MiddlewareSession: ", session)
-
-  if(session?.body?.name) {
+  if(session?.body?.id) {
     if(url.includes("/login") || url.includes("/signup")) {
       return NextResponse.redirect("http://localhost:3000/")
     }
-  } 
+  }
 
-    return NextResponse.next();
+  return NextResponse.next();
 }

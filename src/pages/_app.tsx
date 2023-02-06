@@ -4,28 +4,9 @@ import { store, persistor } from "../store/store";
 import NotificationProvider from 'use-toast-notification'
 import {Provider} from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-import { tokenService } from 'services/auth/tokenService';
-import { authService } from 'services/auth/authService';
+import React from "react";
 
-async function session(cookies:any) {
-  const session = await authService.session(cookies);
-
-  return await session;
-}
-
-function App({ Component, pageProps }: AppProps) {
-
-  const cookies = tokenService.get(null);
-  console.log(cookies);
-  session(cookies).then((resp) => {
-    if(!resp?.data?.body?.id) {
-      if(tokenService.get(null) != "") {
-        localStorage.clear();
-        tokenService.delete();
-      }
-    }
-  });
-
+function App({ Component, pageProps }: AppProps){
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
@@ -39,9 +20,7 @@ function App({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </NotificationProvider>
       </PersistGate>
-
     </Provider>
-
   )
 }
 

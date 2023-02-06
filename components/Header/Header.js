@@ -27,7 +27,7 @@ export const Header = (props) => {
     if(props.searchText) {
       setSearch(props.searchText)
     }
-    console.log("USER HEADER: ", user)
+    console.log("AUTHSTATE HEADER: ", authState)
   }, [])
 
 

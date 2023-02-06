@@ -8,6 +8,7 @@ import { useNotification } from "use-toast-notification";
 import Link from "next/link";
 import { useLocalStorage } from "../../services/localStorage/user.js";
 import { tokenService } from "services/auth/tokenService";
+import { setUserData } from "@/store/userSlice";
 
 function Login() {
   const [email, setEmail] = useState<string>();
@@ -22,9 +23,11 @@ function Login() {
     const responseData = await authService.login({email: email, password: password})
     if(responseData) {
       dispatch(setAuthState(true))
+      dispatch(setUserData(responseData))
+      
       await setUser(responseData);
 
-      window.location.reload();
+      router.push("/")
     } else {
       Toast.notifyError(notification, "Login Error!", "Your credentials are wrong")
       console.log("ERRO NO LOGIN")

@@ -13,6 +13,7 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist'
+import expireReducer from "redux-persist-expire"
 
 const reducers = combineReducers({
   loading: loadingReducer,
@@ -24,7 +25,19 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  whitelist: ["user", "auth"]
+  whitelist: ["user", "auth"],
+  transforms: [
+    expireReducer("user", {
+      expireSeconds: 10,
+      expiredState: {},
+      autoExpire: true
+    }),
+    expireReducer("auth", {
+      expireSeconds: 10,
+      expiredState: {},
+      autoExpire: true
+    })
+  ]
 }
 
 const persistedReducer = persistReducer(persistConfig, reducers)

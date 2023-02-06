@@ -60,8 +60,7 @@ async function verifySession(token:any) {
 const token = tokenService.get(null);
 const session = await verifySession(token);
 
-
 // Selector
-export const selectUserData = (state: RootState) => session?.data?.body?.id ? state.user : localStorage.clear();
+export const selectUserData = (state: RootState) => state.user;
 
 export default userSlice.reducer

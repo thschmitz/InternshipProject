@@ -33,14 +33,16 @@ export const { setAuthState } = authSlice.actions
 async function verifySession(token:any) {
   const session = await authService.session(token);
 
-
   return await session;
 }
 
 const token = tokenService.get(null);
 const session = await verifySession(token);
 
+console.log("AUTH SLICE SESSION: ", session);
+console.log(session?.data?.body?.id)
+
 // Selector
-export const selectAuthState = (state: RootState) => session?.data?.body?.id ? state.auth.authState : false;
+export const selectAuthState = (state: RootState) => state.auth.authState;
 
 export default authSlice.reducer

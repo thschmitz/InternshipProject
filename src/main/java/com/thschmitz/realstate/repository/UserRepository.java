@@ -2,18 +2,12 @@ package com.thschmitz.realstate.repository;
 
 import java.util.List;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.CrudRepository;
 
 import com.thschmitz.realstate.domain.User;
-import com.thschmitz.realstate.dto.UserDTO;
 
-@Repository
-public interface UserRepository extends MongoRepository<User, String> {
-
-	@Query("{ 'email': ?0  }")
-	User login(String email);
+public interface UserRepository extends CrudRepository<User, Integer> {
 	
-	List<User> findByNameContainingIgnoreCase(String text);
+	List<User> findByName(String name);
+	List<User> findByEmail(String email);
 }

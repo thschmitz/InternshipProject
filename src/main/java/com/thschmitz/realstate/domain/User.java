@@ -5,15 +5,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
-@Document(collection="user")
+import org.springframework.data.annotation.Id;
+
+@Entity
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String id;
 	private String name;
 	private String email;
@@ -21,8 +24,8 @@ public class User implements Serializable {
 	private Date created_at;
 	private String image;
 	
-	@DBRef(lazy=true)
-	private List<Post> posts = new ArrayList<>();
+	// @DBRef(lazy=true)
+	// private List<Post> posts = new ArrayList<>();
 	
 	public User() {
 		
@@ -85,13 +88,13 @@ public class User implements Serializable {
 		this.image = image;
 	}
 	
-	public List<Post> getPosts() {
+	/*public List<Post> getPosts() {
 		return posts;
 	}
 
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
-	}
+	}*/
 
 	@Override
 	public int hashCode() {

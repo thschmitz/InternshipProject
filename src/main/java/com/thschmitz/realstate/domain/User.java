@@ -6,10 +6,13 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-import org.springframework.data.annotation.Id;
 
 @Entity
 public class User implements Serializable {
@@ -25,7 +28,8 @@ public class User implements Serializable {
 	private String image;
 	
 	// @DBRef(lazy=true)
-	// private List<Post> posts = new ArrayList<>();
+	@OneToMany(targetEntity=Post.class, mappedBy="author", fetch=FetchType.EAGER)
+	private List<Post> posts = new ArrayList<>();
 	
 	public User() {
 		
@@ -88,13 +92,13 @@ public class User implements Serializable {
 		this.image = image;
 	}
 	
-	/*public List<Post> getPosts() {
+	public List<Post> getPosts() {
 		return posts;
 	}
 
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
-	}*/
+	}
 
 	@Override
 	public int hashCode() {

@@ -14,6 +14,7 @@
 	<name>realstate</name>
 	<description>Realstate project for internship</description>
 	<properties>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>

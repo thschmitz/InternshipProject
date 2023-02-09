@@ -7,8 +7,8 @@ import com.thschmitz.realstate.dto.AuthorDTO;
 import com.thschmitz.realstate.dto.LikeDTO;
 
 public class Like {
-
-	/*public static Integer checkLike(Post post, String id) {
+/*
+	public static Integer checkLike(Post post, String id) {
 		Integer index = 0;
 
 		for(String author : post.getLikes()) {

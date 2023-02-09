@@ -28,10 +28,7 @@ public class CommentService {
 	@Autowired
 	private CommentRepository commentRepository;
 	
-	@Autowired
-	private PostRepository postRepository;
-	
-	/*public List<Comment> findAll() {
+	public List<Comment> findAll() {
 		return (List<Comment>) commentRepository.findAll();
 	}
 	
@@ -41,26 +38,15 @@ public class CommentService {
 		return comment.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 	
-	public Post create(String id, Jws<Claims> session, CommentDTO comment, PostService postService, UserService userService) {
-		Post post = postService.findById(id);
-
-		String author_id = Session.getSessionId(session);
-		Date formattedDate = Util.formatDate(new Date());
-		User user = Util.toUser(author_id, userService);
-	
-		post = CommentCRUD.addComment(post, formattedDate, new AuthorDTO(user), comment, commentRepository, postRepository);
+	public Comment create(String id, Jws<Claims> session, Comment comment, PostService postService, UserService userService) {
 		
-		return post;
+		commentRepository.save(comment);
+		
+		return comment;
 	}
 	
-	public void delete(String id, Jws<Claims> session, PostService postService) {
-		Comment comment = findById(id);
-		
-		comment.setId(id);
-
-		String author_id = Session.getSessionId(session);
-		
-		CommentCRUD.deleteComment(comment, author_id, commentRepository, postService, postRepository);
-	}*/
+	public void delete(String id) {
+		commentRepository.deleteById(id);
+	}
 	
 }

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.thschmitz.realstate.domain.Post;
 import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.dto.AuthorDTO;
-import com.thschmitz.realstate.dto.CommentDTO;
 import com.thschmitz.realstate.exception.ObjectNotFoundException;
 import com.thschmitz.realstate.exception.ParametersNotPassedException;
 import com.thschmitz.realstate.repository.CommentRepository;
@@ -116,7 +115,7 @@ public class PostService {
 
 		return post;
 	}*/
-	
+
 	/*public List<String> commentsByPost(String id) {
 		Post post = findById(id);
 		

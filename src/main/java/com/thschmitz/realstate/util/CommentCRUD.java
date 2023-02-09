@@ -14,16 +14,16 @@ import com.thschmitz.realstate.repository.PostRepository;
 import com.thschmitz.realstate.services.PostService;
 
 public class CommentCRUD {
-	public static Post addComment(Post post, Date formattedDate, AuthorDTO author, CommentDTO comment, CommentRepository commentRepository, PostRepository postRepository) {
+	/*public static Post addComment(Post post, Date formattedDate, AuthorDTO author, CommentDTO comment, CommentRepository commentRepository, PostRepository postRepository) {
 		if(comment.getText() == null) {
 			throw new ParametersNotPassedException("You have to pass some parameters to conclute this request");
 		}
 		
 		comment.setCreated_at(formattedDate);
-		comment.setAuthor(author);
-		post.getComments().add(comment);
+		comment.setAuthor(author.getId());
+		post.getComments().add(comment.getId());
 		
-		Comment commentDomain = new Comment(null, comment.getText(), formattedDate, author, new PostDTO(post));
+		Comment commentDomain = new Comment(null, comment.getText(), formattedDate, author.getId(), new PostDTO(post).getId());
 		
 		commentRepository.save(commentDomain);
 		postRepository.save(post);
@@ -32,17 +32,17 @@ public class CommentCRUD {
 	}
 	
 	public static void deleteComment(Comment comment, String author_id, CommentRepository commentRepository, PostService postService, PostRepository postRepository) {
-		if(comment.getAuthor().getId().equals(author_id)) {
+		if(comment.getAuthor().equals(author_id)) {
 			commentRepository.delete(comment);
 
-			Post post = postService.findById(comment.getPost().getId());
+			Post post = postService.findById(comment.getPost());
 			
 			Integer index = 0;
 			Integer localeIndex = null;
 			
-			for(CommentDTO i : post.getComments()) {
-				System.out.println(i.getId().equals(new CommentDTO(comment).getId()));
-				if(i.getId().equals(new CommentDTO(comment).getId())) {
+			for(String i : post.getComments()) {
+				System.out.println(i.equals(new CommentDTO(comment).getId()));
+				if(i.equals(new CommentDTO(comment).getId())) {
 					localeIndex = index;
 				}
 				index+= 1;
@@ -53,5 +53,5 @@ public class CommentCRUD {
 		} else {
 			throw new Unauthorized("You cant delete this comment!");
 		}
-	}
+	}*/
 }

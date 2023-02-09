@@ -12,7 +12,7 @@ public class CommentDTO implements Serializable{
 	private String id;
 	private String text;
 	private Date created_at;
-	private AuthorDTO author;
+	private String author;
 	
 	public CommentDTO() {
 		
@@ -41,11 +41,11 @@ public class CommentDTO implements Serializable{
 		this.created_at = created_at;
 	}
 
-	public AuthorDTO getAuthor() {
+	public String getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(AuthorDTO author) {
+	public void setAuthor(String author) {
 		this.author = author;
 	}
 

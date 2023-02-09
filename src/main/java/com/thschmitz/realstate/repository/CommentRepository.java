@@ -1,10 +1,9 @@
 package com.thschmitz.realstate.repository;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.thschmitz.realstate.domain.Comment;
 
-public interface CommentRepository extends CrudRepository<Comment, String> {
+public interface CommentRepository extends JpaRepository<Comment, String> {
 
 }

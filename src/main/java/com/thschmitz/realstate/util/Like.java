@@ -8,11 +8,11 @@ import com.thschmitz.realstate.dto.LikeDTO;
 
 public class Like {
 
-	public static Integer checkLike(Post post, String id) {
+	/*public static Integer checkLike(Post post, String id) {
 		Integer index = 0;
 
-		for(LikeDTO author : post.getLikes()) {
-			if(id.equals(author.getAuthor().getId())) {
+		for(String author : post.getLikes()) {
+			if(id.equals(author)) {
 				return index;
 			}
 			index += 1;
@@ -31,5 +31,5 @@ public class Like {
 		// post.getLikes().add(new LikeDTO(formattedDate, author));
 		
 		return post;
-	}
+	}*/
 }

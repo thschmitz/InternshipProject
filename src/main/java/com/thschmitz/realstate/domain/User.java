@@ -8,28 +8,24 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 
 @Entity
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Id @GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String id;
 	private String name;
 	private String email;
 	private String password;
 	private Date created_at;
 	private String image;
-	
-	// @DBRef(lazy=true)
-	@OneToMany(targetEntity=Post.class, mappedBy="author", fetch=FetchType.EAGER)
-	private List<Post> posts = new ArrayList<>();
 	
 	public User() {
 		
@@ -90,14 +86,6 @@ public class User implements Serializable {
 
 	public void setImage(String image) {
 		this.image = image;
-	}
-	
-	public List<Post> getPosts() {
-		return posts;
-	}
-
-	public void setPosts(List<Post> posts) {
-		this.posts = posts;
 	}
 
 	@Override

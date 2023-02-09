@@ -4,33 +4,32 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.thschmitz.realstate.dto.AuthorDTO;
 
 @Entity
 public class Feedback {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Id @GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String id;
 	private Date created_at;
-	private AuthorDTO author;
+	private String author_id;
 	
-	@ManyToOne
-	private Post post;
+	private String post_id;
 	
 	public Feedback() {
 		
 	}
 	
-	public Feedback(Date created_at, AuthorDTO author, Post post) {
+	public Feedback(Date created_at, String author_id, String post_id) {
 		this.created_at = created_at;
-		this.author = author;
-		this.post = post;
+		this.author_id = author_id;
+		this.post_id = post_id;
 	}
 
 	public Date getCreated_at() {
@@ -41,24 +40,28 @@ public class Feedback {
 		this.created_at = created_at;
 	}
 
-	public AuthorDTO getAuthor() {
-		return author;
+	public String getAuthor() {
+		return author_id;
 	}
 
-	public void setAuthor(AuthorDTO author) {
-		this.author = author;
+	public void setAuthor(String author_id) {
+		this.author_id = author_id;
 	}
 
-	public Post getPost() {
-		return post;
+	public String getPost() {
+		return post_id;
 	}
 
-	public void setPost(Post post) {
-		this.post = post;
+	public void setPost(String post_id) {
+		this.post_id = post_id;
+	}
+	
+	public String getId() {
+		return id;
 	}
 
 	@Override
 	public String toString() {
-		return "LikeDTO [created_at=" + created_at + ", author=" + author + "]";
+		return "LikeDTO [created_at=" + created_at + ", author_id=" + author_id + "]";
 	}
 }

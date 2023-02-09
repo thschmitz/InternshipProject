@@ -31,7 +31,7 @@ public class CommentService {
 	@Autowired
 	private PostRepository postRepository;
 	
-	public List<Comment> findAll() {
+	/*public List<Comment> findAll() {
 		return (List<Comment>) commentRepository.findAll();
 	}
 	
@@ -61,6 +61,6 @@ public class CommentService {
 		String author_id = Session.getSessionId(session);
 		
 		CommentCRUD.deleteComment(comment, author_id, commentRepository, postService, postRepository);
-	}
+	}*/
 	
 }

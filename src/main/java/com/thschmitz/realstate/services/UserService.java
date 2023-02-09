@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.thschmitz.realstate.domain.User;
-import com.thschmitz.realstate.exception.AuthenticationException;
 import com.thschmitz.realstate.exception.ObjectNotFoundException;
 import com.thschmitz.realstate.exception.ParametersNotPassedException;
 import com.thschmitz.realstate.repository.UserRepository;
@@ -20,8 +19,8 @@ public class UserService {
 	@Autowired
 	private UserRepository repository;
 
-	public List<User> findAll() {
-		return (List<User>) repository.findAll();
+	public Iterable<User> findAll() {
+		return repository.findAll();
 	}
 	
 	public User findById(String id) {

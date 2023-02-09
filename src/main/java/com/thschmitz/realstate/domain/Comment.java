@@ -6,9 +6,9 @@ import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.thschmitz.realstate.dto.AuthorDTO;
 import com.thschmitz.realstate.dto.PostDTO;
@@ -17,25 +17,25 @@ import com.thschmitz.realstate.dto.PostDTO;
 public class Comment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Id @GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String id;
 	private String text;
 	private Date created_at;
-	private AuthorDTO author;
+	private String author_id;
 
-	private PostDTO post;
+	private String post_id;
 
 	public Comment() {
 
 	}
 
-	public Comment(String id, String text, Date created_at, AuthorDTO author, PostDTO post) {
+	public Comment(String id, String text, Date created_at, String author_id, String post_id) {
 		this.id = id;
 		this.text = text;
 		this.created_at = created_at;
-		this.author = author;
-		this.post = post;
+		this.author_id = author_id;
+		this.post_id = post_id;
 	}
 
 	public String getId() {
@@ -62,20 +62,20 @@ public class Comment implements Serializable {
 		this.created_at = created_at;
 	}
 
-	public AuthorDTO getAuthor() {
-		return author;
+	public String getAuthor() {
+		return author_id;
 	}
 
-	public void setAuthor(AuthorDTO author) {
-		this.author = author;
+	public void setAuthor(String author_id) {
+		this.author_id = author_id;
 	}
 
-	public PostDTO getPost() {
-		return post;
+	public String getPost() {
+		return post_id;
 	}
 
-	public void setPost(PostDTO post) {
-		this.post = post;
+	public void setPost(String post_id) {
+		this.post_id = post_id;
 	}
 
 	@Override

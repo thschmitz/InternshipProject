@@ -58,19 +58,19 @@ public class PostService {
 		String author_id = Session.getSessionId(session);
 
 		User user = Util.toUser(author_id, service);
-		post.setAuthor(new AuthorDTO(user));
+		post.setAuthor(new AuthorDTO(user).getId());
 		
 		return postRepository.save(post);
 	}
 	
 	public void delete(String id) {
-		Post post = findById(id);
+		/*Post post = findById(id);
 		
-		for(CommentDTO comment : post.getComments()) {
-			commentRepository.deleteById(comment.getId());;
+		for(String comment : post.getComments()) {
+			commentRepository.deleteById(comment);
 		}
 		
-		postRepository.deleteById(id);
+		postRepository.deleteById(id);*/
 		
 	}
 	
@@ -97,7 +97,7 @@ public class PostService {
 	}
 	
 	
-	public Post like(String id, Jws<Claims> session) {
+	/*public Post like(String id, Jws<Claims> session) {
 		Post post = findById(id);
 
 		
@@ -115,11 +115,11 @@ public class PostService {
 		postRepository.save(post);
 
 		return post;
-	}
+	}*/
 	
-	public List<CommentDTO> commentsByPost(String id) {
+	/*public List<String> commentsByPost(String id) {
 		Post post = findById(id);
 		
 		return post.getComments();
-	}
+	}*/
 }

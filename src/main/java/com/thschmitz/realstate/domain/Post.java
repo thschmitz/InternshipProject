@@ -6,24 +6,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
-import com.thschmitz.realstate.dto.AuthorDTO;
-import com.thschmitz.realstate.dto.CommentDTO;
-import com.thschmitz.realstate.dto.LikeDTO;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.GenericGenerator;
 
-@Entity
+@Entity(name="post")
 public class Post implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Id @GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String id;
 	private Date created_at;
 	private String title;
@@ -32,19 +29,13 @@ public class Post implements Serializable {
 	private String status;
 	private Double price;
 	private Double size;
-	private AuthorDTO author;
-	
-	@OneToMany(targetEntity=Comment.class, mappedBy="post")
-	private List<CommentDTO> comments = new ArrayList<>();
-	
-	@OneToMany(targetEntity=Feedback.class, mappedBy="post")
-	private List<LikeDTO> likes = new ArrayList<>();
+	private String author_id;
 	
 	public Post() {
 		
 	}
 
-	public Post(String id, Date created_at, String title, String body, String image, String status, Double price, Double size, AuthorDTO author) {
+	public Post(String id, Date created_at, String title, String body, String image, String status, Double price, Double size, String author_id) {
 		this.id = id;
 		this.created_at = created_at;
 		this.title = title;
@@ -53,7 +44,7 @@ public class Post implements Serializable {
 		this.status = status;
 		this.price = price;
 		this.size = size;
-		this.author = author;
+		this.author_id = author_id;
 	}
 
 	public String getId() {
@@ -104,28 +95,12 @@ public class Post implements Serializable {
 		this.status = status;
 	}
 	
-	public AuthorDTO getAuthor() {
-		return author;
+	public String getAuthor() {
+		return author_id;
 	}
 
-	public void setAuthor(AuthorDTO author) {
-		this.author = author;
-	}
-	
-	public List<CommentDTO> getComments() {
-		return comments;
-	}
-
-	public List<LikeDTO> getLikes() {
-		return likes;
-	}
-
-	public void setLikes(List<LikeDTO> likes) {
-		this.likes = likes;
-	}
-	
-	public void setComments(List<CommentDTO> comments) {
-		this.comments = comments;
+	public void setAuthor(String author_id) {
+		this.author_id = author_id;
 	}
 
 	public Double getPrice() {

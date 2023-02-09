@@ -1,35 +1,38 @@
 package com.thschmitz.realstate.resource;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.TimeZone;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.thschmitz.realstate.domain.Post;
 import com.thschmitz.realstate.domain.User;
-import com.thschmitz.realstate.dto.AuthorDTO;
-import com.thschmitz.realstate.repository.PostRepository;
-import com.thschmitz.realstate.repository.UserRepository;
+import com.thschmitz.realstate.dto.UserDTO;
+import com.thschmitz.realstate.exception.MissingRequestHeaderException;
 import com.thschmitz.realstate.services.UserService;
+import com.thschmitz.realstate.util.Session;
+import com.thschmitz.realstate.util.URL;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 
 @RestController
-@RequestMapping(path="/users")
+@RequestMapping(value="/users")
+@CrossOrigin(origins = "*")
 public class UserResource {
 
 	@Autowired
 	private UserService service;
-	
-	@Autowired
-	private PostRepository postRepository;
-	
-	@Autowired
-	private UserRepository userRepository;
 	
 	@RequestMapping(method=RequestMethod.GET)
  	public ResponseEntity<Iterable<User>> findAll() {
@@ -37,17 +40,65 @@ public class UserResource {
 		return ResponseEntity.ok().body(list);
 	}
 	
+	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	public ResponseEntity<User> findById(@PathVariable String id) {
+		User user = service.findById(id);
+		
+		return ResponseEntity.ok().body(user);
+	}
+	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<User> insertUser() throws ParseException {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-		User maria = new User(null, "Maria Brown", "maria@gmail.com", "$2a$10$daJmJ.qCBUfFK4LC91C5be5Lcc6tQufVhrLkSDrGKWAA6XnYNlqri", sdf.parse("21/03/2018"), "https://img.freepik.com/fotos-gratis/mulher-jovem-e-elegante-magnifica-com-grandes-olhos-castanhos-e-um-sorriso-incrivel_291049-2575.jpg?w=2000");
-		User alex = new User(null, "Alex Green", "alex@gmail.com", "$2a$10$ZGgMHu.o4fxB4lbR1WyYPOQAMC8obpmxI.mYT68JPcjlv.PQ/AsJ2", sdf.parse("21/03/2018"), "https://img.freepik.com/fotos-gratis/homem-bonito-e-confiante-sorrindo-com-as-maos-cruzadas-no-peito_176420-18743.jpg");
-		User bob = new User(null, "Bob Grey", "bob@gmail.com", "$2a$10$DN4fGCOugTAtM/.Emwqt/.hwcA25oksByW1.mAOpEcHnjUkdJw6Jq", sdf.parse("21/03/2018"), "https://img.freepik.com/fotos-premium/homem-de-negocios-novo-consideravel-na-camisa-e-nos-monoculos_85574-6228.jpg?w=360");
+	public ResponseEntity<String> insert(@RequestBody User user, HttpServletResponse response){
+		Date created_at = new Date();
+		user.setCreated_at(created_at);
 		
-		userRepository.saveAll(Arrays.asList(maria, alex, bob));
+		String jwt = service.insert(user);
 		
-		return ResponseEntity.ok().body(maria);
+		return ResponseEntity.ok().body(jwt);
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
+	public ResponseEntity<User> update(@RequestBody User user, @PathVariable String id, @RequestHeader(value="JWT") String header) {
+		Session.session(header);
+		user.setId(id);
+		user = service.update(user);
+		
+		return ResponseEntity.ok().body(user);
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<UserDTO> delete(@PathVariable String id, @RequestHeader(value="JWT") String header) {
+		Session.session(header);
+		service.delete(id);
+		
+		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value="/login", method=RequestMethod.POST)
+	public ResponseEntity<String> login(@RequestBody User user, HttpServletResponse response) {
+		System.out.println("LOGIN");
+		String jwt = service.login(user);
+		response.setHeader("JWT", jwt);
+		
+		return ResponseEntity.ok().body(jwt);
+	}
+	
+	@RequestMapping(value="/session", method=RequestMethod.GET)
+	public ResponseEntity<Jws<Claims>> session(@RequestHeader(value="JWT") String header) {
+		
+		if(header == null) {
+			throw new MissingRequestHeaderException("You need to inform JWT header to request!");
+		}
+		System.out.println(header);
+		return ResponseEntity.ok().body(Session.session(header));
+	}
+	
+	@RequestMapping(value="/namesearch", method=RequestMethod.GET)
+	public ResponseEntity<List<User>> findByText(@RequestParam(value="text", defaultValue="") String text) {
+		text = URL.decodeParam(text);
+		List<User> list = service.findbyText(text);
+		
+		return ResponseEntity.ok().body(list);
 	}
 	
 }

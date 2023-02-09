@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.thschmitz.realstate.domain.User;
+import com.thschmitz.realstate.exception.AuthenticationException;
 import com.thschmitz.realstate.exception.ObjectNotFoundException;
 import com.thschmitz.realstate.exception.ParametersNotPassedException;
 import com.thschmitz.realstate.repository.UserRepository;
@@ -27,12 +28,11 @@ public class UserService {
 		Optional<User> user = repository.findById(id);
 		
 		return user.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
-		
 	}
 	
 	public String insert(User obj) {
 		obj.setPassword(Password.encodePassword(obj));
-		((UserService) repository).insert(obj); // Encoding the password and sending the object
+		repository.save(obj); // Encoding the password and sending the object
 		return JWT.createJWT(obj);
 	}
 	
@@ -45,14 +45,13 @@ public class UserService {
 	public User update(User obj) {
 		User newObj = findById(obj.getId());
 		
-		
 		updateData(newObj, obj);
 		
 		return repository.save(newObj);
 	}
 	
 	public void updateData(User newObj, User obj) {
-		if(obj.getName() == null || obj.getEmail() == null || obj.getPassword() == null) {
+		if(obj.getName() == null || obj.getEmail() == null) {
 			throw new ParametersNotPassedException("You need to inform all the parameters to update!");
 		} else {
 			newObj.setName(obj.getName());
@@ -61,8 +60,8 @@ public class UserService {
 		}
 	}
 	
-	public void login(User obj) {
-		/*User newObj = repository.login(obj.getEmail());
+	public String login(User obj) {
+		User newObj = repository.findByEmail(obj.getEmail());
 		
 		if(newObj == null) {
 			throw new AuthenticationException(null);
@@ -74,7 +73,7 @@ public class UserService {
 			throw new AuthenticationException(null);
 		}
 
-		return JWT.createJWT(newObj);*/
+		return JWT.createJWT(newObj);
 		
 	}
 	

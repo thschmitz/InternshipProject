@@ -10,9 +10,6 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.thschmitz.realstate.dto.AuthorDTO;
-import com.thschmitz.realstate.dto.PostDTO;
-
 @Entity
 public class Comment implements Serializable {
 	private static final long serialVersionUID = 1L;

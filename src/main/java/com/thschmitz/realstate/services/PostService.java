@@ -1,6 +1,5 @@
 package com.thschmitz.realstate.services;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,9 +11,7 @@ import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.dto.AuthorDTO;
 import com.thschmitz.realstate.exception.ObjectNotFoundException;
 import com.thschmitz.realstate.exception.ParametersNotPassedException;
-import com.thschmitz.realstate.repository.CommentRepository;
 import com.thschmitz.realstate.repository.PostRepository;
-import com.thschmitz.realstate.util.Like;
 import com.thschmitz.realstate.util.Session;
 import com.thschmitz.realstate.util.Util;
 
@@ -29,10 +26,6 @@ public class PostService {
 	
 	@Autowired
 	private UserService service;
-	
-	@Autowired
-	private CommentRepository commentRepository;
-	
 	
 	public List<Post> findAll() {
 		return (List<Post>) postRepository.findAll();
@@ -94,10 +87,4 @@ public class PostService {
 			newObj.setTitle(obj.getTitle());
 		}
 	}
-
-	/*public List<String> commentsByPost(String id) {
-		Post post = findById(id);
-		
-		return post.getComments();
-	}*/
 }

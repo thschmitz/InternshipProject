@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.thschmitz.realstate.domain.Post;
-import com.thschmitz.realstate.dto.CommentDTO;
 import com.thschmitz.realstate.services.PostService;
 import com.thschmitz.realstate.util.Session;
 import com.thschmitz.realstate.util.URL;
@@ -88,11 +87,4 @@ public class PostResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
-	/*@RequestMapping(value="/{id}/comments", method=RequestMethod.GET)
-	public ResponseEntity<List<CommentDTO>> commentsByPost(@PathVariable String id) {
-		List<CommentDTO> comments = service.commentsByPost(id);
-		
-		return ResponseEntity.ok().body(comments);
-	}*/
 }

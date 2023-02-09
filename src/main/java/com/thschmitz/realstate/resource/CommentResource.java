@@ -13,13 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.thschmitz.realstate.domain.Comment;
-import com.thschmitz.realstate.domain.Post;
-import com.thschmitz.realstate.dto.CommentDTO;
 import com.thschmitz.realstate.services.CommentService;
 import com.thschmitz.realstate.services.PostService;
 import com.thschmitz.realstate.services.UserService;
 import com.thschmitz.realstate.util.Session;
-import com.thschmitz.realstate.util.Util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -46,6 +43,11 @@ public class CommentResource {
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Comment> findById(@PathVariable String id) {
 		return ResponseEntity.ok().body(commentService.findById(id));
+	}
+	
+	@RequestMapping(value="/post/{id}", method=RequestMethod.GET)
+	public ResponseEntity<List<Comment>> findCommentsByPost(@PathVariable String id) {
+		return ResponseEntity.ok().body(commentService.findCommentsByPost(id));
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.POST)

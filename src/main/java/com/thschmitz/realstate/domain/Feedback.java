@@ -1,25 +1,24 @@
 package com.thschmitz.realstate.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.thschmitz.realstate.dto.AuthorDTO;
-
 @Entity
-public class Feedback {
+public class Feedback implements Serializable{
+	private static final long serialVersionUID = 1L;
 	
 	@Id @GeneratedValue(generator="system-uuid")
 	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String id;
 	private Date created_at;
 	private String author_id;
-	
 	private String post_id;
 	
 	public Feedback() {

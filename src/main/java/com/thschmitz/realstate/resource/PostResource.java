@@ -56,13 +56,6 @@ public class PostResource {
 		return ResponseEntity.ok().body(service.update(post));
 	}
 	
-	/*@RequestMapping(value="/like/{id}", method=RequestMethod.POST)
-	public ResponseEntity<Post> like(@PathVariable String id, @RequestHeader(value="JWT") String header) {
-		Jws<Claims> session = Session.session(header);
-		
-		return ResponseEntity.ok().body(service.like(id, session));
-	}*/
-	
 	@RequestMapping(value="/titlesearch", method=RequestMethod.GET)
  	public ResponseEntity<List<Post>> findByTitle(@RequestParam(value="text", defaultValue="") String title) {
 		title = URL.decodeParam(title);

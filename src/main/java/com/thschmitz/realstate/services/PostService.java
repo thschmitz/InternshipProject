@@ -94,27 +94,6 @@ public class PostService {
 			newObj.setTitle(obj.getTitle());
 		}
 	}
-	
-	
-	/*public Post like(String id, Jws<Claims> session) {
-		Post post = findById(id);
-
-		
-		String author_id = Session.getSessionId(session);
-		Date formattedDate = Util.formatDate(new Date());
-		User user = Util.toUser(author_id, service);
-		Integer alreadyLiked = Like.checkLike(post, author_id);
-		
-		if(alreadyLiked != null) {
-			Like.removeLike(post, alreadyLiked);	
-		} else {
-			Like.addLike(post, formattedDate, new AuthorDTO(user));
-		}
-		
-		postRepository.save(post);
-
-		return post;
-	}*/
 
 	/*public List<String> commentsByPost(String id) {
 		Post post = findById(id);

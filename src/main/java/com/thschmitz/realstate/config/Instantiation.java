@@ -9,14 +9,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import com.thschmitz.realstate.domain.Comment;
-import com.thschmitz.realstate.domain.Feedback;
 import com.thschmitz.realstate.domain.Post;
 import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.dto.AuthorDTO;
-import com.thschmitz.realstate.dto.CommentDTO;
-import com.thschmitz.realstate.dto.LikeDTO;
 import com.thschmitz.realstate.dto.PostDTO;
 import com.thschmitz.realstate.repository.CommentRepository;
+import com.thschmitz.realstate.repository.FeedbackRepository;
 import com.thschmitz.realstate.repository.PostRepository;
 import com.thschmitz.realstate.repository.UserRepository;
 
@@ -32,6 +30,9 @@ public class Instantiation implements CommandLineRunner {
 	@Autowired
 	private CommentRepository commentRepository;
 	
+	@Autowired
+	private FeedbackRepository feedbackRepository;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
@@ -41,6 +42,7 @@ public class Instantiation implements CommandLineRunner {
 		
 		System.out.println("ENTROU AQUI");
 		
+		feedbackRepository.deleteAll();
 		userRepository.deleteAll(); // AQUI TA DELETANDO TUDOOOO
 		postRepository.deleteAll();
 		commentRepository.deleteAll();

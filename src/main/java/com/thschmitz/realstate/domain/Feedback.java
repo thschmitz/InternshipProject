@@ -17,17 +17,17 @@ public class Feedback implements Serializable{
 	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String id;
 	private Date created_at;
-	private String author_id;
-	private String post_id;
+	private String authorId;
+	private String postId;
 	
 	public Feedback() {
 		
 	}
 	
-	public Feedback(Date created_at, String author_id, String post_id) {
+	public Feedback(Date created_at, String authorId, String postId) {
 		this.created_at = created_at;
-		this.author_id = author_id;
-		this.post_id = post_id;
+		this.authorId = authorId;
+		this.postId = postId;
 	}
 
 	public Date getCreated_at() {
@@ -39,19 +39,19 @@ public class Feedback implements Serializable{
 	}
 
 	public String getAuthor() {
-		return author_id;
+		return authorId;
 	}
 
-	public void setAuthor(String author_id) {
-		this.author_id = author_id;
+	public void setAuthor(String authorId) {
+		this.authorId = authorId;
 	}
 
 	public String getPost() {
-		return post_id;
+		return postId;
 	}
 
-	public void setPost(String post_id) {
-		this.post_id = post_id;
+	public void setPost(String postId) {
+		this.postId = postId;
 	}
 	
 	public String getId() {
@@ -60,6 +60,6 @@ public class Feedback implements Serializable{
 
 	@Override
 	public String toString() {
-		return "LikeDTO [created_at=" + created_at + ", author_id=" + author_id + "]";
+		return "LikeDTO [created_at=" + created_at + ", authorId=" + authorId + "]";
 	}
 }

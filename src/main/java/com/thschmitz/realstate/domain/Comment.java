@@ -19,20 +19,20 @@ public class Comment implements Serializable {
 	private String id;
 	private String text;
 	private Date created_at;
-	private String author_id;
+	private String authorId;
 
-	private String post_id;
+	private String postId;
 
 	public Comment() {
 
 	}
 
-	public Comment(String id, String text, Date created_at, String author_id, String post_id) {
+	public Comment(String id, String text, Date created_at, String authorId, String postId) {
 		this.id = id;
 		this.text = text;
 		this.created_at = created_at;
-		this.author_id = author_id;
-		this.post_id = post_id;
+		this.authorId = authorId;
+		this.postId = postId;
 	}
 
 	public String getId() {
@@ -60,19 +60,19 @@ public class Comment implements Serializable {
 	}
 
 	public String getAuthor() {
-		return author_id;
+		return authorId;
 	}
 
-	public void setAuthor(String author_id) {
-		this.author_id = author_id;
+	public void setAuthor(String authorId) {
+		this.authorId = authorId;
 	}
 
 	public String getPost() {
-		return post_id;
+		return postId;
 	}
 
-	public void setPost(String post_id) {
-		this.post_id = post_id;
+	public void setPost(String postId) {
+		this.postId = postId;
 	}
 
 	@Override

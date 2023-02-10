@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.thschmitz.realstate.domain.Comment;
 import com.thschmitz.realstate.domain.Post;
 import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.dto.AuthorDTO;
@@ -26,6 +27,9 @@ public class PostService {
 	
 	@Autowired
 	private UserService service;
+	
+	@Autowired
+	private CommentService commentService;
 	
 	public List<Post> findAll() {
 		return (List<Post>) postRepository.findAll();
@@ -56,13 +60,13 @@ public class PostService {
 	}
 	
 	public void delete(String id) {
-		/*Post post = findById(id);
+		List<Comment> comments = commentService.findCommentsByPost(id);
 		
-		for(String comment : post.getComments()) {
-			commentRepository.deleteById(comment);
+		for(Comment comment : comments) {
+			commentService.delete(comment.getId());
 		}
-		
-		postRepository.deleteById(id);*/
+	
+		postRepository.deleteById(id);
 		
 	}
 	
@@ -86,5 +90,9 @@ public class PostService {
 			newObj.setStatus(obj.getStatus());
 			newObj.setTitle(obj.getTitle());
 		}
+	}
+	
+	public List<Post> getPostByProfileId(String id) {
+		return postRepository.findByAuthorId(id);
 	}
 }

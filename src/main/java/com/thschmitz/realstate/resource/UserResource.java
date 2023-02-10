@@ -89,7 +89,6 @@ public class UserResource {
 		if(header == null) {
 			throw new MissingRequestHeaderException("You need to inform JWT header to request!");
 		}
-		System.out.println(header);
 		return ResponseEntity.ok().body(Session.session(header));
 	}
 	

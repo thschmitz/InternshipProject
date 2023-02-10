@@ -24,13 +24,13 @@ public class Post implements Serializable {
 	private String status;
 	private Double price;
 	private Double size;
-	private String author_id;
+	private String authorId;
 	
 	public Post() {
 		
 	}
 
-	public Post(String id, Date created_at, String title, String body, String image, String status, Double price, Double size, String author_id) {
+	public Post(String id, Date created_at, String title, String body, String image, String status, Double price, Double size, String authorId) {
 		this.id = id;
 		this.created_at = created_at;
 		this.title = title;
@@ -39,7 +39,7 @@ public class Post implements Serializable {
 		this.status = status;
 		this.price = price;
 		this.size = size;
-		this.author_id = author_id;
+		this.authorId = authorId;
 	}
 
 	public String getId() {
@@ -91,11 +91,11 @@ public class Post implements Serializable {
 	}
 	
 	public String getAuthor() {
-		return author_id;
+		return authorId;
 	}
 
-	public void setAuthor(String author_id) {
-		this.author_id = author_id;
+	public void setAuthor(String authorId) {
+		this.authorId = authorId;
 	}
 
 	public Double getPrice() {

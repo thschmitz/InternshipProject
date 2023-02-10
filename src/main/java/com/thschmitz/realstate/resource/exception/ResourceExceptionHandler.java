@@ -83,4 +83,13 @@ public class ResourceExceptionHandler {
 		
 		return ResponseEntity.status(status).body(err);
 	}
+	
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<StandardError> illegalArgumentException(IllegalArgumentException e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.UNAUTHORIZED;
+		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "IllegalArgumentException", e.getMessage(), request.getRequestURI()); // esse request pega o caminho onde tu vai colocar o id do usuario que tu quer procurar
+		
+		
+		return ResponseEntity.status(status).body(err);
+	}
 }

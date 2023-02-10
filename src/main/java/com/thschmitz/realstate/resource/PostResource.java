@@ -87,4 +87,9 @@ public class PostResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@RequestMapping(value="/profile/{id}", method=RequestMethod.GET)
+	public ResponseEntity<List<Post>> getProfilePosts(@PathVariable String id) {
+		return ResponseEntity.ok().body(service.getPostByProfileId(id));
+	}
 }

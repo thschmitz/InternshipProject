@@ -21,8 +21,6 @@ public class FeedbackService {
 	}
 	
 	public Feedback checkAlreadyLiked(String author_id, String post_id) {
-		Boolean isAlreadyLiked = false;
-		
 		Feedback feedbackQuery = feedbackRepository.findByAuthorAndPostId(author_id, post_id);
 		
 		return feedbackQuery;

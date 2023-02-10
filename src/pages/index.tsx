@@ -8,7 +8,7 @@ const Home: NextPage = (props: any) => {
   return (
     <div>
       <Header />
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-10">
         <Feed posts={props?.posts} />
       </div>
     </div>

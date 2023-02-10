@@ -11,6 +11,9 @@ const Search = (props:any) => {
   const [postData, setPostData] = useState<any[]>([]);
   const [userData, setUserData] = useState<any[]>([]);
 
+  console.log("PROPS SEARCH: ", props?.search);
+  console.log("POST DATA: ", postData.length === 0)
+
   return (
     <>
       <Header searchText={router.query.searchMsg}/>
@@ -20,13 +23,13 @@ const Search = (props:any) => {
           userData?.length > 0?
             postData?.length > 0?
               <div className="flex">
-                <Feed posts={postData || props?.search}/>
+                <Feed posts={postData.length === 0? props?.search : postData}/>
                 <User userData={userData}/>
               </div>
             :
               <User userData={userData}/>
           :
-            <Feed posts={postData || props?.search}/>
+            <Feed posts={postData.length === 0? props?.search : postData}/>
         }
         
       </div>

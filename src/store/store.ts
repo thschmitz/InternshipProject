@@ -28,12 +28,12 @@ const persistConfig = {
   whitelist: ["user", "auth"],
   transforms: [
     expireReducer("user", {
-      expireSeconds: 10,
+      expireSeconds: 600,
       expiredState: {},
       autoExpire: true
     }),
     expireReducer("auth", {
-      expireSeconds: 10,
+      expireSeconds: 600,
       expiredState: {},
       autoExpire: true
     })

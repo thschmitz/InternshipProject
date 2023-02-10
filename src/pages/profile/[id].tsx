@@ -5,11 +5,14 @@ import {Post} from "../../../components/Post/Post.js"
 import { selectUserData } from "@/store/userSlice"
 import { useSelector } from "react-redux"
 import { authService } from "services/auth/authService.js"
+import { postService } from "services/post/postService.js"
 
 const Profile = (props:any) => {
   const router = useRouter();
   const createdHour = `${props?.profile?.created_at?.[8]}${props?.profile?.created_at?.[9]}/${props?.profile?.created_at?.[5]}${props?.profile?.created_at?.[6]}/${props?.profile?.created_at?.[0]}${props?.profile?.created_at?.[1]}${props?.profile?.created_at?.[2]}${props?.profile?.created_at?.[3]}`
   const session = useSelector(selectUserData);
+
+  console.log("PROPS POSTS: ", props.postsProfile)
 
   return(
     <>
@@ -43,8 +46,8 @@ const Profile = (props:any) => {
           }
           <div className="mt-10 flex-1 space-y-4 max-w-5xl my-7 mx-auto">
               {
-                props?.profile?.posts?.length > 0?
-                  props?.profile?.posts?.map((post: any) => (
+                props?.postsProfile?.length > 0?
+                  props?.postsProfile?.map((post: any) => (
                     <Post key={post.id} post={post} />
                   ))
                 :
@@ -64,10 +67,12 @@ const Profile = (props:any) => {
 export const getServerSideProps = async(ctx:any) => {
 
   const profile = await authService.userData(ctx.query.id)
+  const posts = await postService.getPostsByProfileId(profile?.id)
 
   return {
     props: {
       profile: profile || {},
+      postsProfile: posts || {},
     }
   }
 }

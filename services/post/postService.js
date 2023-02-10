@@ -28,13 +28,22 @@ export const postService = {
 
   async searchPostsByBody(body) {
     try {
-      console.log("BODY: ", body)
       const response = await axios.get(`http://localhost:8080/posts/bodysearch?text=${body}`)
-
-      console.log("RESPONSEPOSTSBODY: ", response)
 
       return response.data;
     } catch(error) {
+      console.log(error);
+    }
+  },
+
+  async getPostsByProfileId(id) {
+    try {
+      const response =  await axios.get(`http://localhost:8080/posts/profile/${id}`)
+
+      console.log("GET SERVER SIDE PROPS POST: ", response.data)
+
+      return response.data;
+    } catch (error) {
       console.log(error);
     }
   }

@@ -3,12 +3,11 @@ import { useState } from "react";
 import { authService } from "services/auth/authService.js";
 import { useDispatch } from "react-redux";
 import { setAuthState } from "@/store/authSlice";
-import {Toast} from "../../services/notification/toast"
 import { useNotification } from "use-toast-notification";
 import Link from "next/link";
-import { useLocalStorage } from "../../services/localStorage/user.js";
-import { tokenService } from "services/auth/tokenService";
+import { useLocalStorage } from "../../../services/localStorage/user.js";
 import { setUserData } from "@/store/userSlice";
+import { Toast } from "services/notification/toast.js";
 
 function Login() {
   const [email, setEmail] = useState<string>();
@@ -28,7 +27,7 @@ function Login() {
       await setUser(responseData);
 
       Toast.notifySuccess(notification, "Login Success!", "You have logged in!");
-      router.push("/")
+      router.push("/admin")
     } else {
       Toast.notifyError(notification, "Login Error!", "Your credentials are wrong")
       console.log("ERRO NO LOGIN")
@@ -76,19 +75,9 @@ function Login() {
                   SIGN IN
                 </button></Link>
               </div>
-              <div className="mt-4">
-                <Link href="/signup"><p
-                  className="text-sm font-sans font-medium text-gray-600 underline"
-                >
-                  Don´t have an account? Sign up
-                </p></Link>
-              </div>
-              
             </div>
-
           </div>
         </div>
-
         <div className="lg:col-span-7 text-white font-sans font-bold bg-cover bg-[url('https://cdn.dribbble.com/users/22815/screenshots/14343442/media/c2a2d9926b0de3f8077e80ed7cb04c96.jpg')]"></div>
       </div>
   )

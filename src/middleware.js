@@ -25,5 +25,11 @@ export async function middleware(req) {
     }
   }
 
+  if(!session?.body?.id) {
+    if(url.includes("/admin")) {
+      return NextResponse.redirect("http://localhost:3000/admin")
+    }
+  }
+
   return NextResponse.next();
 }

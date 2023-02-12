@@ -50,4 +50,8 @@
   .filterItem{
     @apply cursor-pointer after:bg-gray-200 rounded-full p-2
   }
+
+  .typeAdminButton {
+    @apply border border-black border-current rounded-lg max-w-fit p-10 mt-10 cursor-pointer hover:bg-gray-100 hover:border-2 mr-10;
+  }
 }

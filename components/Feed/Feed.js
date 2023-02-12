@@ -9,12 +9,12 @@ export const Feed = ({posts}) => {
     <>
       {
       posts?.length > 0?
-        <div className="">
+        <div className="flex p-2">
           {
-            posts?.map((post) => (
-              <>
+            posts?.map((post, index) => (
+              <div key={index} className="max-w-sm max-h-sm pr-3">
                 <Post post={post[0] || post} />
-              </>
+              </div>
             ))
           }
 

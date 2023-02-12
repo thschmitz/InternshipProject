@@ -55,7 +55,7 @@ export const Header = (props) => {
 
         </div>
         <div className="flex flex-col">
-          <p className="navResponsiveButton">Registre um apartamento</p>
+          <Link href="/create/register-your-place"><p className="navResponsiveButton">Registre seu imovel</p></Link>
           <Link href={`/profile/${user.id}`}><p className="navResponsiveButton">Conta</p></Link>
           {authState?
             <p className="navResponsiveButton" onClick={(e) => signOut(e)}>
@@ -90,7 +90,7 @@ export const Header = (props) => {
       </form>
 
       <div className="navButton">
-        <p className="">Registre um apartamento</p>
+        <Link href="/create/register-your-place"><p className="">Registre seu imovel</p></Link>
       </div>
       <div className="navButton">
       </div>

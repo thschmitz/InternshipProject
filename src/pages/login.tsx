@@ -27,6 +27,7 @@ function Login() {
       
       await setUser(responseData);
 
+      Toast.notifySuccess(notification, "Login Success!", "You have logged in!");
       router.push("/")
     } else {
       Toast.notifyError(notification, "Login Error!", "Your credentials are wrong")

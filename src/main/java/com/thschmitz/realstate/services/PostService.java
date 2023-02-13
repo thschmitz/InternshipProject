@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.thschmitz.realstate.domain.Comment;
 import com.thschmitz.realstate.domain.Post;
 import com.thschmitz.realstate.domain.User;
-import com.thschmitz.realstate.dto.AuthorDTO;
 import com.thschmitz.realstate.exception.ObjectNotFoundException;
 import com.thschmitz.realstate.exception.ParametersNotPassedException;
 import com.thschmitz.realstate.repository.PostRepository;
@@ -54,7 +53,7 @@ public class PostService {
 		String author_id = Session.getSessionId(session);
 
 		User user = Util.toUser(author_id, service);
-		post.setAuthor(new AuthorDTO(user).getId());
+		post.setAuthor(user.getId());
 		
 		return postRepository.save(post);
 	}
@@ -80,14 +79,13 @@ public class PostService {
 	
 	
 	public void updateData(Post newObj, Post obj) {
-		if(obj.getBody() == null || obj.getImage() == null || obj.getPrice() == null || obj.getSize() == null || obj.getStatus() == null || obj.getTitle() == null) {
+		if(obj.getBody() == null || obj.getImage() == null || obj.getPrice() == null || obj.getSize() == null || obj.getTitle() == null) {
 			throw new ParametersNotPassedException("You need to inform all the parameters to update!");
 		} else {
 			newObj.setBody(obj.getBody());
 			newObj.setImage(obj.getImage());
 			newObj.setPrice(obj.getPrice());
 			newObj.setSize(obj.getSize());
-			newObj.setStatus(obj.getStatus());
 			newObj.setTitle(obj.getTitle());
 		}
 	}

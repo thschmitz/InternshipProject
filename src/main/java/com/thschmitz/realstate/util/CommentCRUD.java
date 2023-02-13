@@ -1,18 +1,5 @@
 package com.thschmitz.realstate.util;
 
-import java.util.Date;
-
-import com.thschmitz.realstate.domain.Comment;
-import com.thschmitz.realstate.domain.Post;
-import com.thschmitz.realstate.dto.AuthorDTO;
-import com.thschmitz.realstate.dto.CommentDTO;
-import com.thschmitz.realstate.dto.PostDTO;
-import com.thschmitz.realstate.exception.ParametersNotPassedException;
-import com.thschmitz.realstate.exception.Unauthorized;
-import com.thschmitz.realstate.repository.CommentRepository;
-import com.thschmitz.realstate.repository.PostRepository;
-import com.thschmitz.realstate.services.PostService;
-
 public class CommentCRUD {
 	/*public static Post addComment(Post post, Date formattedDate, AuthorDTO author, CommentDTO comment, CommentRepository commentRepository, PostRepository postRepository) {
 		if(comment.getText() == null) {

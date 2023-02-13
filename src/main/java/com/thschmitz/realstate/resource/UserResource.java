@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.thschmitz.realstate.domain.User;
-import com.thschmitz.realstate.dto.UserDTO;
 import com.thschmitz.realstate.exception.MissingRequestHeaderException;
 import com.thschmitz.realstate.services.UserService;
 import com.thschmitz.realstate.util.Session;
@@ -67,7 +66,7 @@ public class UserResource {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<UserDTO> delete(@PathVariable String id, @RequestHeader(value="JWT") String header) {
+	public ResponseEntity<Void> delete(@PathVariable String id, @RequestHeader(value="JWT") String header) {
 		Session.session(header);
 		service.delete(id);
 		
@@ -88,8 +87,10 @@ public class UserResource {
 		
 		if(header == null) {
 			throw new MissingRequestHeaderException("You need to inform JWT header to request!");
+		} else {
+			return ResponseEntity.ok().body(Session.session(header));	
 		}
-		return ResponseEntity.ok().body(Session.session(header));
+		
 	}
 	
 	@RequestMapping(value="/namesearch", method=RequestMethod.GET)

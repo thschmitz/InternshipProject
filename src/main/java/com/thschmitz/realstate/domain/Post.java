@@ -21,26 +21,39 @@ public class Post implements Serializable {
 	private String title;
 	private String body;
 	private String image;
-	private String status;
 	private Double price;
 	private Double size;
 	private String authorId;
+	private Integer restrooms;
+	private Integer bedrooms;
+	private String longitude;
+	private String latitude;
+	private String status;
 	
 	public Post() {
 		
 	}
 
-	public Post(String id, Date created_at, String title, String body, String image, String status, Double price, Double size, String authorId) {
+
+
+	public Post(String id, Date created_at, String title, String body, String image, Double price, Double size,
+			String authorId, Integer restrooms, Integer bedrooms, String longitude, String latitude, String status) {
 		this.id = id;
 		this.created_at = created_at;
 		this.title = title;
 		this.body = body;
 		this.image = image;
-		this.status = status;
 		this.price = price;
 		this.size = size;
 		this.authorId = authorId;
+		this.restrooms = restrooms;
+		this.bedrooms = bedrooms;
+		this.longitude = longitude;
+		this.latitude = latitude;
+		this.status = status;
 	}
+
+
 
 	public String getId() {
 		return id;
@@ -81,14 +94,6 @@ public class Post implements Serializable {
 	public void setImage(String image) {
 		this.image = image;
 	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
 	
 	public String getAuthor() {
 		return authorId;
@@ -114,6 +119,54 @@ public class Post implements Serializable {
 		this.size = size;
 	}
 	
+	public String getAuthorId() {
+		return authorId;
+	}
+
+	public void setAuthorId(String authorId) {
+		this.authorId = authorId;
+	}
+
+	public Integer getRestrooms() {
+		return restrooms;
+	}
+
+	public void setRestrooms(Integer restrooms) {
+		this.restrooms = restrooms;
+	}
+
+	public Integer getBedrooms() {
+		return bedrooms;
+	}
+
+	public void setBedrooms(Integer bedrooms) {
+		this.bedrooms = bedrooms;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

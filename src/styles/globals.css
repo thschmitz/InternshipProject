@@ -60,6 +60,14 @@
   }
 
   .address {
-    @apply box-border border-black w-52 h-12 p-6 rounded-sm font-normal absolute left-1/2 -ml-20 mt-12
+    @apply box-border border-black w-52 h-12 p-6 rounded-sm font-light relative mt-7 text-sm
+  }
+
+  .inputInfo {
+    @apply border border-black w-52 h-12 p-6 rounded-lg text-sm
+  }
+
+  .inputInfoTitle {
+    @apply border border-black w-96 h-12 p-6 rounded-lg text-sm
   }
 }

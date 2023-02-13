@@ -11,7 +11,7 @@ import { setAuthState } from "../../store/authSlice";
 import { tokenService } from "../../../services/auth/tokenService";
 import { Toast } from "../../../services/notification/toast.js";
 import { useNotification } from "use-toast-notification";
-import Hub from "../../../components/Register/Hub"
+import {Hub} from "../../../components/Register/Hub"
 
 const Home: NextPage = () => {
 

@@ -1,12 +1,71 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import {BsFillHouseFill} from "react-icons/bs"
 import { MdApartment, MdCabin } from "react-icons/md"
+import { GoogleMap, LoadScript, Marker, StandaloneSearchBox } from '@react-google-maps/api';
 
-
-const Hub = () => {
+export const Hub = () => {
   const [ step, setStep ] = useState("Hub");
   const [ type, setType ] = useState("");
+  const [ searchBox, setSearchBox ] = useState<google.maps.places.SearchBox>();
+  const [ map, setMap] = useState<google.maps.Map>();
+  const [ markers, setMarkers ] = useState<any[]>([]);
+
+  const containerStyle = {
+    width: '100%',
+    height: '100%'
+  };
   
+  const center = {
+    lat: -29.745,
+    lng: -52.423
+  };
+
+  const onLoad = (ref: google.maps.places.SearchBox) => {
+    setSearchBox(ref)
+  }
+
+  const onMapLoad = (map:google.maps.Map) => {
+    setMap(map);
+  }
+
+  const onPlacesChanged = () => {
+    const places = searchBox!.getPlaces();
+
+    console.log("PLACES: ", places);
+
+    const place = places![0];
+    const location = {
+      lat: place?.geometry?.location?.lat() || 0,
+      lng: place?.geometry?.location?.lng() || 0,
+    }
+
+    console.log(location)
+
+    setMarkers([...markers, location])
+
+    map?.panTo(location) // Coloca o centro na nova posicao
+  }
+
+  if(step === "Localization") {
+    return(
+      <div className="h-screen">
+        <LoadScript googleMapsApiKey="AIzaSyCA_eQIClZMrzVH2loVNR_qn5VZ5kiMscs" libraries={['places']}>
+          <GoogleMap onLoad={onMapLoad} mapContainerStyle={containerStyle} center={center} zoom={15}>
+            <StandaloneSearchBox onLoad={onLoad} onPlacesChanged={onPlacesChanged}>
+              <input className="address" placeholder="Digite um endereco"/>
+            </StandaloneSearchBox>
+
+            {markers.map((marker, index) => (
+              <Marker key={index} position={marker} />
+            ))}
+
+          </GoogleMap>
+        </LoadScript>
+      </div>
+    )
+  }
+
+
   if(step === "Type") {
     return(
       <div>
@@ -47,34 +106,6 @@ const Hub = () => {
     )
   }
 
-  if(step === "Localization") {
-    return(
-      <div>
-        <div className="max-w-7xl mx-auto items-center flex w-full justify-center mt-32">
-          <div className="flex-col">
-            <div className="flex">
-              <div className="w-full items-center justify-center text-xl">
-                <p className="">Etapa 1</p>
-                <h1 className="font-bold text-5xl mt-5">Qual a localizacao do imovel?</h1>
-                <div className="mt-10">
-                  <p>Mostre no mapa onde se localiza o seu imovel, lembre-se de que seu cliente ira filtrar a sua pesquisa de acordo com a localizacao do imovel</p>
-                </div>
-              </div>
-
-            </div>
-            <div className="mt-20 flex text-center">
-              <p className="bg-black max-w-fit text-white rounded-lg p-5 mr-5 cursor-pointer" onClick={() => setStep("Type")}>Voltar</p>
-              <p className="bg-black max-w-fit text-white rounded-lg p-5 cursor-pointer" onClick={() => setStep("Informations")}>Avancar</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-
-  }
-
-  console.log(step)
-
   return(
     <div>
         <div className="max-w-7xl mx-auto items-center flex w-full justify-center mt-32">
@@ -97,10 +128,9 @@ const Hub = () => {
           </div>
 
         </div>
+
       
     </div>
     
   )
 }
-
-export default Hub;

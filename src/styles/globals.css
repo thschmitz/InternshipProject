@@ -54,4 +54,12 @@
   .typeAdminButton {
     @apply border border-black border-current rounded-lg max-w-fit p-10 mt-10 cursor-pointer hover:bg-gray-100 hover:border-2 mr-10;
   }
+
+  .marker-map {
+    @apply -mt-10;
+  }
+
+  .address {
+    @apply box-border border-black w-52 h-12 p-6 rounded-sm font-normal absolute left-1/2 -ml-20 mt-12
+  }
 }

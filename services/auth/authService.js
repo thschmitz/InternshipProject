@@ -48,7 +48,7 @@ export const authService = {
   async signUp(data) {
     console.log(data);
     try {
-      const response = await axios.post('http://localhost:8080/users', data, { 'Content-Type': 'application/json' });
+      const response = await axios.post('http://localhost:8080/users', data, { headers: { 'Content-Type': 'application/json'}});
       console.log("Response.data: ", response);
 
       tokenService.save(response.data);

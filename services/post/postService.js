@@ -51,7 +51,7 @@ export const postService = {
   async createPost(data) {
     try {
       const token = tokenService.get(null);
-      const response = await axios.post(`http://localhost:8080/posts`, data, { "Content-Type": "application/json", "JWT": token })
+      const response = await axios.post(`http://localhost:8080/posts`, data, { headers: {"Content-Type": "application/json", "JWT": token} })
 
       console.log(response.data);
 

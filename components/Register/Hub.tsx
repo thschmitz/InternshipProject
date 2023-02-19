@@ -5,11 +5,13 @@ import { Informations } from "./Informations"
 import { Localization } from "./Localization"
 import { Type } from "./Type"
 import { SellOrRent } from "./SellOrRent"
+import { useNotification } from 'use-toast-notification';
+import { Toast } from 'services/notification/toast';
 
 export const Hub = () => {
   const [ step, setStep ] = useState("Hub");
-  const [ type, setType ] = useState("");
-  const [ title, setTitle ] = useState("");
+  const [ type, setType ] = useState();
+  const [ title, setTitle ] = useState();
   const [ restrooms, setRestrooms ] = useState();
   const [ bedrooms, setBedrooms ] = useState();
   const [ size, setSize ] = useState();
@@ -18,18 +20,22 @@ export const Hub = () => {
   const [ body, setBody ] = useState();
   const [ address, setAddress ] = useState();
   const [ location, setLocation ] = useState({lat: null, lng: null})
-
+  const notification = useNotification();
 
   function onHandleSubmitDone(e:any) {
     e.preventDefault();
 
-    console.log("DADOS: ", {location, title, restrooms, bedrooms, size, image, price, body, address})
-
     const longitude = location.lng;
     const latitude = location.lat;
     const status = type;
+    const listValues = [title, body, image, price, size, restrooms, bedrooms, longitude, latitude, status];
 
-    postService.createPost({title, body, image, price, size, restrooms, bedrooms, longitude, latitude, status});
+    if(listValues.includes(undefined)) {
+      Toast.notifyError(notification, "Failed to create a new post!", "Check if all the informations has been fully completed and try again later!")
+    } else {
+      postService.createPost({title, body, image, price, size, restrooms, bedrooms, longitude, latitude, status});
+      Toast.notifySuccess(notification, "Success to create a new post!", "You have successfully created a new post")
+    }
   }
 
   if(step === "Localization") {
@@ -66,7 +72,6 @@ export const Hub = () => {
                 <h1 className="font-bold text-5xl mt-5">Descreva sua acomodação</h1>
                 <div className="mt-10">
                   <p>Nessa etapa, perguntaremos que tipo de propriedade você deseja anunciar e se os hóspedes poderão reservar o espaço inteiro ou apenas um quarto. Em seguida, informe a localização e quantas pessoas podem se hospedar.</p>
-
                 </div>
               </div>
               <div className="flex w-full items-center justify-center text-xl">

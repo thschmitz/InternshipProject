@@ -71,6 +71,7 @@ export const Informations = ({setRestrooms, restrooms, setBedrooms, bedrooms, se
                         placeholder="Exemplo: 2"
                         onChange={(e) => setImage(e.target.value)}
                         value={image}
+                        multiple
                       />
                     </div>
                     {type === "Aluguel" ? (

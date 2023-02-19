@@ -7,18 +7,19 @@ export const authService = {
       const response = await axios.post('http://localhost:8080/users/login', data, { 'Content-Type': 'application/json' }).catch(err => {
         console.log("ERR:", err)
       });
-  
+      
       tokenService.save(response.data)
 
       const session = await this.session(response.data);
       const userData = await this.userData(session.data.body.id);
   
+      console.log("USERADATA: ", userData)
       return userData;
     } catch (error) {
       console.error(error);
     }
   },
-  
+    
   async session(token) {
     try{
       const response = axios.get("http://localhost:8080/users/session", {headers: {"JWT": token}})
@@ -34,6 +35,30 @@ export const authService = {
     }
 
   },
+
+  async loginAdmin(data) {
+    try {
+      const response = await axios.post('http://localhost:8080/users/login', data, { 'Content-Type': 'application/json' }).catch(err => {
+        console.log("ERR:", err)
+      });
+      const session = await this.session(response.data)
+
+      if(session.data.body.sub === "Admin") {
+        tokenService.save(response.data)
+
+        const session = await this.session(response.data);
+        const userData = await this.userData(session.data.body.id);
+    
+        return userData;
+      } else {
+        return "Non Authorized";
+      }
+      
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
 
   async userData(id) {
     try{

@@ -18,6 +18,10 @@ export async function middleware(req) {
   })
 
   const session = await response.json();
+  
+  
+  console.log("MIDDLEWARE: ", session)
+
 
   if(session?.body?.id) {
     if(url.includes("/login") || url.includes("/signup")) {
@@ -25,9 +29,22 @@ export async function middleware(req) {
     }
   }
 
-  if(!session?.body?.id) {
+  if(session?.body?.sub === "User") {
     if(url.includes("/admin")) {
+      return NextResponse.redirect("http://localhost:3000/admin/login")
+    }
+  }
+
+  if(session?.body?.id) {
+    if(url.includes("/admin/login")) {
       return NextResponse.redirect("http://localhost:3000/admin")
+    }
+  }
+  
+
+  if(session?.body?.id === undefined) {
+    if(url.includes("/admin")) {
+      return NextResponse.redirect("http://localhost:3000/admin/login")
     }
   }
 

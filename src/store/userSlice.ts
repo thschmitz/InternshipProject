@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-import { HYDRATE } from "next-redux-wrapper";
 import { tokenService } from "services/auth/tokenService";
 import { authService } from "services/auth/authService";
 
@@ -10,7 +9,8 @@ export interface IInitialState {
   name:string,
   email:string,
   created_at:string,
-  image: string
+  image: string,
+  admin: any
 }
 
 // Initial state
@@ -20,6 +20,7 @@ const initialState: IInitialState = {
   email: "",
   created_at: "",
   image: "",
+  admin: false
 };
 
 // Actual Slice
@@ -35,6 +36,7 @@ export const userSlice = createSlice({
       state.email = action.payload.email;
       state.created_at = action.payload.created_at;
       state.image = action.payload.image;
+      state.admin = action.payload.admin
     },
 
     cleanUserData(state) {
@@ -43,6 +45,7 @@ export const userSlice = createSlice({
       state.email= "";
       state.created_at= "";
       state.image= "";
+      state.admin = false;
     },
   },
 });

@@ -22,9 +22,11 @@ const Home: NextPage = () => {
   const notification = useNotification();
 
   useEffect(() => {
-    if(!user.id) {
+    console.log("USER INDEX: ", user)
+    if(!user.id || user.admin === false) {
       router.push("/admin/login")
     }
+
   }, [])
 
   function signOut(e:any) {
@@ -32,6 +34,7 @@ const Home: NextPage = () => {
 
     dispatch(setAuthState(false))
     dispatch(cleanUserData())
+    localStorage.clear();
 
     router.push("/admin/login")
     tokenService.delete(null);
@@ -40,7 +43,6 @@ const Home: NextPage = () => {
 
   return (
     <div>
-
       <div className="sticky flex justify-between top-0 z-100 bg-white px-4 py-5 shadow-sm items-center ">
         <div className="relative h-13 w-13 flex-shrink-0 cursor-pointer">
           <Link href="/"><Image src={Logo} width={150} height={150} alt="RealStateLogo" /></Link>
@@ -54,14 +56,9 @@ const Home: NextPage = () => {
           <img className="rounded-full object-cover" onClick={(e) => signOut(e)} src={user.image}/>
         </div>
       </div>
-
       {
         actionState === "Register" &&
         <Hub />
-      }
-
-      {
-        
       }
     </div>
   );

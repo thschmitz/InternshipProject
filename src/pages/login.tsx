@@ -1,13 +1,14 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { authService } from "services/auth/authService.js";
+import { authService } from "../../services/auth/authService.js";
 import { useDispatch } from "react-redux";
-import { setAuthState } from "@/store/authSlice";
+import { setAuthState } from "../store/authSlice";
 import { useNotification } from "use-toast-notification";
 import Link from "next/link";
-import { useLocalStorage } from "../../../services/localStorage/user.js";
-import { setUserData } from "@/store/userSlice";
-import { Toast } from "services/notification/toast.js";
+import { useLocalStorage } from "../../services/localStorage/user.js";
+import { setUserData } from "../store/userSlice";
+import { Toast } from "../../services/notification/toast.js";
+import React from 'react'
 
 function Login() {
   const [email, setEmail] = useState<string>();
@@ -19,24 +20,19 @@ function Login() {
 
   async function onSubmit(e: any) {
     e.preventDefault();
-    const responseData = await authService.loginAdmin({email: email, password: password})
-    if(responseData === "Non Authorized") {
-      Toast.notifyError(notification, "Login Error!", "You are not authorized to enter here")
-    } else {
-      if(responseData) {
-        dispatch(setAuthState(true))
-        dispatch(setUserData(responseData))
-        
-        await setUser(responseData);
-  
-        Toast.notifySuccess(notification, "Login Success!", "You have logged in!");
-        router.push("/admin")
-      } else {
-        Toast.notifyError(notification, "Login Error!", "Your credentials are wrong")
-        console.log("ERRO NO LOGIN")
-      }
-    }
+    const responseData = await authService.login({email: email, password: password})
+    if(responseData) {
+      dispatch(setAuthState(true))
+      dispatch(setUserData(responseData))
+      
+      await setUser(responseData);
 
+      Toast.notifySuccess(notification, "Login Success!", "You have logged in!");
+      router.push("/")
+    } else {
+      Toast.notifyError(notification, "Login Error!", "Your credentials are wrong")
+      console.log("ERRO NO LOGIN")
+    }
   }
 
   return(

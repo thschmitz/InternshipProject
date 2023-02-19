@@ -48,6 +48,14 @@ export const Localization = ({setLocation, setStep, setAddress, address}:any) =>
     libraries: places
   });
 
+  const onMapClick = (e:google.maps.MapMouseEvent) => {
+    const location = {
+      lat: e?.latLng?.lat(),
+      lng: e?.latLng?.lng(),
+    }
+
+    setMarkers([location])
+  }
 
   return (
     <div>
@@ -70,6 +78,7 @@ export const Localization = ({setLocation, setStep, setAddress, address}:any) =>
                       onLoad={onMapLoad}
                       mapContainerStyle={containerStyle}
                       zoom={15}
+                      onClick={(e) => onMapClick(e)}
                     >
                       <StandaloneSearchBox
                         onLoad={onLoad}

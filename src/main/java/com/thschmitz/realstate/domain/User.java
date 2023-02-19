@@ -22,18 +22,20 @@ public class User implements Serializable {
 	private String password;
 	private Date created_at;
 	private String image;
+	private Boolean admin;
 	
 	public User() {
 		
 	}
 	
-	public User(String id, String name, String email, String password, Date created_at, String image) {
+	public User(String id, String name, String email, String password, Date created_at, String image, Boolean admin) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.created_at = created_at;
 		this.image = image;
+		this.admin = admin;
 	}
 
 	public String getId() {
@@ -83,6 +85,14 @@ public class User implements Serializable {
 	public void setImage(String image) {
 		this.image = image;
 	}
+	
+	public Boolean getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
+	}
 
 	@Override
 	public int hashCode() {
@@ -107,4 +117,6 @@ public class User implements Serializable {
 			return false;
 		return true;
 	}
+
+
 }

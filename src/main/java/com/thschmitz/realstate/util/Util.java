@@ -35,7 +35,7 @@ public class Util {
 	public static void isAllowed(String id_post, String id_author, PostService service) {
 		Post post = service.findById(id_post);
 		
-		if(!post.getAuthor().equals(id_author)) {
+		if(!post.getAuthorId().equals(id_author)) {
 			throw new Unauthorized("You can't do this request because you are not allowed to!");
 		}
 	}

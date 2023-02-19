@@ -94,14 +94,6 @@ public class Post implements Serializable {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	
-	public String getAuthor() {
-		return authorId;
-	}
-
-	public void setAuthor(String authorId) {
-		this.authorId = authorId;
-	}
 
 	public Double getPrice() {
 		return price;

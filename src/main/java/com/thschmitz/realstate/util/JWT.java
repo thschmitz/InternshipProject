@@ -23,11 +23,19 @@ public class JWT {
 		String secret = dotenv.get("secret_JWT");
 		Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(secret), 
                 SignatureAlgorithm.HS256.getJcaName());
+		String role;
+		
+		if(newObj.getAdmin()) {
+			role = "Admin";
+		} else {
+			role = "User";
+		}
 		
 		Instant now = Instant.now();
 		String jwtToken = Jwts.builder()
 		        .claim("id", newObj.getId())
 		        .setSubject(newObj.getName())
+		        .setSubject(role)
 		        .setIssuedAt(Date.from(now))
 		        .setExpiration(Date.from(now.plus(10l, ChronoUnit.MINUTES)))
 		        .signWith(hmacKey)

@@ -9,18 +9,18 @@ export const Informations = ({setRestrooms, restrooms, setBedrooms, bedrooms, se
             <div className="w-full items-center justify-center text-xl">
               <p className="">Etapa 5</p>
               <h1 className="font-bold text-5xl mt-5">
-                Nos de mais informacoes sobre o imovel
+                Nos dê mais informações sobre o imóvel
               </h1>
               <div className="mt-10">
                 <p>
-                  Insira nos campos indicados informacoes sobre o seu imovel!
-                  Lembre de que elas serao usadas para fins de filtragem na
+                  Insira nos campos indicados informações sobre o seu imóvel!
+                  Lembre de que elas serão usadas para fins de filtragem na
                   busca do seu cliente.
                 </p>
                 <div className="flex justify-between">
                   <div className="">
                     <div className="mt-10">
-                      <p className="text-lg font-bold">Titulo</p>
+                      <p className="text-lg font-bold">Título</p>
                       <input
                         className="inputInfoTitle"
                         placeholder="Exemplo: Casa no litoral com vista para a praia"
@@ -54,7 +54,7 @@ export const Informations = ({setRestrooms, restrooms, setBedrooms, bedrooms, se
                   <div className="">
                     <div className="mt-10">
                       <p className="text-lg font-bold">
-                        Tamanho do imovel (m²)
+                        Tamanho do imóvel (m²)
                       </p>
                       <input
                         type="number"
@@ -77,7 +77,7 @@ export const Informations = ({setRestrooms, restrooms, setBedrooms, bedrooms, se
                     {type === "Aluguel" ? (
                       <div className="mt-10">
                         <p className="text-lg font-bold">
-                          Preco do aluguel do imovel (R$)
+                          Preço do aluguel do imóvel (R$)
                         </p>
                         <input
                           type="number"
@@ -90,7 +90,7 @@ export const Informations = ({setRestrooms, restrooms, setBedrooms, bedrooms, se
                     ) : (
                       <div className="mt-10">
                         <p className="text-lg font-bold">
-                          Preco para venda do imovel (R$)
+                          Preço para venda do imóvel (R$)
                         </p>
                         <input
                           type="number"

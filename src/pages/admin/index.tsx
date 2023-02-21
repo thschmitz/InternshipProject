@@ -48,9 +48,9 @@ const Home: NextPage = () => {
           <Link href="/"><Image src={Logo} width={150} height={150} alt="RealStateLogo" /></Link>
         </div>
         <div className="flex">
-          <p className="navButton" onClick={() => setActionState("Register")}>Registrar um imovel</p>
-          <p className="navButton" onClick={() => setActionState("Edit")}>Editar um imovel</p>
-          <p className="navButton" onClick={() => setActionState("Remove")}>Remover um imovel</p>
+          <p className="navButton" onClick={() => setActionState("Register")}>Registrar um imóvel</p>
+          <p className="navButton" onClick={() => setActionState("Edit")}>Editar um imóvel</p>
+          <p className="navButton" onClick={() => setActionState("Remove")}>Remover um imóvel</p>
         </div>
         <div className="flex h-11 w-11 ml-6 cursor-pointer">
           <img className="rounded-full object-cover" onClick={(e) => signOut(e)} src={user.image}/>

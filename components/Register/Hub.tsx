@@ -79,7 +79,7 @@ export const Hub = () => {
               </div>
             </div>
             <div className="mt-20 flex flex-col text-center">
-              <p className="bg-black max-w-fit text-white rounded-lg p-5 cursor-pointer" onClick={() => setStep("SellOrRent")}>Avancar</p>
+              <p className="bg-black max-w-fit text-white rounded-lg p-5 cursor-pointer" onClick={() => setStep("SellOrRent")}>Avançar</p>
             </div>
           </div>
 

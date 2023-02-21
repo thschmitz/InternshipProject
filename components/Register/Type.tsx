@@ -11,12 +11,12 @@ export const Type = ({setType, type, setStep}:any) => {
             <div className="w-full items-center justify-center text-xl">
               <p className="">Etapa 3</p>
               <h1 className="font-bold text-5xl mt-5">
-                Qual o tipo do imovel?
+                Qual o tipo do imóvel?
               </h1>
               <div className="mt-10">
                 <p>
-                  Escolha palavras-chave que enquadram o imovel a ser inserido.
-                  Lembre-se de que eles serao usados para que seu imovel seja
+                  Escolha palavras-chave que enquadram o imóvel a ser inserido.
+                  Lembre-se de que eles serão usados para que seu imóvel seja
                   encontrado pelos seus clientes!
                 </p>
                 <div className="flex">
@@ -62,7 +62,7 @@ export const Type = ({setType, type, setStep}:any) => {
               className="bg-black max-w-fit text-white rounded-lg p-5 cursor-pointer"
               onClick={() => setStep("Localization")}
             >
-              Avancar
+              Avançar
             </p>
           </div>
         </div>

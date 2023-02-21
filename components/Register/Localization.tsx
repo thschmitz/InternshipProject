@@ -69,7 +69,7 @@ export const Localization = ({setLocation, setStep, setAddress, address}:any) =>
               </h1>
               <div className="mt-10">
                 <p>
-                  Digite no campo indicado o endereco do seu imovel e verifique
+                  Digite no campo indicado o endereço do seu imóvel e verifique
                   no mapa abaixo se esta corretamente assinalado
                 </p>
                 <div className="h-96 w-full text-center mt-10">

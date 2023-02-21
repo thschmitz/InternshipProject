@@ -18,7 +18,6 @@ const Home: NextPage = (props: any) => {
 export const getServerSideProps = async (ctx: any) => {
   const posts = await postService.searchAllPosts();
 
-
   return {
     props: {
       posts: posts || [],

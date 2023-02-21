@@ -2,7 +2,7 @@
 import { Post } from "components/Post/Post"
 import {useRouter} from "next/router"
 
-export const Feed = ({posts}) => {
+export const Feed = ({posts, editor}) => {
   const router = useRouter();
 
   return (
@@ -13,7 +13,7 @@ export const Feed = ({posts}) => {
           {
             posts?.map((post, index) => (
               <div key={index} className="max-w-sm max-h-sm pr-3">
-                <Post post={post[0] || post} />
+                <Post post={post[0] || post} editor={editor}/>
               </div>
             ))
           }

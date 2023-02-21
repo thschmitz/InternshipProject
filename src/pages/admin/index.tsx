@@ -11,9 +11,10 @@ import { setAuthState } from "../../store/authSlice";
 import { tokenService } from "../../../services/auth/tokenService";
 import { Toast } from "../../../services/notification/toast.js";
 import { useNotification } from "use-toast-notification";
-import {Hub} from "../../../components/Register/Hub"
+import {CreateHub} from "../../../components/Register/Hub"
+import EditHub from "../../../components/Edit/Hub"
 
-const Home: NextPage = () => {
+const Home: NextPage = (props) => {
 
   const [ actionState, setActionState ] = useState("Nothing")
   const router = useRouter();
@@ -22,7 +23,6 @@ const Home: NextPage = () => {
   const notification = useNotification();
 
   useEffect(() => {
-    console.log("USER INDEX: ", user)
     if(!user.id || user.admin === false) {
       router.push("/admin/login")
     }
@@ -58,7 +58,11 @@ const Home: NextPage = () => {
       </div>
       {
         actionState === "Register" &&
-        <Hub />
+        <CreateHub />
+      }
+      {
+        actionState === "Edit" && 
+        <EditHub posts={props?.posts}/>
       }
     </div>
   );

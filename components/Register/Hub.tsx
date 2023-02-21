@@ -8,7 +8,7 @@ import { SellOrRent } from "./SellOrRent"
 import { useNotification } from 'use-toast-notification';
 import { Toast } from 'services/notification/toast';
 
-export const Hub = () => {
+export const CreateHub = () => {
   const [ step, setStep ] = useState("Hub");
   const [ type, setType ] = useState();
   const [ title, setTitle ] = useState();

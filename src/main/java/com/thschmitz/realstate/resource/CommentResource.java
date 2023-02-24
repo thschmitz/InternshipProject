@@ -13,13 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.thschmitz.realstate.domain.Comment;
-import com.thschmitz.realstate.domain.Post;
-import com.thschmitz.realstate.domain.services.CommentService;
-import com.thschmitz.realstate.domain.services.PostService;
-import com.thschmitz.realstate.domain.services.UserService;
-import com.thschmitz.realstate.dto.CommentDTO;
-import com.thschmitz.realstate.resource.util.Session;
-import com.thschmitz.realstate.resource.util.Util;
+import com.thschmitz.realstate.services.CommentService;
+import com.thschmitz.realstate.services.PostService;
+import com.thschmitz.realstate.services.UserService;
+import com.thschmitz.realstate.util.Session;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -48,21 +45,23 @@ public class CommentResource {
 		return ResponseEntity.ok().body(commentService.findById(id));
 	}
 	
+	@RequestMapping(value="/post/{id}", method=RequestMethod.GET)
+	public ResponseEntity<List<Comment>> findCommentsByPost(@PathVariable String id) {
+		return ResponseEntity.ok().body(commentService.findCommentsByPost(id));
+	}
+	
 	@RequestMapping(value="/{id}", method=RequestMethod.POST)
-	public ResponseEntity<Post> create(@RequestBody CommentDTO comments, @PathVariable String id, @RequestHeader(value="JWT") String header) {
+	public ResponseEntity<Comment> create(@RequestBody Comment comment, @PathVariable String id, @RequestHeader(value="JWT") String header) {
 		Jws<Claims> session = Session.session(header);
 		
-		return ResponseEntity.ok().body(commentService.create(id, session, comments, postService, userService));
+		return ResponseEntity.ok().body(commentService.create(id, session, comment, postService, userService));
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable String id, @RequestHeader(value="JWT") String header) {
-		Jws<Claims> session = Session.session(header);
-		String author_id = Session.getSessionId(session);
+		Session.session(header);
+		commentService.delete(id);
 		
-		Util.isAllowed(id, author_id, postService);
-		
-		commentService.delete(id, session, postService);
 		return ResponseEntity.noContent().build();
 	}
 }

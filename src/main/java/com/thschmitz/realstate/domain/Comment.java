@@ -4,35 +4,35 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-import com.thschmitz.realstate.dto.AuthorDTO;
-import com.thschmitz.realstate.dto.PostDTO;
+import org.hibernate.annotations.GenericGenerator;
 
-@Document
+@Entity
 public class Comment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
+	@Id @GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String id;
 	private String text;
 	private Date created_at;
-	private AuthorDTO author;
+	private String authorId;
 
-	private PostDTO post;
+	private String postId;
 
 	public Comment() {
 
 	}
 
-	public Comment(String id, String text, Date created_at, AuthorDTO author, PostDTO post) {
+	public Comment(String id, String text, Date created_at, String authorId, String postId) {
 		this.id = id;
 		this.text = text;
 		this.created_at = created_at;
-		this.author = author;
-		this.post = post;
+		this.authorId = authorId;
+		this.postId = postId;
 	}
 
 	public String getId() {
@@ -59,20 +59,20 @@ public class Comment implements Serializable {
 		this.created_at = created_at;
 	}
 
-	public AuthorDTO getAuthor() {
-		return author;
+	public String getAuthor() {
+		return authorId;
 	}
 
-	public void setAuthor(AuthorDTO author) {
-		this.author = author;
+	public void setAuthor(String authorId) {
+		this.authorId = authorId;
 	}
 
-	public PostDTO getPost() {
-		return post;
+	public String getPost() {
+		return postId;
 	}
 
-	public void setPost(PostDTO post) {
-		this.post = post;
+	public void setPost(String postId) {
+		this.postId = postId;
 	}
 
 	@Override

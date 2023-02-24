@@ -1,52 +1,59 @@
 package com.thschmitz.realstate.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-import com.thschmitz.realstate.dto.AuthorDTO;
-import com.thschmitz.realstate.dto.CommentDTO;
-import com.thschmitz.realstate.dto.LikeDTO;
+import org.hibernate.annotations.GenericGenerator;
 
-@Document
+@Entity(name="post")
 public class Post implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Id
+	@Id @GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String id;
 	private Date created_at;
 	private String title;
 	private String body;
 	private String image;
-	private String status;
 	private Double price;
 	private Double size;
-	private AuthorDTO author;
-	
-	private List<CommentDTO> comments = new ArrayList<>();
-	
-	private List<LikeDTO> likes = new ArrayList<>();
+	private String authorId;
+	private Integer restrooms;
+	private Integer bedrooms;
+	private String longitude;
+	private String latitude;
+	private String status;
 	
 	public Post() {
 		
 	}
 
-	public Post(String id, Date created_at, String title, String body, String image, String status, Double price, Double size, AuthorDTO author) {
+
+
+	public Post(String id, Date created_at, String title, String body, String image, Double price, Double size,
+			String authorId, Integer restrooms, Integer bedrooms, String longitude, String latitude, String status) {
 		this.id = id;
 		this.created_at = created_at;
 		this.title = title;
 		this.body = body;
 		this.image = image;
-		this.status = status;
 		this.price = price;
 		this.size = size;
-		this.author = author;
+		this.authorId = authorId;
+		this.restrooms = restrooms;
+		this.bedrooms = bedrooms;
+		this.longitude = longitude;
+		this.latitude = latitude;
+		this.status = status;
 	}
+
+
 
 	public String getId() {
 		return id;
@@ -88,38 +95,6 @@ public class Post implements Serializable {
 		this.image = image;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	
-	public AuthorDTO getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(AuthorDTO author) {
-		this.author = author;
-	}
-	
-	public List<CommentDTO> getComments() {
-		return comments;
-	}
-
-	public List<LikeDTO> getLikes() {
-		return likes;
-	}
-
-	public void setLikes(List<LikeDTO> likes) {
-		this.likes = likes;
-	}
-	
-	public void setComments(List<CommentDTO> comments) {
-		this.comments = comments;
-	}
-
 	public Double getPrice() {
 		return price;
 	}
@@ -136,6 +111,54 @@ public class Post implements Serializable {
 		this.size = size;
 	}
 	
+	public String getAuthorId() {
+		return authorId;
+	}
+
+	public void setAuthorId(String authorId) {
+		this.authorId = authorId;
+	}
+
+	public Integer getRestrooms() {
+		return restrooms;
+	}
+
+	public void setRestrooms(Integer restrooms) {
+		this.restrooms = restrooms;
+	}
+
+	public Integer getBedrooms() {
+		return bedrooms;
+	}
+
+	public void setBedrooms(Integer bedrooms) {
+		this.bedrooms = bedrooms;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

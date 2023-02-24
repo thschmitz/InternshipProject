@@ -7,13 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.thschmitz.realstate.domain.services.exception.AuthenticationException;
-import com.thschmitz.realstate.domain.services.exception.ExpiredJwtException;
-import com.thschmitz.realstate.domain.services.exception.MissingRequestHeaderException;
-import com.thschmitz.realstate.domain.services.exception.ObjectNotFoundException;
-import com.thschmitz.realstate.domain.services.exception.ParametersNotPassedException;
-import com.thschmitz.realstate.domain.services.exception.ParseException;
-import com.thschmitz.realstate.domain.services.exception.Unauthorized;
+import com.thschmitz.realstate.exception.AuthenticationException;
+import com.thschmitz.realstate.exception.ExpiredJwtException;
+import com.thschmitz.realstate.exception.MissingRequestHeaderException;
+import com.thschmitz.realstate.exception.ObjectNotFoundException;
+import com.thschmitz.realstate.exception.ParametersNotPassedException;
+import com.thschmitz.realstate.exception.ParseException;
+import com.thschmitz.realstate.exception.Unauthorized;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
@@ -79,6 +79,15 @@ public class ResourceExceptionHandler {
 	public ResponseEntity<StandardError> unauthorizedException(Unauthorized e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.UNAUTHORIZED;
 		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Unauthorized", e.getMessage(), request.getRequestURI()); // esse request pega o caminho onde tu vai colocar o id do usuario que tu quer procurar
+		
+		
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<StandardError> illegalArgumentException(IllegalArgumentException e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.UNAUTHORIZED;
+		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "IllegalArgumentException", e.getMessage(), request.getRequestURI()); // esse request pega o caminho onde tu vai colocar o id do usuario que tu quer procurar
 		
 		
 		return ResponseEntity.status(status).body(err);

@@ -1,40 +1,41 @@
 package com.thschmitz.realstate.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-@Document(collection="user")
+import org.hibernate.annotations.GenericGenerator;
+
+
+@Entity
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Id
+	@Id @GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String id;
 	private String name;
 	private String email;
 	private String password;
 	private Date created_at;
 	private String image;
-	
-	@DBRef(lazy=true)
-	private List<Post> posts = new ArrayList<>();
+	private Boolean admin;
 	
 	public User() {
 		
 	}
 	
-	public User(String id, String name, String email, String password, Date created_at, String image) {
+	public User(String id, String name, String email, String password, Date created_at, String image, Boolean admin) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.created_at = created_at;
 		this.image = image;
+		this.admin = admin;
 	}
 
 	public String getId() {
@@ -85,12 +86,12 @@ public class User implements Serializable {
 		this.image = image;
 	}
 	
-	public List<Post> getPosts() {
-		return posts;
+	public Boolean getAdmin() {
+		return admin;
 	}
 
-	public void setPosts(List<Post> posts) {
-		this.posts = posts;
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
 	}
 
 	@Override
@@ -116,4 +117,6 @@ public class User implements Serializable {
 			return false;
 		return true;
 	}
+
+
 }

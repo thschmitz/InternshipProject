@@ -15,11 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.thschmitz.realstate.domain.Post;
-import com.thschmitz.realstate.domain.services.PostService;
-import com.thschmitz.realstate.dto.CommentDTO;
-import com.thschmitz.realstate.resource.util.Session;
-import com.thschmitz.realstate.resource.util.URL;
-import com.thschmitz.realstate.resource.util.Util;
+import com.thschmitz.realstate.services.PostService;
+import com.thschmitz.realstate.util.Session;
+import com.thschmitz.realstate.util.URL;
+import com.thschmitz.realstate.util.Util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -56,13 +55,6 @@ public class PostResource {
 		return ResponseEntity.ok().body(service.update(post));
 	}
 	
-	@RequestMapping(value="/like/{id}", method=RequestMethod.POST)
-	public ResponseEntity<Post> like(@PathVariable String id, @RequestHeader(value="JWT") String header) {
-		Jws<Claims> session = Session.session(header);
-		
-		return ResponseEntity.ok().body(service.like(id, session));
-	}
-	
 	@RequestMapping(value="/titlesearch", method=RequestMethod.GET)
  	public ResponseEntity<List<Post>> findByTitle(@RequestParam(value="text", defaultValue="") String title) {
 		title = URL.decodeParam(title);
@@ -96,10 +88,8 @@ public class PostResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@RequestMapping(value="/{id}/comments", method=RequestMethod.GET)
-	public ResponseEntity<List<CommentDTO>> commentsByPost(@PathVariable String id) {
-		List<CommentDTO> comments = service.commentsByPost(id);
-		
-		return ResponseEntity.ok().body(comments);
+	@RequestMapping(value="/profile/{id}", method=RequestMethod.GET)
+	public ResponseEntity<List<Post>> getProfilePosts(@PathVariable String id) {
+		return ResponseEntity.ok().body(service.getPostByProfileId(id));
 	}
 }

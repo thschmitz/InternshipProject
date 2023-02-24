@@ -1,11 +1,14 @@
 package com.thschmitz.realstate.repository;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.thschmitz.realstate.domain.Comment;
 
-@Repository
-public interface CommentRepository extends MongoRepository<Comment, String> {
-
+public interface CommentRepository extends JpaRepository<Comment, String> {
+	
+	@Query("SELECT c from Comment c WHERE c.postId = :id")
+	List<Comment> findCommentsByPostId(String id);
 }

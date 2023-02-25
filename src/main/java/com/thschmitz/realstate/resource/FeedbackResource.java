@@ -30,15 +30,4 @@ public class FeedbackResource {
 	public ResponseEntity<List<Feedback>> findAll() {
 		return ResponseEntity.ok().body(feedbackService.findAll());
 	}
-	
-	@RequestMapping(value="/{id}", method=RequestMethod.POST) 
-	public ResponseEntity<Void> like(@PathVariable String id, @RequestHeader(value="JWT") String header) {
-		Jws<Claims> session = Session.session(header);
-		String author_id = Session.getSessionId(session);
-
-		feedbackService.like(id, author_id);
-		
-		return ResponseEntity.noContent().build();
-	}
-	
 }

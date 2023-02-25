@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.thschmitz.realstate.domain.Post;
+import com.thschmitz.realstate.services.FeedbackService;
 import com.thschmitz.realstate.services.PostService;
 import com.thschmitz.realstate.util.Session;
 import com.thschmitz.realstate.util.URL;
@@ -29,16 +30,19 @@ import io.jsonwebtoken.Jws;
 public class PostResource {
 
 	@Autowired
-	private PostService service;
+	private PostService postService;
+	
+	@Autowired
+	private FeedbackService feedbackService;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<Post>> findAll() {
-		return ResponseEntity.ok().body(service.findAll());
+		return ResponseEntity.ok().body(postService.findAll());
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Post> findById(@PathVariable String id) {
-		Post post = service.findById(id);
+		Post post = postService.findById(id);
 		
 		return ResponseEntity.ok().body(post);
 	}
@@ -48,24 +52,24 @@ public class PostResource {
 		Jws<Claims> session = Session.session(header);
 		String author_id = Session.getSessionId(session);
 		
-		Util.isAllowed(id, author_id, service);
+		Util.isAllowed(id, author_id, postService);
 		
 		post.setId(id);
 		
-		return ResponseEntity.ok().body(service.update(post));
+		return ResponseEntity.ok().body(postService.update(post));
 	}
 	
 	@RequestMapping(value="/titlesearch", method=RequestMethod.GET)
  	public ResponseEntity<List<Post>> findByTitle(@RequestParam(value="text", defaultValue="") String title) {
 		title = URL.decodeParam(title);
-		List<Post> list = service.findByTitle(title);
+		List<Post> list = postService.findByTitle(title);
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@RequestMapping(value="/bodysearch", method=RequestMethod.GET)
 	public ResponseEntity<List<Post>> findByBody(@RequestParam(value="text", defaultValue="") String body) {
 		body = URL.decodeParam(body);
-		List<Post> list = service.findByBody(body);
+		List<Post> list = postService.findByBody(body);
 		return ResponseEntity.ok().body(list);
 	}
 	
@@ -74,7 +78,7 @@ public class PostResource {
 		Jws<Claims> session = Session.session(header);
 		Date created_at = new Date();
 		post.setCreated_at(created_at);
-		return ResponseEntity.ok().body(service.insert(post, session));
+		return ResponseEntity.ok().body(postService.insert(post, session));
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
@@ -82,14 +86,24 @@ public class PostResource {
 		Jws<Claims> session = Session.session(header);
 		String author_id = Session.getSessionId(session);
 		
-		Util.isAllowed(id, author_id, service);
+		Util.isAllowed(id, author_id, postService);
 		
-		service.delete(id);
+		postService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@RequestMapping(value="/profile/{id}", method=RequestMethod.GET)
 	public ResponseEntity<List<Post>> getProfilePosts(@PathVariable String id) {
-		return ResponseEntity.ok().body(service.getPostByProfileId(id));
+		return ResponseEntity.ok().body(postService.getPostByProfileId(id));
+	}
+	
+	@RequestMapping(value="/feedback/{id}", method=RequestMethod.POST) 
+	public ResponseEntity<Void> feedback(@PathVariable String id, @RequestHeader(value="JWT") String header) {
+		Jws<Claims> session = Session.session(header);
+		String author_id = Session.getSessionId(session);
+
+		feedbackService.like(id, author_id);
+		
+		return ResponseEntity.noContent().build();
 	}
 }

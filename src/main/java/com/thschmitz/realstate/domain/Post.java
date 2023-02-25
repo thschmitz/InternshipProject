@@ -20,7 +20,6 @@ public class Post implements Serializable {
 	private Date created_at;
 	private String title;
 	private String body;
-	private String image;
 	private Double price;
 	private Double size;
 	private String authorId;
@@ -35,14 +34,12 @@ public class Post implements Serializable {
 	}
 
 
-
-	public Post(String id, Date created_at, String title, String body, String image, Double price, Double size,
-			String authorId, Integer restrooms, Integer bedrooms, String longitude, String latitude, String status) {
+	public Post(String id, Date created_at, String title, String body, Double price, Double size,
+		String authorId, Integer restrooms, Integer bedrooms, String longitude, String latitude, String status) {
 		this.id = id;
 		this.created_at = created_at;
 		this.title = title;
 		this.body = body;
-		this.image = image;
 		this.price = price;
 		this.size = size;
 		this.authorId = authorId;
@@ -85,14 +82,6 @@ public class Post implements Serializable {
 
 	public void setBody(String body) {
 		this.body = body;
-	}
-
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
 	}
 
 	public Double getPrice() {

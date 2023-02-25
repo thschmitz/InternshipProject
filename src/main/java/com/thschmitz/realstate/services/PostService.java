@@ -79,11 +79,10 @@ public class PostService {
 	
 	
 	public void updateData(Post newObj, Post obj) {
-		if(obj.getBody() == null || obj.getImage() == null || obj.getPrice() == null || obj.getSize() == null || obj.getTitle() == null) {
+		if(obj.getBody() == null || obj.getPrice() == null || obj.getSize() == null || obj.getTitle() == null) {
 			throw new ParametersNotPassedException("You need to inform all the parameters to update!");
 		} else {
 			newObj.setBody(obj.getBody());
-			newObj.setImage(obj.getImage());
 			newObj.setPrice(obj.getPrice());
 			newObj.setSize(obj.getSize());
 			newObj.setTitle(obj.getTitle());

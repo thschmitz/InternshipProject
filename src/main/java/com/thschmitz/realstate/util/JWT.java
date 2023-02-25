@@ -7,7 +7,7 @@ import java.util.Date;
 
 import javax.crypto.spec.SecretKeySpec;
 
-import com.thschmitz.realstate.domain.User;
+import com.thschmitz.realstate.domain.Users;
 import com.thschmitz.realstate.exception.ExpiredJwtException;
 
 import io.github.cdimascio.dotenv.Dotenv;
@@ -17,7 +17,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 public class JWT {
-	public static String createJWT(User newObj) {
+	public static String createJWT(Users newObj) {
 		Dotenv dotenv = Dotenv.configure().directory("./.env").load();
 		
 		String secret = dotenv.get("secret_JWT");

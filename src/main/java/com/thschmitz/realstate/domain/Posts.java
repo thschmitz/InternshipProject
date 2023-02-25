@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity(name="post")
-public class Post implements Serializable {
+public class Posts implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id @GeneratedValue(generator="system-uuid")
@@ -29,12 +29,12 @@ public class Post implements Serializable {
 	private String latitude;
 	private String status;
 	
-	public Post() {
+	public Posts() {
 		
 	}
 
 
-	public Post(String id, Date created_at, String title, String body, Double price, Double size,
+	public Posts(String id, Date created_at, String title, String body, Double price, Double size,
 		String authorId, Integer restrooms, Integer bedrooms, String longitude, String latitude, String status) {
 		this.id = id;
 		this.created_at = created_at;
@@ -161,7 +161,7 @@ public class Post implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Post other = (Post) obj;
+		Posts other = (Posts) obj;
 		return Objects.equals(id, other.id);
 	}
 }

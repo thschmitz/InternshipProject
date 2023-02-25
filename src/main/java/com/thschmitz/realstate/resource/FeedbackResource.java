@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.thschmitz.realstate.domain.Feedback;
+import com.thschmitz.realstate.domain.Feedbacks;
 import com.thschmitz.realstate.services.FeedbackService;
 import com.thschmitz.realstate.util.Session;
 
@@ -27,7 +27,7 @@ public class FeedbackResource {
 	private FeedbackService feedbackService;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<Feedback>> findAll() {
+	public ResponseEntity<List<Feedbacks>> findAll() {
 		return ResponseEntity.ok().body(feedbackService.findAll());
 	}
 }

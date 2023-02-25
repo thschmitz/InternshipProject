@@ -3,11 +3,11 @@ package com.thschmitz.realstate.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.thschmitz.realstate.domain.Feedback;
+import com.thschmitz.realstate.domain.Feedbacks;
 
-public interface FeedbackRepository extends JpaRepository<Feedback, String> {
+public interface FeedbackRepository extends JpaRepository<Feedbacks, String> {
 	
-	@Query("SELECT f from Feedback f WHERE f.postId = :postId AND f.authorId = :authorId")
-	Feedback findByAuthorAndPostId(String authorId, String postId);
+	@Query("SELECT f from Feedbacks f WHERE f.postId = :postId AND f.authorId = :authorId")
+	Feedbacks findByAuthorAndPostId(String authorId, String postId);
 	
 }

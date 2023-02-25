@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.thschmitz.realstate.domain.Comment;
+import com.thschmitz.realstate.domain.Comments;
 import com.thschmitz.realstate.services.CommentService;
 import com.thschmitz.realstate.services.PostService;
 import com.thschmitz.realstate.services.UserService;
@@ -36,22 +36,22 @@ public class CommentResource {
 	private UserService userService;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<Comment>> findAll() {
+	public ResponseEntity<List<Comments>> findAll() {
 		return ResponseEntity.ok().body(commentService.findAll());
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Comment> findById(@PathVariable String id) {
+	public ResponseEntity<Comments> findById(@PathVariable String id) {
 		return ResponseEntity.ok().body(commentService.findById(id));
 	}
 	
 	@RequestMapping(value="/post/{id}", method=RequestMethod.GET)
-	public ResponseEntity<List<Comment>> findCommentsByPost(@PathVariable String id) {
+	public ResponseEntity<List<Comments>> findCommentsByPost(@PathVariable String id) {
 		return ResponseEntity.ok().body(commentService.findCommentsByPost(id));
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.POST)
-	public ResponseEntity<Comment> create(@RequestBody Comment comment, @PathVariable String id, @RequestHeader(value="JWT") String header) {
+	public ResponseEntity<Comments> create(@RequestBody Comments comment, @PathVariable String id, @RequestHeader(value="JWT") String header) {
 		Jws<Claims> session = Session.session(header);
 		
 		return ResponseEntity.ok().body(commentService.create(id, session, comment, postService, userService));

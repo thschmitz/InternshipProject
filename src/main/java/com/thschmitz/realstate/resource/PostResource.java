@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.thschmitz.realstate.domain.Post;
+import com.thschmitz.realstate.domain.Posts;
 import com.thschmitz.realstate.services.FeedbackService;
 import com.thschmitz.realstate.services.PostService;
 import com.thschmitz.realstate.util.Session;
@@ -36,19 +36,19 @@ public class PostResource {
 	private FeedbackService feedbackService;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<Post>> findAll() {
+	public ResponseEntity<List<Posts>> findAll() {
 		return ResponseEntity.ok().body(postService.findAll());
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Post> findById(@PathVariable String id) {
-		Post post = postService.findById(id);
+	public ResponseEntity<Posts> findById(@PathVariable String id) {
+		Posts post = postService.findById(id);
 		
 		return ResponseEntity.ok().body(post);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Post> update(@RequestBody Post post, @PathVariable String id, @RequestHeader(value="JWT") String header) {
+	public ResponseEntity<Posts> update(@RequestBody Posts post, @PathVariable String id, @RequestHeader(value="JWT") String header) {
 		Jws<Claims> session = Session.session(header);
 		String author_id = Session.getSessionId(session);
 		
@@ -60,21 +60,21 @@ public class PostResource {
 	}
 	
 	@RequestMapping(value="/titlesearch", method=RequestMethod.GET)
- 	public ResponseEntity<List<Post>> findByTitle(@RequestParam(value="text", defaultValue="") String title) {
+ 	public ResponseEntity<List<Posts>> findByTitle(@RequestParam(value="text", defaultValue="") String title) {
 		title = URL.decodeParam(title);
-		List<Post> list = postService.findByTitle(title);
+		List<Posts> list = postService.findByTitle(title);
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@RequestMapping(value="/bodysearch", method=RequestMethod.GET)
-	public ResponseEntity<List<Post>> findByBody(@RequestParam(value="text", defaultValue="") String body) {
+	public ResponseEntity<List<Posts>> findByBody(@RequestParam(value="text", defaultValue="") String body) {
 		body = URL.decodeParam(body);
-		List<Post> list = postService.findByBody(body);
+		List<Posts> list = postService.findByBody(body);
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Post> insert(@RequestBody Post post, @RequestHeader(value="JWT") String header) {
+	public ResponseEntity<Posts> insert(@RequestBody Posts post, @RequestHeader(value="JWT") String header) {
 		Jws<Claims> session = Session.session(header);
 		Date created_at = new Date();
 		post.setCreated_at(created_at);
@@ -93,7 +93,7 @@ public class PostResource {
 	}
 	
 	@RequestMapping(value="/profile/{id}", method=RequestMethod.GET)
-	public ResponseEntity<List<Post>> getProfilePosts(@PathVariable String id) {
+	public ResponseEntity<List<Posts>> getProfilePosts(@PathVariable String id) {
 		return ResponseEntity.ok().body(postService.getPostByProfileId(id));
 	}
 	

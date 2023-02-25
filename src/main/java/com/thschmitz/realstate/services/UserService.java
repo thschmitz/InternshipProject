@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.thschmitz.realstate.domain.User;
+import com.thschmitz.realstate.domain.Users;
 import com.thschmitz.realstate.exception.AuthenticationException;
 import com.thschmitz.realstate.exception.ObjectNotFoundException;
 import com.thschmitz.realstate.exception.ParametersNotPassedException;
@@ -20,17 +20,17 @@ public class UserService {
 	@Autowired
 	private UserRepository repository;
 
-	public Iterable<User> findAll() {
+	public Iterable<Users> findAll() {
 		return repository.findAll();
 	}
 	
-	public User findById(String id) {
-		Optional<User> user = repository.findById(id);
+	public Users findById(String id) {
+		Optional<Users> user = repository.findById(id);
 		
 		return user.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 	
-	public String insert(User obj) {
+	public String insert(Users obj) {
 		obj.setPassword(Password.encodePassword(obj));
 		repository.save(obj); // Encoding the password and sending the object
 		return JWT.createJWT(obj);
@@ -42,15 +42,15 @@ public class UserService {
 		repository.deleteById(id);
 	}
 	
-	public User update(User obj) {
-		User newObj = findById(obj.getId());
+	public Users update(Users obj) {
+		Users newObj = findById(obj.getId());
 		
 		updateData(newObj, obj);
 		
 		return repository.save(newObj);
 	}
 	
-	public void updateData(User newObj, User obj) {
+	public void updateData(Users newObj, Users obj) {
 		if(obj.getName() == null || obj.getEmail() == null) {
 			throw new ParametersNotPassedException("You need to inform all the parameters to update!");
 		} else {
@@ -60,8 +60,8 @@ public class UserService {
 		}
 	}
 	
-	public String login(User obj) {
-		User newObj = repository.findByEmail(obj.getEmail());
+	public String login(Users obj) {
+		Users newObj = repository.findByEmail(obj.getEmail());
 		
 		if(newObj == null) {
 			throw new AuthenticationException(null);
@@ -77,7 +77,7 @@ public class UserService {
 		
 	}
 	
-	public List<User> findbyText(String text) {
+	public List<Users> findbyText(String text) {
 		return repository.findByNameContainingIgnoreCase(text);
 	}
 

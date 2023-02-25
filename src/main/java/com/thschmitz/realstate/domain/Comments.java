@@ -2,6 +2,7 @@ package com.thschmitz.realstate.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,24 +11,44 @@ import javax.persistence.Id;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-public class Feedback implements Serializable{
+public class Comments implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id @GeneratedValue(generator="system-uuid")
 	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String id;
+	private String text;
 	private Date created_at;
 	private String authorId;
+
 	private String postId;
-	
-	public Feedback() {
-		
+
+	public Comments() {
+
 	}
-	
-	public Feedback(Date created_at, String authorId, String postId) {
+
+	public Comments(String id, String text, Date created_at, String authorId, String postId) {
+		this.id = id;
+		this.text = text;
 		this.created_at = created_at;
 		this.authorId = authorId;
 		this.postId = postId;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	public Date getCreated_at() {
@@ -53,13 +74,23 @@ public class Feedback implements Serializable{
 	public void setPost(String postId) {
 		this.postId = postId;
 	}
-	
-	public String getId() {
-		return id;
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
 	}
 
 	@Override
-	public String toString() {
-		return "LikeDTO [created_at=" + created_at + ", authorId=" + authorId + "]";
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Comments other = (Comments) obj;
+		return Objects.equals(id, other.id);
 	}
+
+
 }

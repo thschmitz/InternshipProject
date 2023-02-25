@@ -11,7 +11,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 
 @Entity
-public class User implements Serializable {
+public class Users implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id @GeneratedValue(generator="system-uuid")
@@ -24,11 +24,11 @@ public class User implements Serializable {
 	private String image;
 	private Boolean admin;
 	
-	public User() {
+	public Users() {
 		
 	}
 	
-	public User(String id, String name, String email, String password, Date created_at, String image, Boolean admin) {
+	public Users(String id, String name, String email, String password, Date created_at, String image, Boolean admin) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -109,7 +109,7 @@ public class User implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		Users other = (Users) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

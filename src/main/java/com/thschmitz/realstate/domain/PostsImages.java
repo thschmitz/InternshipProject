@@ -1,9 +1,21 @@
 package com.thschmitz.realstate.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class PostsImages {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+import org.hibernate.annotations.GenericGenerator;
+
+@Entity
+public class PostsImages implements Serializable{
+	private static final long serialVersionUID = 1L;
+
+	@Id @GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String id;
 	private Date created_at;
 	private String post_id;

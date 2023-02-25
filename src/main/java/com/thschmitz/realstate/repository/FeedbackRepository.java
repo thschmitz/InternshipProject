@@ -7,7 +7,7 @@ import com.thschmitz.realstate.domain.Feedbacks;
 
 public interface FeedbackRepository extends JpaRepository<Feedbacks, String> {
 	
-	@Query("SELECT f from Feedbacks f WHERE f.postId = :postId AND f.authorId = :authorId")
+	@Query("SELECT f from Feedbacks f WHERE f.post_id = :postId AND f.author_id = :authorId")
 	Feedbacks findByAuthorAndPostId(String authorId, String postId);
 	
 }

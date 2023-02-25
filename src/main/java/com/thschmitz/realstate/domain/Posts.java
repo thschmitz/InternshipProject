@@ -7,10 +7,12 @@ import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-@Entity(name="post")
+@Entity
+@Table(name="Posts")
 public class Posts implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -22,12 +24,12 @@ public class Posts implements Serializable {
 	private String body;
 	private Double price;
 	private Double size;
-	private String authorId;
+	private String author_id;
 	private Integer restrooms;
 	private Integer bedrooms;
 	private String longitude;
 	private String latitude;
-	private String status;
+	private String type;
 	
 	public Posts() {
 		
@@ -35,19 +37,19 @@ public class Posts implements Serializable {
 
 
 	public Posts(String id, Date created_at, String title, String body, Double price, Double size,
-		String authorId, Integer restrooms, Integer bedrooms, String longitude, String latitude, String status) {
+		String author_id, Integer restrooms, Integer bedrooms, String longitude, String latitude, String type) {
 		this.id = id;
 		this.created_at = created_at;
 		this.title = title;
 		this.body = body;
 		this.price = price;
 		this.size = size;
-		this.authorId = authorId;
+		this.author_id = author_id;
 		this.restrooms = restrooms;
 		this.bedrooms = bedrooms;
 		this.longitude = longitude;
 		this.latitude = latitude;
-		this.status = status;
+		this.type = type;
 	}
 
 
@@ -101,11 +103,11 @@ public class Posts implements Serializable {
 	}
 	
 	public String getAuthorId() {
-		return authorId;
+		return author_id;
 	}
 
-	public void setAuthorId(String authorId) {
-		this.authorId = authorId;
+	public void setAuthorId(String author_id) {
+		this.author_id = author_id;
 	}
 
 	public Integer getRestrooms() {
@@ -141,11 +143,11 @@ public class Posts implements Serializable {
 	}
 
 	public String getStatus() {
-		return status;
+		return type;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setStatus(String type) {
+		this.type = type;
 	}
 
 	@Override

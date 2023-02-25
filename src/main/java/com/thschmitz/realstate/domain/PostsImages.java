@@ -7,10 +7,14 @@ import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
+@Table(name="PostsImages")
 public class PostsImages implements Serializable{
 	private static final long serialVersionUID = 1L;
 
@@ -18,16 +22,18 @@ public class PostsImages implements Serializable{
 	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String id;
 	private Date created_at;
+	private String image_url;
 	private String post_id;
 	
 	public PostsImages() {
 		
 	}
 	
-	public PostsImages(String id, Date created_at, String post_id) {
+	public PostsImages(String id, Date created_at, String image_url, String post_id) {
 		super();
 		this.id = id;
 		this.created_at = created_at;
+		this.setImage_url(image_url);
 		this.post_id = post_id;
 	}
 
@@ -47,12 +53,20 @@ public class PostsImages implements Serializable{
 		this.created_at = created_at;
 	}
 
-	public String getPost_id() {
+	public String getPostId() {
 		return post_id;
 	}
 
-	public void setPost_id(String post_id) {
+	public void setPostId(String post_id) {
 		this.post_id = post_id;
+	}
+	
+	public String getImage_url() {
+		return image_url;
+	}
+
+	public void setImage_url(String image_url) {
+		this.image_url = image_url;
 	}
 
 	@Override
@@ -71,4 +85,6 @@ public class PostsImages implements Serializable{
 		PostsImages other = (PostsImages) obj;
 		return Objects.equals(id, other.id);
 	}
+
+
 }

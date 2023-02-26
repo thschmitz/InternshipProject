@@ -1,6 +1,7 @@
 package com.thschmitz.realstate.resource;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -47,4 +48,10 @@ public class PostImageResource {
 		
 		return ResponseEntity.ok().body(postImageService.insert(images));
 	}
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<PostsImages>> listAll() {
+		return ResponseEntity.ok().body(postImageService.listAll());
+	}
+	
 }

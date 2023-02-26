@@ -32,13 +32,14 @@ public class Posts implements Serializable {
 	private String longitude;
 	private String latitude;
 	private String type;
+	private String main_image;
 	
 	public Posts() {
 		
 	}
 
 	public Posts(String id, Date created_at, String title, String body, Double price, Double size,
-		String author_id, Integer restrooms, Integer bedrooms, String longitude, String latitude, String type) {
+		String author_id, Integer restrooms, Integer bedrooms, String longitude, String latitude, String type, String main_image) {
 		this.id = id;
 		this.created_at = created_at;
 		this.title = title;
@@ -51,6 +52,7 @@ public class Posts implements Serializable {
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.type = type;
+		this.main_image = main_image;
 	}
 
 	public String getId() {
@@ -149,6 +151,14 @@ public class Posts implements Serializable {
 		this.type = type;
 	}
 
+	public String getMain_image() {
+		return main_image;
+	}
+
+	public void setMain_image(String main_image) {
+		this.main_image = main_image;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -165,6 +175,4 @@ public class Posts implements Serializable {
 		Posts other = (Posts) obj;
 		return Objects.equals(id, other.id);
 	}
-
-
 }

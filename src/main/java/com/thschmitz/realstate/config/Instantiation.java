@@ -45,6 +45,7 @@ public class Instantiation implements CommandLineRunner {
 		
 		System.out.println("ENTROU AQUI");
 		
+		postsImagesRepository.deleteAll();
 		feedbackRepository.deleteAll();
 		userRepository.deleteAll(); // AQUI TA DELETANDO TUDOOOO
 		postRepository.deleteAll();

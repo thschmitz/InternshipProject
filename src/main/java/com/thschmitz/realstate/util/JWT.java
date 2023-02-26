@@ -9,6 +9,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import com.thschmitz.realstate.domain.Users;
 import com.thschmitz.realstate.exception.ExpiredJwtException;
+import com.thschmitz.realstate.exception.InvalidJWT;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Claims;
@@ -37,7 +38,7 @@ public class JWT {
 		        .setSubject(newObj.getName())
 		        .setSubject(role)
 		        .setIssuedAt(Date.from(now))
-		        .setExpiration(Date.from(now.plus(10l, ChronoUnit.MINUTES)))
+		        .setExpiration(Date.from(now.plus(2l, ChronoUnit.SECONDS)))
 		        .signWith(hmacKey)
 		        .compact();
 		
@@ -59,7 +60,9 @@ public class JWT {
 	    	
 	    	return jwtResponse;
 	    } catch(io.jsonwebtoken.ExpiredJwtException e) {
-	    	throw new ExpiredJwtException("JWT has expired or doesn't exist");
+	    	throw new ExpiredJwtException("JWT has expired");
+	    } catch(io.jsonwebtoken.security.SignatureException s) {
+	    	throw new InvalidJWT("You arent logged in!");
 	    }
 	    
 	    

@@ -75,6 +75,7 @@ public class PostResource {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Posts> insert(@RequestBody Posts post, @RequestHeader(value="JWT") String header) {
+		
 		Jws<Claims> session = Session.session(header);
 		Date created_at = new Date();
 		post.setCreated_at(created_at);
@@ -92,10 +93,10 @@ public class PostResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	/*@RequestMapping(value="/profile/{id}", method=RequestMethod.GET)
+	@RequestMapping(value="/profile/{id}", method=RequestMethod.GET)
 	public ResponseEntity<List<Posts>> getProfilePosts(@PathVariable String id) {
 		return ResponseEntity.ok().body(postService.getPostByProfileId(id));
-	}*/
+	}
 	
 	@RequestMapping(value="/feedback/{id}", method=RequestMethod.POST) 
 	public ResponseEntity<Void> feedback(@PathVariable String id, @RequestHeader(value="JWT") String header) {

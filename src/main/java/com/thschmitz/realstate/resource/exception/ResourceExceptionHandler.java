@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.thschmitz.realstate.exception.AuthenticationException;
 import com.thschmitz.realstate.exception.ExpiredJwtException;
+import com.thschmitz.realstate.exception.InvalidJWT;
 import com.thschmitz.realstate.exception.MissingRequestHeaderException;
+import com.thschmitz.realstate.exception.NonExistingJWTException;
 import com.thschmitz.realstate.exception.ObjectNotFoundException;
 import com.thschmitz.realstate.exception.ParametersNotPassedException;
 import com.thschmitz.realstate.exception.ParseException;
@@ -88,6 +90,24 @@ public class ResourceExceptionHandler {
 	public ResponseEntity<StandardError> illegalArgumentException(IllegalArgumentException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.UNAUTHORIZED;
 		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "IllegalArgumentException", e.getMessage(), request.getRequestURI()); // esse request pega o caminho onde tu vai colocar o id do usuario que tu quer procurar
+		
+		
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(NonExistingJWTException.class)
+	public ResponseEntity<StandardError> NonExistingJWTException(NonExistingJWTException e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "JWT not found", e.getMessage(), request.getRequestURI()); // esse request pega o caminho onde tu vai colocar o id do usuario que tu quer procurar
+		
+		
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(InvalidJWT.class)
+	public ResponseEntity<StandardError> InvalidJWT(InvalidJWT e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.NOT_ACCEPTABLE;
+		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Invalid JWT", e.getMessage(), request.getRequestURI()); // esse request pega o caminho onde tu vai colocar o id do usuario que tu quer procurar
 		
 		
 		return ResponseEntity.status(status).body(err);

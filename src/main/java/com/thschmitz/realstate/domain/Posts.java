@@ -1,7 +1,9 @@
 package com.thschmitz.realstate.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -35,7 +37,6 @@ public class Posts implements Serializable {
 		
 	}
 
-
 	public Posts(String id, Date created_at, String title, String body, Double price, Double size,
 		String author_id, Integer restrooms, Integer bedrooms, String longitude, String latitude, String type) {
 		this.id = id;
@@ -51,8 +52,6 @@ public class Posts implements Serializable {
 		this.latitude = latitude;
 		this.type = type;
 	}
-
-
 
 	public String getId() {
 		return id;
@@ -142,11 +141,11 @@ public class Posts implements Serializable {
 		this.latitude = latitude;
 	}
 
-	public String getStatus() {
+	public String getType() {
 		return type;
 	}
 
-	public void setStatus(String type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
@@ -166,4 +165,6 @@ public class Posts implements Serializable {
 		Posts other = (Posts) obj;
 		return Objects.equals(id, other.id);
 	}
+
+
 }

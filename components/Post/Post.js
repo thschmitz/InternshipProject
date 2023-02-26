@@ -3,7 +3,7 @@ import TimeAgo from "react-timeago";
 import Link from "next/link";
 import {FaEdit} from "react-icons/fa"
 
-export const Post = ({post, editor}) => {
+export const Post = ({post, editor, images}) => {
 
   return (
 
@@ -21,7 +21,7 @@ export const Post = ({post, editor}) => {
           
           <Link href={`/post/${post?.id}`}>
             <div className={editor? `rounded-t-3xl` : ``}>
-              <img className={`w-full ${editor? "" : "rounded-t-3xl"} max-w-3xl max-h-60`} src={post.image} alt="" />
+              <img className={`w-full ${editor? "" : "rounded-t-3xl"} max-w-3xl max-h-60`} src={post.main_image} alt="" />
               <div className="p-2 flex">
                 {post?.status === "Aluguel"?
                   <p><b>R${post?.price}</b>/mes</p>

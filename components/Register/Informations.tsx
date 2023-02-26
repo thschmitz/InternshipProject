@@ -1,4 +1,7 @@
 import React from 'react'
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Textarea from '@mui/joy/Textarea';
 
 export const Informations = ({setRestrooms, restrooms, setBedrooms, bedrooms, setImage, image, setPrice, price, setBody, body, setTitle, title, type, setSize, size, setStep, onHandleSubmitDone}:any) => {
   return (
@@ -21,34 +24,21 @@ export const Informations = ({setRestrooms, restrooms, setBedrooms, bedrooms, se
                   <div className="">
                     <div className="mt-10">
                       <p className="text-lg font-bold">Título</p>
-                      <input
-                        className="inputInfoTitle"
-                        placeholder="Exemplo: Casa no litoral com vista para a praia"
-                        maxLength={40}
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        required
-                      />
+                      <Box component="form" sx={{'& > :not(style)': { m: 1, width: '30ch' },}} noValidate autoComplete="off">
+                        <TextField value={title} id="outlined-basic" label="Exemplo: Casa no litoral com vista para a praia" variant="outlined" onChange={(e) => setTitle(e.target.value)} required></TextField>
+                      </Box>
                     </div>
                     <div className="mt-10">
                       <p className="text-lg font-bold">N de banheiros</p>
-                      <input
-                        type="number"
-                        className="inputInfo"
-                        placeholder="Exemplo: 2"
-                        value={restrooms}
-                        onChange={(e) => setRestrooms(e.target.value)}
-                      />
+                      <Box component="form" sx={{'& > :not(style)': { m: 1, width: '30ch' },}} noValidate autoComplete="off">
+                        <TextField value={restrooms} id="outlined-basic" label="Exemplo: 2" variant="outlined" required type="number" onChange={(e) => setRestrooms(e.target.value)}></TextField>
+                      </Box>
                     </div>
                     <div className="mt-10">
                       <p className="text-lg font-bold">N de quartos</p>
-                      <input
-                        type="number"
-                        className="inputInfo"
-                        placeholder="Exemplo: 2"
-                        value={bedrooms}
-                        onChange={(e) => setBedrooms(e.target.value)}
-                      />
+                      <Box component="form" sx={{'& > :not(style)': { m: 1, width: '30ch' },}} noValidate autoComplete="off">
+                        <TextField value={bedrooms} id="outlined-basic" label="Exemplo: 2" variant="outlined" type="number" required onChange={(e) => setBedrooms(e.target.value)}></TextField>
+                      </Box>
                     </div>
                   </div>
                   <div className="">
@@ -56,49 +46,34 @@ export const Informations = ({setRestrooms, restrooms, setBedrooms, bedrooms, se
                       <p className="text-lg font-bold">
                         Tamanho do imóvel (m²)
                       </p>
-                      <input
-                        type="number"
-                        className="inputInfo"
-                        placeholder="Exemplo: 100"
-                        value={size}
-                        onChange={(e) => setSize(e.target.value)}
-                      />
+                      <Box component="form" sx={{'& > :not(style)': { m: 1, width: '30ch' },}} noValidate autoComplete="off">
+                        <TextField value={size} id="outlined-basic" label="Exemplo: 100" variant="outlined" type="number" required onChange={(e) => setSize(e.target.value)}></TextField>
+                      </Box>
                     </div>
                     <div className="mt-10">
-                      <p className="text-lg font-bold">Imagem</p>
-                      <input
-                        type="file"
-                        placeholder="Exemplo: 2"
-                        onChange={(e) => setImage(e.target.value)}
-                        value={image}
-                        multiple
-                      />
+                      <p className="text-lg font-bold">Imagem Principal</p>
+                      <Box component="form" sx={{'& > :not(style)': { m: 1, width: '30ch' },}} noValidate autoComplete="off">
+                        <TextField value={image} id="outlined-basic" variant="outlined" type="file" required onChange={(e) => setImage(e.target.value)}></TextField>
+                      </Box>
                     </div>
                     {type === "Aluguel" ? (
                       <div className="mt-10">
                         <p className="text-lg font-bold">
                           Preço do aluguel do imóvel (R$)
                         </p>
-                        <input
-                          type="number"
-                          className="inputInfo"
-                          placeholder="Exemplo: 2500"
-                          value={price}
-                          onChange={(e) => setPrice(e.target.value)}
-                        />
+                        <Box component="form" sx={{'& > :not(style)': { m: 1, width: '30ch' },}} noValidate autoComplete="off">
+                          <TextField value={price} placeholder="Exemplo: 2500" id="outlined-basic" variant="outlined" type="number" required onChange={(e) => setPrice(e.target.value)}></TextField>
+                        </Box>
+                        
                       </div>
                     ) : (
                       <div className="mt-10">
                         <p className="text-lg font-bold">
                           Preço para venda do imóvel (R$)
                         </p>
-                        <input
-                          type="number"
-                          className="inputInfo"
-                          placeholder="Exemplo: 2500"
-                          value={price}
-                          onChange={(e) => setPrice(e.target.value)}
-                        />
+                        <Box component="form" sx={{'& > :not(style)': { m: 1, width: '30ch' },}} noValidate autoComplete="off">
+                          <TextField value={price} placeholder="Exemplo: 1 000 000" id="outlined-basic" variant="outlined" type="number" required onChange={(e) => setPrice(e.target.value)}></TextField>
+                        </Box>
                       </div>
                     )}
                   </div>

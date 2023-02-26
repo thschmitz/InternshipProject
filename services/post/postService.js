@@ -61,6 +61,21 @@ export const postService = {
 
       return error;
     }
+  },
+
+  async getAllImages() {
+    try {
+      const response = await axios.get(`http://localhost:8080/postimage`, {headers: {"Content-Type": "application/json"}})
+
+
+      console.log("Images: ", response.data)
+
+      return response.data;
+    } catch(error) {
+      console.log(error);
+
+      return error;
+    }
   }
 }
 

@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.thschmitz.realstate.domain.PostsImages;
+import com.thschmitz.realstate.exception.ParametersNotPassedException;
 import com.thschmitz.realstate.services.PostImageService;
+import com.thschmitz.realstate.services.PostService;
 import com.thschmitz.realstate.util.Session;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 
 @RestController
 @RequestMapping(value="/postimage")
@@ -27,13 +26,24 @@ public class PostImageResource {
 	@Autowired
 	private PostImageService postImageService;
 	
+	@Autowired
+	private PostService postService;
+	
 	@RequestMapping(value="/{id}", method=RequestMethod.POST)
 	public ResponseEntity<PostsImages> insert(@RequestBody PostsImages images, @PathVariable String id, @RequestHeader(value="JWT") String header) {
-		Jws<Claims> session = Session.session(header);
+		Session.session(header);
+		postService.findById(id);
+		
 		Date created_at = new Date();
 		
 		images.setCreated_at(created_at);
 		images.setPostId(id);
+		
+		System.out.println(images.getImage_url());
+		
+		if(images.getImage_url() == "") {
+			throw new ParametersNotPassedException("You need to inform the image_url to request!");
+		}
 		
 		return ResponseEntity.ok().body(postImageService.insert(images));
 	}

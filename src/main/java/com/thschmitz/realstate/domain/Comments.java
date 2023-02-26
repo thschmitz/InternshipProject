@@ -24,9 +24,7 @@ public class Comments implements Serializable {
 	private String id;
 	private String body;
 	private Date created_at;
-	
 	private String author_id;
-
 	private String post_id;
 
 	public Comments() {

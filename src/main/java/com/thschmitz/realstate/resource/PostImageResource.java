@@ -31,7 +31,7 @@ public class PostImageResource {
 	private PostService postService;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.POST)
-	public ResponseEntity<PostsImages> insert(@RequestBody PostsImages images, @PathVariable String id, @RequestHeader(value="JWT") String header) {
+	public ResponseEntity<PostsImages> insert(@RequestBody PostsImages images, @PathVariable Integer id, @RequestHeader(value="JWT") String header) {
 		Session.session(header);
 		postService.findById(id);
 		

@@ -41,24 +41,24 @@ public class CommentResource {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Comments> findById(@PathVariable String id) {
+	public ResponseEntity<Comments> findById(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(commentService.findById(id));
 	}
 	
 	@RequestMapping(value="/post/{id}", method=RequestMethod.GET)
-	public ResponseEntity<List<Comments>> findCommentsByPost(@PathVariable String id) {
+	public ResponseEntity<List<Comments>> findCommentsByPost(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(commentService.findCommentsByPost(id));
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.POST)
-	public ResponseEntity<Comments> create(@RequestBody Comments comment, @PathVariable String id, @RequestHeader(value="JWT") String header) {
+	public ResponseEntity<Comments> create(@RequestBody Comments comment, @PathVariable Integer id, @RequestHeader(value="JWT") String header) {
 		Jws<Claims> session = Session.session(header);
 		
 		return ResponseEntity.ok().body(commentService.create(id, session, comment, postService, userService));
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable String id, @RequestHeader(value="JWT") String header) {
+	public ResponseEntity<Void> delete(@PathVariable Integer id, @RequestHeader(value="JWT") String header) {
 		Session.session(header);
 		commentService.delete(id);
 		

@@ -41,16 +41,16 @@ public class PostResource {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Posts> findById(@PathVariable String id) {
+	public ResponseEntity<Posts> findById(@PathVariable Integer id) {
 		Posts post = postService.findById(id);
 		
 		return ResponseEntity.ok().body(post);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Posts> update(@RequestBody Posts post, @PathVariable String id, @RequestHeader(value="JWT") String header) {
+	public ResponseEntity<Posts> update(@RequestBody Posts post, @PathVariable Integer id, @RequestHeader(value="JWT") String header) {
 		Jws<Claims> session = Session.session(header);
-		String author_id = Session.getSessionId(session);
+		Integer author_id = Session.getSessionId(session);
 		
 		Util.isAllowed(id, author_id, postService);
 		
@@ -83,9 +83,9 @@ public class PostResource {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable String id, @RequestHeader(value="JWT") String header) {
+	public ResponseEntity<Void> delete(@PathVariable Integer id, @RequestHeader(value="JWT") String header) {
 		Jws<Claims> session = Session.session(header);
-		String author_id = Session.getSessionId(session);
+		Integer author_id = Session.getSessionId(session);
 		
 		Util.isAllowed(id, author_id, postService);
 		
@@ -94,14 +94,14 @@ public class PostResource {
 	}
 	
 	@RequestMapping(value="/profile/{id}", method=RequestMethod.GET)
-	public ResponseEntity<List<Posts>> getProfilePosts(@PathVariable String id) {
+	public ResponseEntity<List<Posts>> getProfilePosts(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(postService.getPostByProfileId(id));
 	}
 	
 	@RequestMapping(value="/feedback/{id}", method=RequestMethod.POST) 
-	public ResponseEntity<Void> feedback(@PathVariable String id, @RequestHeader(value="JWT") String header) {
+	public ResponseEntity<Void> feedback(@PathVariable Integer id, @RequestHeader(value="JWT") String header) {
 		Jws<Claims> session = Session.session(header);
-		String author_id = Session.getSessionId(session);
+		Integer author_id = Session.getSessionId(session);
 
 		feedbackService.like(id, author_id);
 		

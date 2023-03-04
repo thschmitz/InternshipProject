@@ -40,7 +40,7 @@ public class UserResource {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Users> findById(@PathVariable String id) {
+	public ResponseEntity<Users> findById(@PathVariable Integer id) {
 		Users user = service.findById(id);
 		
 		return ResponseEntity.ok().body(user);
@@ -57,7 +57,7 @@ public class UserResource {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Users> update(@RequestBody Users user, @PathVariable String id, @RequestHeader(value="JWT") String header) {
+	public ResponseEntity<Users> update(@RequestBody Users user, @PathVariable Integer id, @RequestHeader(value="JWT") String header) {
 		Session.session(header);
 		user.setId(id);
 		user = service.update(user);
@@ -66,7 +66,7 @@ public class UserResource {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable String id, @RequestHeader(value="JWT") String header) {
+	public ResponseEntity<Void> delete(@PathVariable Integer id, @RequestHeader(value="JWT") String header) {
 		Session.session(header);
 		service.delete(id);
 		

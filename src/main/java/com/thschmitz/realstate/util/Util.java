@@ -28,11 +28,11 @@ public class Util {
 	}
 	
 	
-	public static Users toUser(String id, UserService service) {
+	public static Users toUser(Integer id, UserService service) {
 		return service.findById(id);
 	}
 	
-	public static void isAllowed(String id_post, String id_author, PostService service) {
+	public static void isAllowed(Integer id_post, Integer id_author, PostService service) {
 		Posts post = service.findById(id_post);
 		
 		if(!post.getAuthorId().equals(id_author)) {

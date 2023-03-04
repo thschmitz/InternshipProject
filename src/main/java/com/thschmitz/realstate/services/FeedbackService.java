@@ -20,13 +20,13 @@ public class FeedbackService {
 		return (List<Feedbacks>) feedbackRepository.findAll();
 	}
 	
-	public Feedbacks checkAlreadyLiked(String author_id, String post_id) {
+	public Feedbacks checkAlreadyLiked(Integer author_id, Integer post_id) {
 		Feedbacks feedbackQuery = feedbackRepository.findByAuthorAndPostId(author_id, post_id);
 		
 		return feedbackQuery;
 	}
 	
-	public void like(String id, String author_id) {
+	public void like(Integer id, Integer author_id) {
 		Date created_at = new Date();
 		Feedbacks feedback = new Feedbacks();
 		

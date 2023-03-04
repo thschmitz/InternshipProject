@@ -34,7 +34,7 @@ public class PostService {
 		return (List<Posts>) postRepository.findAll();
 	}
 	
-	public Posts findById(String id) {
+	public Posts findById(Integer id) {
 		Optional<Posts> user = postRepository.findById(id);
 		
 		return user.orElseThrow(() -> new ObjectNotFoundException("Object not found!"));
@@ -50,7 +50,7 @@ public class PostService {
 	
 	public Posts insert(Posts post, Jws<Claims> session) {
 		
-		String author_id = Session.getSessionId(session);
+		Integer author_id = Session.getSessionId(session);
 
 		Users user = Util.toUser(author_id, service);
 		post.setAuthorId(user.getId());
@@ -58,7 +58,7 @@ public class PostService {
 		return postRepository.save(post);
 	}
 	
-	public void delete(String id) {
+	public void delete(Integer id) {
 		List<Comments> comments = commentService.findCommentsByPost(id);
 		
 		for(Comments comment : comments) {
@@ -89,7 +89,7 @@ public class PostService {
 		}
 	}
 	
-	public List<Posts> getPostByProfileId(String id) {
+	public List<Posts> getPostByProfileId(Integer id) {
 		return postRepository.findByAuthorId(id);
 	}
 }

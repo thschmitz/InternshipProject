@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.thschmitz.realstate.domain.PostsImages;
 
-public interface PostsImagesRepository extends JpaRepository<PostsImages, String> {
+public interface PostsImagesRepository extends JpaRepository<PostsImages, Integer> {
 
 
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,9 +16,9 @@ import org.hibernate.annotations.GenericGenerator;
 public class Users implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Id @GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid", strategy = "uuid")
-	private String id;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 	private String name;
 	private String email;
 	private String password;
@@ -29,7 +30,7 @@ public class Users implements Serializable {
 		
 	}
 	
-	public Users(String id, String name, String email, String password, Date created_at, String image, Boolean admin) {
+	public Users(Integer id, String name, String email, String password, Date created_at, String image, Boolean admin) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -39,11 +40,11 @@ public class Users implements Serializable {
 		this.admin = admin;
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

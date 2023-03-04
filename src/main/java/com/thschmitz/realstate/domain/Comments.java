@@ -6,32 +6,28 @@ import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="Comments")
 public class Comments implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id @GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid", strategy = "uuid")
-	private String id;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 	private String body;
 	private Date created_at;
-	private String author_id;
-	private String post_id;
+	private Integer author_id;
+	private Integer post_id;
 
 	public Comments() {
 
 	}
 
-	public Comments(String id, String body, Date created_at, String author_id, String post_id) {
+	public Comments(Integer id, String body, Date created_at, Integer author_id, Integer post_id) {
 		this.id = id;
 		this.body = body;
 		this.created_at = created_at;
@@ -39,11 +35,11 @@ public class Comments implements Serializable {
 		this.post_id = post_id;
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -63,19 +59,19 @@ public class Comments implements Serializable {
 		this.created_at = created_at;
 	}
 
-	public String getAuthor() {
+	public Integer getAuthor() {
 		return author_id;
 	}
 
-	public void setAuthor(String author_id) {
+	public void setAuthor(Integer author_id) {
 		this.author_id = author_id;
 	}
 
-	public String getPost() {
+	public Integer getPost() {
 		return post_id;
 	}
 
-	public void setPost(String post_id) {
+	public void setPost(Integer post_id) {
 		this.post_id = post_id;
 	}
 

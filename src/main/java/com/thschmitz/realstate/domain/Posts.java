@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -18,15 +19,15 @@ import org.hibernate.annotations.GenericGenerator;
 public class Posts implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Id @GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid", strategy = "uuid")
-	private String id;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 	private Date created_at;
 	private String title;
 	private String body;
 	private Double price;
 	private Double size;
-	private String author_id;
+	private Integer author_id;
 	private Integer restrooms;
 	private Integer bedrooms;
 	private String longitude;
@@ -38,8 +39,8 @@ public class Posts implements Serializable {
 		
 	}
 
-	public Posts(String id, Date created_at, String title, String body, Double price, Double size,
-		String author_id, Integer restrooms, Integer bedrooms, String longitude, String latitude, String type, String main_image) {
+	public Posts(Integer id, Date created_at, String title, String body, Double price, Double size,
+		Integer author_id, Integer restrooms, Integer bedrooms, String longitude, String latitude, String type, String main_image) {
 		this.id = id;
 		this.created_at = created_at;
 		this.title = title;
@@ -55,11 +56,11 @@ public class Posts implements Serializable {
 		this.main_image = main_image;
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -103,11 +104,11 @@ public class Posts implements Serializable {
 		this.size = size;
 	}
 	
-	public String getAuthorId() {
+	public Integer getAuthorId() {
 		return author_id;
 	}
 
-	public void setAuthorId(String author_id) {
+	public void setAuthorId(Integer author_id) {
 		this.author_id = author_id;
 	}
 

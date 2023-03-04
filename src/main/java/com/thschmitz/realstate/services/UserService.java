@@ -24,7 +24,7 @@ public class UserService {
 		return repository.findAll();
 	}
 	
-	public Users findById(String id) {
+	public Users findById(Integer id) {
 		Optional<Users> user = repository.findById(id);
 		
 		return user.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
@@ -37,7 +37,7 @@ public class UserService {
 	}
 	
 	
-	public void delete(String id) {
+	public void delete(Integer id) {
 		findById(id);
 		repository.deleteById(id);
 	}

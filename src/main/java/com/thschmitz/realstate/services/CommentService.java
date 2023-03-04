@@ -23,24 +23,24 @@ public class CommentService {
 		return (List<Comments>) commentRepository.findAll();
 	}
 	
-	public Comments findById(String id) {
+	public Comments findById(Integer id) {
 		Optional<Comments> comment = commentRepository.findById(id);
 		
 		return comment.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 	
-	public Comments create(String id, Jws<Claims> session, Comments comment, PostService postService, UserService userService) {
+	public Comments create(Integer id, Jws<Claims> session, Comments comment, PostService postService, UserService userService) {
 		
 		commentRepository.save(comment);
 		
 		return comment;
 	}
 	
-	public void delete(String id) {
+	public void delete(Integer id) {
 		commentRepository.deleteById(id);
 	}
 	
-	public List<Comments> findCommentsByPost(String id) {
+	public List<Comments> findCommentsByPost(Integer id) {
 		return commentRepository.findCommentsByPostId(id);
 	}
 	

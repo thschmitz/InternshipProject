@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.thschmitz.realstate.domain.Posts;
 
-public interface PostRepository extends JpaRepository<Posts, String> {
+public interface PostRepository extends JpaRepository<Posts, Integer> {
 
 	// https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#repositores.query-methods
 	// Para ver todos os metodos ja prontos do spring
@@ -17,6 +17,6 @@ public interface PostRepository extends JpaRepository<Posts, String> {
 	List<Posts> findByBodyContainingIgnoreCase(String body);
 	
 	@Query("SELECT p from Posts p WHERE p.author_id = :authorId")
-	List<Posts> findByAuthorId(String authorId);
+	List<Posts> findByAuthorId(Integer authorId);
 
 }

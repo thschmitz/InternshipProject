@@ -15,8 +15,8 @@ public class Session {
 		
 	}
 	
-	public static String getSessionId(Jws<Claims> session) {
-		String author_id = session.getBody().get("id").toString();
+	public static Integer getSessionId(Jws<Claims> session) {
+		Integer author_id = (Integer) session.getBody().get("id");
 		
 		return author_id;
 	}

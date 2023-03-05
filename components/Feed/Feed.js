@@ -1,8 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
+import { EditFields } from "components/Edit/EditFields";
 import { Post } from "components/Post/Post"
 import {useRouter} from "next/router"
+import React, {useState} from 'react'
 
-export const Feed = ({posts, editor, images}) => {
+export const Feed = ({posts, editor, setShowFields, setData}) => {
   const router = useRouter();
 
   return (
@@ -13,11 +15,10 @@ export const Feed = ({posts, editor, images}) => {
           {
             posts?.map((post, index) => (
               <div key={index} className="max-w-sm max-h-sm pr-3">
-                <Post post={post[0] || post} editor={editor} images={images}/>
+                <Post post={post[0] || post} editor={editor} setShowFields={setShowFields} setData={setData}/>
               </div>
             ))
           }
-
         </div>
       :
         <div className="flex-1 mt-10 text-center">

@@ -1,7 +1,6 @@
 import React from 'react'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import Textarea from '@mui/joy/Textarea';
 
 export const Informations = ({setRestrooms, restrooms, setBedrooms, bedrooms, setImage, image, setPrice, price, setBody, body, setTitle, title, type, setSize, size, setStep, onHandleSubmitDone}:any) => {
   return (

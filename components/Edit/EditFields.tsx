@@ -7,16 +7,16 @@ import { postService } from 'services/post/postService';
 const places = ['geometry', 'drawing', "places"];
 
 export const EditFields = ({data}: any, setShowFields: React.Dispatch<React.SetStateAction<boolean | undefined>>) => {
-  const [ title, setTitle ] = useState<string>("");
-  const [ restrooms, setRestrooms ] = useState<number>();
-  const [ bedrooms, setBedrooms ] = useState<number>();
-  const [ size, setSize ] = useState<number>();
+  const [ title, setTitle ] = useState<string>(data.title);
+  const [ restrooms, setRestrooms ] = useState<number>(data.restrooms);
+  const [ bedrooms, setBedrooms ] = useState<number>(data.bedrooms);
+  const [ size, setSize ] = useState<number>(data.size);
   const [ image, setImage ] = useState<string>("");
-  const [ price, setPrice ] = useState();
-  const [ body, setBody ] = useState<string>("");
+  const [ price, setPrice ] = useState(data.price);
+  const [ body, setBody ] = useState<string>(data.body);
   const [ address, setAddress ] = useState<string>("");
-  const [ location, setLocation ] = useState({lat: "", lng: ""})
-  const [ type, setType ] = useState<string>("");
+  const [ location, setLocation ] = useState({lat: data.latitude, lng: data.longitude})
+  const [ type, setType ] = useState<string>(data.type);
   const [ searchBox, setSearchBox ] = useState<google.maps.places.SearchBox>();
   const [ map, setMap] = useState<google.maps.Map>();
   const [ markers, setMarkers ] = useState<any[]>([]);
@@ -40,8 +40,23 @@ export const EditFields = ({data}: any, setShowFields: React.Dispatch<React.SetS
     height: '100%',
   };
 
+
   const onLoad = (ref: google.maps.places.SearchBox) => {
     setSearchBox(ref)
+  }
+
+  const onMapLoad = (map:google.maps.Map) => {
+    var centerLat = parseFloat(data.latitude).toFixed(0);
+    var centerLng = parseFloat(data.longitude).toFixed(0);
+
+    map.setCenter({
+      lat: Number(centerLat),
+      lng: Number(centerLng)
+    });
+
+    map.setZoom(8)
+    setMap(map);
+
   }
 
   const onPlacesChanged = () => {
@@ -52,8 +67,11 @@ export const EditFields = ({data}: any, setShowFields: React.Dispatch<React.SetS
       lat: place?.geometry?.location?.lat() || 0,
       lng: place?.geometry?.location?.lng() || 0,
     }
+
     setLocation(location)
+
     setMarkers([location])
+
     var latLng = new google.maps.LatLng(location.lat, location.lng)
 
     map?.panTo(latLng) // Coloca o centro na nova posicao
@@ -66,41 +84,13 @@ export const EditFields = ({data}: any, setShowFields: React.Dispatch<React.SetS
   });
 
   const onMapClick = (e:google.maps.MapMouseEvent) => {
-    console.log("clicked")
     const location = {
       lat: e?.latLng?.lat(),
       lng: e?.latLng?.lng(),
     }
 
-    console.log(location)
-
     setMarkers([location])
   }
-
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null)
-    setAddress(data.address);
-
-
-    const location = {
-      lat: data.latitude,
-      lng: data.longiutde
-    }
-
-    const locationNumber = {
-      lat: Number(data.latitude),
-      lng: Number(data.longitude)
-    }
-
-    console.log("LOCATIONNUMBER: ", locationNumber)
-
-    setMarkers([locationNumber]);
-
-    setLocation(location)
-    var latLng = new google.maps.LatLng(location.lat, location.lng)
-
-    map?.panTo(latLng) // Coloca o centro na nova posicao
-  }, [])
 
   return (
     <div>
@@ -176,39 +166,17 @@ export const EditFields = ({data}: any, setShowFields: React.Dispatch<React.SetS
                   <p className="text-lg font-bold">
                     Imagem postada
                   </p>
-                  {image !== undefined?
-                    <div className="flex justify-center">
-                      <img src={image}></img>
-                    </div>
-                  :
-                    <div className="flex justify-center">
-                      <img src={data.main_image}></img>
-                    </div>
-                  }
-
+                  <div className="flex justify-center">
+                    <img src={image || data.main_image}></img>
+                  </div>
                 </div>
                 <div className="h-96 w-full text-center mt-10">
                   {isLoaded && (
                     <GoogleMap
+                      onLoad={onMapLoad}
                       mapContainerStyle={containerStyle}
+                      zoom={15}
                       onClick={(e) => onMapClick(e)}
-                      onUnmount={onUnmount}
-                      onLoad={map => {
-                        const bounds = new window.google.maps.LatLngBounds();
-                        map.fitBounds(bounds);
-                        setMap(map);
-                        const location = {
-                          lat: data.latitude,
-                          lng: data.longitude
-                        }
-                    
-                        setMarkers([location]);
-                    
-                        setLocation(location)
-                        var latLng = new google.maps.LatLng(location.lat, location.lng)
-                    
-                        map?.panTo(latLng) // Coloca o centro na nova posicao
-                      }}
                     >
                       <StandaloneSearchBox
                         onLoad={onLoad}
@@ -216,12 +184,11 @@ export const EditFields = ({data}: any, setShowFields: React.Dispatch<React.SetS
                       >
                         <input
                           className="address"
-                          placeholder={"Digite um endereco"}
+                          placeholder="Digite um endereco"
                           value={address}
                           onChange={(e) => setAddress(e.target.value)}
                         />
                       </StandaloneSearchBox>
-
                       {markers.map((marker, index) => (
                         <Marker key={index} position={marker} />
                       ))}
@@ -258,7 +225,4 @@ export const EditFields = ({data}: any, setShowFields: React.Dispatch<React.SetS
       </div>
     </div>
   );
-
-
-
 }

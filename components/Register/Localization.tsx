@@ -20,6 +20,15 @@ export const Localization = ({setLocation, setStep, setAddress, address}:any) =>
 
   const onMapLoad = (map:google.maps.Map) => {
     setMap(map);
+    var centerLat = -29
+    var centerLng = -52
+
+    map.setCenter({
+      lat: Number(centerLat),
+      lng: Number(centerLng)
+    });
+
+    map.setZoom(8)
   }
 
   const onPlacesChanged = () => {

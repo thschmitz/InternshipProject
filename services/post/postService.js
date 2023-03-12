@@ -78,11 +78,11 @@ export const postService = {
     }
   },
   
-  async updatePost(id, {title, restrooms, bedrooms, size, image, price, latitude, longitude, body, type}) {
+  async updatePost(id, {title, restrooms, bedrooms, size, main_image, price, latitude, longitude, body, type}) {
     try{
       const token = tokenService.get(null);
-      console.log({title, restrooms, bedrooms, size, image, price, latitude, longitude, body, type})
-      const response = await axios.put(`http://localhost:8080/posts/${id}`, {title, restrooms, bedrooms, size, image, price, latitude, longitude, body, type}, {headers: {"Content-Type": "application/json", "JWT": token}})
+      console.log({title, restrooms, bedrooms, size, main_image, price, latitude, longitude, body, type})
+      const response = await axios.put(`http://localhost:8080/posts/${id}`, {title, restrooms, bedrooms, size, main_image, price, latitude, longitude, body, type}, {headers: {"Content-Type": "application/json", "JWT": token}})
 
       console.log(response);
 

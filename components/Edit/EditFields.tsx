@@ -32,7 +32,9 @@ export const EditFields = ({data}: any, setShowFields: React.Dispatch<React.SetS
 
     console.log(title)
 
-    postService.updatePost(data.id, {title, restrooms, bedrooms, size, image, price, latitude, longitude, body, type})
+    const main_image = image || data.main_image;
+
+    postService.updatePost(data.id, {title, restrooms, bedrooms, size, main_image, price, latitude, longitude, body, type})
   }
   
   const containerStyle = {

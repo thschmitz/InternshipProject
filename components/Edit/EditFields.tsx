@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { GoogleMap, Marker, StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api';
+import { postService } from 'services/post/postService';
 
 const places = ['geometry', 'drawing', "places"];
 
@@ -22,8 +23,17 @@ export const EditFields = ({data}: any, setShowFields: React.Dispatch<React.SetS
 
   function onHandleSubmitDone(e: React.MouseEvent<HTMLParagraphElement, MouseEvent>) {
     e.preventDefault();
+
+    console.log("Updating....")
+    console.log(data)
+
+    const latitude = location.lat;
+    const longitude = location.lng;
+
+    console.log(title)
+
+    postService.updatePost(data.id, {title, restrooms, bedrooms, size, image, price, latitude, longitude, body, type})
   }
-  
   
   const containerStyle = {
     width: '100%',
@@ -101,6 +111,7 @@ export const EditFields = ({data}: any, setShowFields: React.Dispatch<React.SetS
               <h1 className="font-bold text-5xl mt-5">
                 Edite os valores do imóvel selecionado
               </h1>
+              <p>Deixe em branco para permanecer o dado, digite '-' para deletar a informacao ou simplesmente digite um novo valor para o campo</p>
               <div className="mt-10">
 
                 <div className="flex justify-between">
@@ -108,19 +119,19 @@ export const EditFields = ({data}: any, setShowFields: React.Dispatch<React.SetS
                     <div className="mt-10">
                       <p className="text-lg font-bold">Título</p>
                       <Box component="form" sx={{'& > :not(style)': { m: 1, width: '30ch' },}} noValidate autoComplete="off">
-                        <TextField value={title} id="outlined-basic" label={data.title} variant="outlined" onChange={(e) => setTitle(e.target.value)} required></TextField>
+                        <TextField value={title} id="outlined-basic" label={data.title} variant="outlined" onChange={(e) => e.target.value !== "-" ? e.target.value === undefined? setTitle(data.title): setTitle(e.target.value) : ""} required></TextField>
                       </Box>
                     </div>
                     <div className="mt-10">
                       <p className="text-lg font-bold">N de banheiros</p>
                       <Box component="form" sx={{'& > :not(style)': { m: 1, width: '30ch' },}} noValidate autoComplete="off">
-                        <TextField value={restrooms} id="outlined-basic" label={data.restrooms}variant="outlined" required type="number" onChange={(e) => setRestrooms(Number(e.target.value))}></TextField>
+                        <TextField value={restrooms} id="outlined-basic" label={data.restrooms}variant="outlined" required type="number" onChange={(e) => e.target.value !== "-" ? e.target.value == undefined? setRestrooms(data.restrooms): setRestrooms(Number(e.target.value)) : ""}></TextField>
                       </Box>
                     </div>
                     <div className="mt-10">
                       <p className="text-lg font-bold">N de quartos</p>
                       <Box component="form" sx={{'& > :not(style)': { m: 1, width: '30ch' },}} noValidate autoComplete="off">
-                        <TextField value={bedrooms} id="outlined-basic" label={data.bedrooms} variant="outlined" type="number" required onChange={(e) => setBedrooms(Number(e.target.value))}></TextField>
+                        <TextField value={bedrooms} id="outlined-basic" label={data.bedrooms} variant="outlined" type="number" required onChange={(e) => e.target.value !== "-" ? e.target.value === undefined? setBedrooms(data.bedrooms): setBedrooms(Number(e.target.value)) : ""}></TextField>
                       </Box>
                     </div>
                   </div>
@@ -130,13 +141,13 @@ export const EditFields = ({data}: any, setShowFields: React.Dispatch<React.SetS
                         Tamanho do imóvel (m²)
                       </p>
                       <Box component="form" sx={{'& > :not(style)': { m: 1, width: '30ch' },}} noValidate autoComplete="off">
-                        <TextField value={size} id="outlined-basic" label={data.size} variant="outlined" type="number" required onChange={(e) => setSize(Number(e.target.value))}></TextField>
+                        <TextField value={size} id="outlined-basic" label={data.size} variant="outlined" type="number" required onChange={(e) => e.target.value !== "-" ? e.target.value === undefined? setSize(data.size): setSize(Number(e.target.value)) : ""}></TextField>
                       </Box>
                     </div>
                     <div className="mt-10">
                       <p className="text-lg font-bold">Imagem Principal</p>
                       <Box component="form" sx={{'& > :not(style)': { m: 1, width: '30ch' },}} noValidate autoComplete="off">
-                        <TextField value={image} id="outlined-basic" variant="outlined" type="file" required onChange={(e) => setImage(e.target.value)}></TextField>
+                        <TextField value={image} id="outlined-basic" variant="outlined" type="file" required onChange={(e) => e.target.value !== "-" ? e.target.value === undefined? setImage(data.main_image): setImage(e.target.value) : ""}></TextField>
                       </Box>
                     </div>
                     {type === "Aluguel" ? (
@@ -145,7 +156,7 @@ export const EditFields = ({data}: any, setShowFields: React.Dispatch<React.SetS
                           Preço do aluguel do imóvel (R$)
                         </p>
                         <Box component="form" sx={{'& > :not(style)': { m: 1, width: '30ch' },}} noValidate autoComplete="off">
-                          <TextField value={price} placeholder={data.price} id="outlined-basic" variant="outlined" type="number" required onChange={(e) => setPrice(e.target.value)}></TextField>
+                          <TextField value={price} placeholder={data.price} id="outlined-basic" variant="outlined" type="number" required onChange={(e) => e.target.value !== "-" ? e.target.value === undefined? setPrice(data.price): setPrice(e.target.value) : ""}></TextField>
                         </Box>
                         
                       </div>
@@ -155,7 +166,7 @@ export const EditFields = ({data}: any, setShowFields: React.Dispatch<React.SetS
                           Preço para venda do imóvel (R$)
                         </p>
                         <Box component="form" sx={{'& > :not(style)': { m: 1, width: '30ch' },}} noValidate autoComplete="off">
-                          <TextField value={price} placeholder={data.price} id="outlined-basic" variant="outlined" type="number" required onChange={(e) => setPrice(e.target.value)}></TextField>
+                          <TextField value={price} placeholder={data.price} id="outlined-basic" variant="outlined" type="number" required onChange={(e) => e.target.value !== "-" ? e.target.value === undefined? setPrice(data.price): setPrice(e.target.value) : ""}></TextField>
                         </Box>
                       </div>
                     )}
@@ -165,7 +176,7 @@ export const EditFields = ({data}: any, setShowFields: React.Dispatch<React.SetS
                   <p className="text-lg font-bold">
                     Imagem postada
                   </p>
-                  {image !== ""?
+                  {image !== undefined?
                     <div className="flex justify-center">
                       <img src={image}></img>
                     </div>
@@ -220,7 +231,7 @@ export const EditFields = ({data}: any, setShowFields: React.Dispatch<React.SetS
                 <div className="mt-10">
                   <textarea
                     value={body}
-                    onChange={(e) => setBody(e.target.value)}
+                    onChange={(e) => e.target.value !== "-" ? e.target.value === undefined? setBody(data.body): setBody(e.target.value) : ""}
                     rows={10}
                     className="resize-none block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder={data.body}

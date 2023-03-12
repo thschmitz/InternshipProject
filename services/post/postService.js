@@ -76,6 +76,23 @@ export const postService = {
 
       return error;
     }
+  },
+  
+  async updatePost(id, {title, restrooms, bedrooms, size, image, price, latitude, longitude, body, type}) {
+    try{
+      const token = tokenService.get(null);
+      console.log({title, restrooms, bedrooms, size, image, price, latitude, longitude, body, type})
+      const response = await axios.put(`http://localhost:8080/posts/${id}`, {title, restrooms, bedrooms, size, image, price, latitude, longitude, body, type}, {headers: {"Content-Type": "application/json", "JWT": token}})
+
+      console.log(response);
+
+      return response.data;
+
+    } catch(error) {
+      console.log(error);
+      return error;
+    }
+
   }
 }
 

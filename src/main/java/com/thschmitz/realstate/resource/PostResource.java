@@ -52,7 +52,9 @@ public class PostResource {
 		Jws<Claims> session = Session.session(header);
 		Integer author_id = Session.getSessionId(session);
 		
-		Util.isAllowed(id, author_id, postService);
+		System.out.println("Entrou dentro do update");
+		
+		// Util.isAllowed(id, author_id, postService);
 		
 		post.setId(id);
 		

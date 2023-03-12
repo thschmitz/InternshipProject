@@ -71,22 +71,27 @@ public class PostService {
 	
 	public Posts update(Posts post) {
 		Posts newObj = findById(post.getId());
-		
+		System.out.println("Dentro do service update");
 		updateData(newObj, post);
-		
+		System.out.println("Deu update");
 		return postRepository.save(newObj);
 	}
 	
 	
 	public void updateData(Posts newObj, Posts obj) {
-		if(obj.getBody() == null || obj.getPrice() == null || obj.getSize() == null || obj.getTitle() == null) {
-			throw new ParametersNotPassedException("You need to inform all the parameters to update!");
-		} else {
-			newObj.setBody(obj.getBody());
-			newObj.setPrice(obj.getPrice());
-			newObj.setSize(obj.getSize());
-			newObj.setTitle(obj.getTitle());
-		}
+		System.out.println(newObj.getBody());
+		System.out.println(newObj.getTitle());
+		
+		newObj.setRestrooms(obj.getRestrooms());
+		newObj.setBedrooms(obj.getBedrooms());
+		newObj.setLatitude(obj.getLatitude());
+		newObj.setLongitude(obj.getLatitude());
+		newObj.setBody(obj.getBody());
+		newObj.setMain_image(obj.getMain_image());
+		newObj.setType(obj.getType());
+		newObj.setPrice(obj.getPrice());
+		newObj.setSize(obj.getSize());
+		newObj.setTitle(obj.getTitle());
 	}
 	
 	public List<Posts> getPostByProfileId(Integer id) {

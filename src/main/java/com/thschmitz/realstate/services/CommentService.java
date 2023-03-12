@@ -43,5 +43,4 @@ public class CommentService {
 	public List<Comments> findCommentsByPost(Integer id) {
 		return commentRepository.findCommentsByPostId(id);
 	}
-	
 }

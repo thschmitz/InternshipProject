@@ -91,6 +91,4 @@ public class Comments implements Serializable {
 		Comments other = (Comments) obj;
 		return Objects.equals(id, other.id);
 	}
-
-
 }

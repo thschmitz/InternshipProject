@@ -26,5 +26,4 @@ public class PostImageService {
 	public List<PostsImages> listAll() {
 		return (List<PostsImages>) postsImagesRepository.findAll();
 	}
-	
 }

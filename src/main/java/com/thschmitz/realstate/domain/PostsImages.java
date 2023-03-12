@@ -86,6 +86,4 @@ public class PostsImages implements Serializable{
 		PostsImages other = (PostsImages) obj;
 		return Objects.equals(id, other.id);
 	}
-
-
 }

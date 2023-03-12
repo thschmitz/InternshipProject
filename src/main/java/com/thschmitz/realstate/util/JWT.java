@@ -64,7 +64,5 @@ public class JWT {
 	    } catch(io.jsonwebtoken.security.SignatureException s) {
 	    	throw new InvalidJWT("You arent logged in!");
 	    }
-	    
-	    
 	}
 }

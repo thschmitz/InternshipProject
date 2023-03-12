@@ -27,7 +27,6 @@ public class Util {
 		}
 	}
 	
-	
 	public static Users toUser(Integer id, UserService service) {
 		return service.findById(id);
 	}

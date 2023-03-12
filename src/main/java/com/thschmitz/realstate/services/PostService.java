@@ -77,7 +77,6 @@ public class PostService {
 		return postRepository.save(newObj);
 	}
 	
-	
 	public void updateData(Posts newObj, Posts obj) {
 		System.out.println(newObj.getBody());
 		System.out.println(newObj.getTitle());

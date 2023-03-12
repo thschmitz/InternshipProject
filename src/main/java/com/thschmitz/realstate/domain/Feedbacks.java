@@ -19,7 +19,6 @@ public class Feedbacks implements Serializable{
 	private Integer id;
 	private Date created_at;
 	private Integer author_id;
-	
 	private Integer post_id;
 	
 	public Feedbacks() {

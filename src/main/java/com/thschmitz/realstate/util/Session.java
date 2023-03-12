@@ -12,12 +12,10 @@ public class Session {
 		} else {
 			throw new ExpiredJwtException("JWT doesnt exist");
 		}
-		
 	}
 	
 	public static Integer getSessionId(Jws<Claims> session) {
 		Integer author_id = (Integer) session.getBody().get("id");
-		
 		return author_id;
 	}
 }

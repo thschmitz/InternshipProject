@@ -6,7 +6,6 @@ import com.thschmitz.realstate.domain.Users;
 
 public class Password {
 	
-	
 	public static String encodePassword(Users obj) {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		String bCryptedPassword = bCryptPasswordEncoder.encode(obj.getPassword());

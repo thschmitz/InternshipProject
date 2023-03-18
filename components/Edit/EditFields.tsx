@@ -3,10 +3,11 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { GoogleMap, Marker, StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api';
 import { postService } from 'services/post/postService';
+import { MdKeyboardReturn } from "react-icons/md"
 
 const places = ['geometry', 'drawing', "places"];
 
-export const EditFields = ({data}: any, setShowFields: React.Dispatch<React.SetStateAction<boolean | undefined>>) => {
+export const EditFields = ({data, setShowFields}: any) => {
   const [ title, setTitle ] = useState<string>(data.title);
   const [ restrooms, setRestrooms ] = useState<number>(data.restrooms);
   const [ bedrooms, setBedrooms ] = useState<number>(data.bedrooms);
@@ -98,12 +99,14 @@ export const EditFields = ({data}: any, setShowFields: React.Dispatch<React.SetS
     <div>
       <div className="max-w-7xl mx-auto items-center flex w-full justify-center mt-32">
         <div className="flex-col">
+          <p>
+            <MdKeyboardReturn className="h-7 w-7 mb-10 cursor-pointer"  onClick={(e) => setShowFields(false)}/>
+          </p>
           <div className="flex">
             <div className="w-full items-center justify-center text-xl">
               <h1 className="font-bold text-5xl mt-5">
                 Edite os valores do imóvel selecionado
               </h1>
-              <p>Deixe em branco para permanecer o dado, digite '-' para deletar a informacao ou simplesmente digite um novo valor para o campo</p>
               <div className="mt-10">
 
                 <div className="flex justify-between">
@@ -169,7 +172,7 @@ export const EditFields = ({data}: any, setShowFields: React.Dispatch<React.SetS
                     Imagem postada
                   </p>
                   <div className="flex justify-center">
-                    <img src={image || data.main_image}></img>
+                    <img src={image || data.main_image} className="max-w-3xl"></img>
                   </div>
                 </div>
                 <div className="h-96 w-full text-center mt-10">

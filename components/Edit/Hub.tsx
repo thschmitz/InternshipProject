@@ -24,7 +24,7 @@ const EditHub: NextPage = ({posts}:any) => {
 
   if(showFields) {
     return (
-      <EditFields data={data} setShowFields={setShowFields} />
+      <EditFields data={data} setShowFields={setShowFields}/>
     )
   }
 

@@ -34,11 +34,15 @@ export const EditFields = ({data, setShowFields}: any) => {
     const main_image = image || data.main_image;
 
     try {
-      postService.updatePost(data.id, {title, restrooms, bedrooms, size, main_image, price, latitude, longitude, body, type})
-      Toast.notifySuccess(notification, "Update Sucess!", "You have updated this post!")
+      const response = postService.updatePost(data.id, {title, restrooms, bedrooms, size, main_image, price, latitude, longitude, body, type})
+      if(response?.data) {
+        Toast.notifySuccess(notification, "Update Sucess!", "You have updated this post!")
+      } else {
+        Toast.notifyError(notification, "Update Error!", "Your session has expired!")
+      }
     } catch(error) {
       console.log(error);
-      Toast.notifySuccess(notification, "Update Error!", "Internal Error Exception!")
+      Toast.notifyError(notification, "Update Error!", "Internal Error Exception!")
     }
   }
   

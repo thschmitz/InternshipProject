@@ -93,6 +93,21 @@ export const postService = {
       return error;
     }
 
+  },
+
+  async deletePost(id) {
+    try {
+      const token = tokenService.get(null);
+
+      const response = await axios.delete(`http://localhost:8080/posts/${id}`, {headers: {"Content-Type": "application/json", "JWT": token}})
+
+      console.log(response)
+
+      return response.status;
+    } catch(error) {
+      console.log(error)
+      return error;
+    }
   }
 }
 

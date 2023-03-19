@@ -13,11 +13,12 @@ import { Toast } from "../../../services/notification/toast.js";
 import { useNotification } from "use-toast-notification";
 import {CreateHub} from "../../../components/Register/Hub"
 import EditHub from "../../../components/Edit/Hub"
+import DeleteHub from "../../../components/Delete/Hub"
 
-const Home: NextPage = (props) => {
-
+const Home: NextPage = () => {
   const [ actionState, setActionState ] = useState("Nothing")
   const [ posts, setPosts ] = useState();
+  const [ deleted, setDeleted] = useState(false);
   const router = useRouter();
   const user = useSelector(selectUserData)
   const dispatch = useDispatch();
@@ -36,6 +37,10 @@ const Home: NextPage = (props) => {
     getPosts();
   }, [showFields])
 
+  useEffect(() => {
+    getPosts();
+  }, [deleted])
+
   async function getPosts() {
     const posts = await postService.searchAllPosts();
     console.log(posts)
@@ -44,12 +49,12 @@ const Home: NextPage = (props) => {
 
   function signOut(e:any) {
     e.preventDefault();
+    router.push("/admin/login")
 
     dispatch(setAuthState(false))
     dispatch(cleanUserData())
     localStorage.clear();
 
-    router.push("/admin/login")
     tokenService.delete(null);
     Toast.notifySuccess(notification, "Logout Sucess!", "You have logged out!")
   }
@@ -63,7 +68,7 @@ const Home: NextPage = (props) => {
         <div className="flex">
           <p className="navButton" onClick={() => setActionState("Register")}>Registrar um imóvel</p>
           <p className="navButton" onClick={() => setActionState("Edit")}>Editar um imóvel</p>
-          <p className="navButton" onClick={() => setActionState("Remove")}>Remover um imóvel</p>
+          <p className="navButton" onClick={() => setActionState("Delete")}>Remover um imóvel</p>
         </div>
         <div className="flex h-11 w-11 ml-6 cursor-pointer">
           <img className="rounded-full object-cover" onClick={(e) => signOut(e)} src={user.image}/>
@@ -77,18 +82,12 @@ const Home: NextPage = (props) => {
         actionState === "Edit" && 
         <EditHub posts={posts} showFields={showFields} setShowFields={setShowFields}/>
       }
+      {
+        actionState === "Delete" &&
+        <DeleteHub posts={posts} deleted={deleted} setDeleted={setDeleted}/>
+      }
     </div>
   );
-};
-
-export const getServerSideProps = async (ctx: any) => {
-  const posts = await postService.searchAllPosts();
-
-  return {
-    props: {
-      posts: posts || [],
-    },
-  };
 };
 
 export default Home;

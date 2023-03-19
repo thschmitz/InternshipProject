@@ -6,6 +6,7 @@ import { postService } from 'services/post/postService';
 import { MdKeyboardReturn } from "react-icons/md"
 import { useNotification } from "use-toast-notification";
 import { Toast } from "../../services/notification/toast.js";
+import {ImageSlider} from "./ImageSlider.js"
 
 const places = ['geometry', 'drawing', "places"];
 
@@ -218,6 +219,7 @@ export const EditFields = ({data, setShowFields}: any) => {
                   />
                 </div>
               </div>
+              <ImageSlider />
             </div>
           </div>
           <div className="mt-20 flex text-center">

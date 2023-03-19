@@ -6,9 +6,6 @@ import { Feed } from "../../components/Feed/Feed.js";
 
 const Home: NextPage = (props: any) => {
 
-  console.log(props.posts)
-  console.log(props.images)
-
   return (
     <div>
       <Header />

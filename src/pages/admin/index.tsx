@@ -17,17 +17,30 @@ import EditHub from "../../../components/Edit/Hub"
 const Home: NextPage = (props) => {
 
   const [ actionState, setActionState ] = useState("Nothing")
+  const [ posts, setPosts ] = useState();
   const router = useRouter();
   const user = useSelector(selectUserData)
   const dispatch = useDispatch();
   const notification = useNotification();
+  const [showFields, setShowFields] = useState<boolean>();
 
   useEffect(() => {
     if(!user.id || user.admin === false) {
       router.push("/admin/login")
     }
 
-  }, [])
+    getPosts();
+  }, [actionState])
+
+  useEffect(() => {
+    getPosts();
+  }, [showFields])
+
+  async function getPosts() {
+    const posts = await postService.searchAllPosts();
+    console.log(posts)
+    setPosts(posts);
+  }
 
   function signOut(e:any) {
     e.preventDefault();
@@ -62,7 +75,7 @@ const Home: NextPage = (props) => {
       }
       {
         actionState === "Edit" && 
-        <EditHub posts={props?.posts}/>
+        <EditHub posts={posts} showFields={showFields} setShowFields={setShowFields}/>
       }
     </div>
   );
@@ -70,7 +83,6 @@ const Home: NextPage = (props) => {
 
 export const getServerSideProps = async (ctx: any) => {
   const posts = await postService.searchAllPosts();
-
 
   return {
     props: {

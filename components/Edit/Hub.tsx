@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { postService } from '../../services/post/postService.js';
 import { Feed } from "../../components/Feed/Feed.js"
 import type { NextPage } from "next";
@@ -18,8 +18,7 @@ interface postData {
   main_image: string,
 }
 
-const EditHub: NextPage = ({posts}:any) => {
-  const [showFields, setShowFields] = useState<boolean>();
+const EditHub: NextPage = ({posts, showFields, setShowFields}:any) => {
   const [data, setData] = useState<postData>();
 
   if(showFields) {
@@ -45,15 +44,5 @@ const EditHub: NextPage = ({posts}:any) => {
   </div>
   )
 }
-
-export const getServerSideProps = async (ctx: any) => {
-  const posts = await postService.searchAllPosts();
-  return {
-    props: {
-      posts: posts || [],
-    },
-  };
-};
-
 
 export default EditHub;

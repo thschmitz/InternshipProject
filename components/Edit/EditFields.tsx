@@ -4,6 +4,8 @@ import TextField from '@mui/material/TextField';
 import { GoogleMap, Marker, StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api';
 import { postService } from 'services/post/postService';
 import { MdKeyboardReturn } from "react-icons/md"
+import { useNotification } from "use-toast-notification";
+import { Toast } from "../../services/notification/toast.js";
 
 const places = ['geometry', 'drawing', "places"];
 
@@ -21,21 +23,23 @@ export const EditFields = ({data, setShowFields}: any) => {
   const [ searchBox, setSearchBox ] = useState<google.maps.places.SearchBox>();
   const [ map, setMap] = useState<google.maps.Map>();
   const [ markers, setMarkers ] = useState<any[]>([]);
+  const notification = useNotification();
 
   function onHandleSubmitDone(e: React.MouseEvent<HTMLParagraphElement, MouseEvent>) {
     e.preventDefault();
 
-    console.log("Updating....")
-    console.log(data)
-
     const latitude = location.lat;
     const longitude = location.lng;
 
-    console.log(title)
-
     const main_image = image || data.main_image;
 
-    postService.updatePost(data.id, {title, restrooms, bedrooms, size, main_image, price, latitude, longitude, body, type})
+    try {
+      postService.updatePost(data.id, {title, restrooms, bedrooms, size, main_image, price, latitude, longitude, body, type})
+      Toast.notifySuccess(notification, "Update Sucess!", "You have updated this post!")
+    } catch(error) {
+      console.log(error);
+      Toast.notifySuccess(notification, "Update Error!", "Internal Error Exception!")
+    }
   }
   
   const containerStyle = {
@@ -214,13 +218,7 @@ export const EditFields = ({data, setShowFields}: any) => {
           </div>
           <div className="mt-20 flex text-center">
             <p
-              className="bg-black max-w-fit text-white rounded-lg p-5 mr-5 cursor-pointer"
-              onClick={() => setShowFields(false)}
-            >
-              Voltar
-            </p>
-            <p
-              className="bg-black max-w-fit text-white rounded-lg p-5 cursor-pointer"
+              className="bg-black max-w-fit text-white rounded-lg p-5 cursor-pointer mb-10"
               onClick={(e) => onHandleSubmitDone(e)}
             >
               Finalizar

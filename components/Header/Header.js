@@ -27,7 +27,6 @@ export const Header = (props) => {
     if(props.searchText) {
       setSearch(props.searchText)
     }
-    console.log("AUTHSTATE HEADER: ", userData)
   }, [])
 
   if(barsOpen === true) {

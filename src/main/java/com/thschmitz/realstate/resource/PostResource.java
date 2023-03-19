@@ -50,14 +50,9 @@ public class PostResource {
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Posts> update(@RequestBody Posts post, @PathVariable Integer id, @RequestHeader(value="JWT") String header) {
 		Jws<Claims> session = Session.session(header);
-		Integer author_id = Session.getSessionId(session);
-		
-		System.out.println("Entrou dentro do update");
-		
-		// Util.isAllowed(id, author_id, postService);
-		
 		post.setId(id);
 		
+		Util.isAdmin(session);
 		return ResponseEntity.ok().body(postService.update(post));
 	}
 	
@@ -89,7 +84,7 @@ public class PostResource {
 		Jws<Claims> session = Session.session(header);
 		Integer author_id = Session.getSessionId(session);
 		
-		Util.isAllowed(id, author_id, postService);
+		Util.isAdmin(session);
 		
 		postService.delete(id);
 		return ResponseEntity.noContent().build();

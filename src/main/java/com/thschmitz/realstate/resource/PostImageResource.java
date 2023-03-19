@@ -40,8 +40,6 @@ public class PostImageResource {
 		images.setCreated_at(created_at);
 		images.setPostId(id);
 		
-		System.out.println(images.getImage_url());
-		
 		if(images.getImage_url() == "") {
 			throw new ParametersNotPassedException("You need to inform the image_url to request!");
 		}

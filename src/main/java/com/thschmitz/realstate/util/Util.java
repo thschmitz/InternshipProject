@@ -12,6 +12,9 @@ import com.thschmitz.realstate.exception.Unauthorized;
 import com.thschmitz.realstate.services.PostService;
 import com.thschmitz.realstate.services.UserService;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+
 public class Util {
 	public static Date formatDate(Date date) {
 		try {
@@ -37,5 +40,14 @@ public class Util {
 		if(!post.getAuthorId().equals(id_author)) {
 			throw new Unauthorized("You can't do this request because you are not allowed to!");
 		}
+	}
+	
+	public static void isAdmin(Jws<Claims> session) {
+		System.out.println(session.getBody().getSubject());
+		
+		if(!session.getBody().getSubject().equals("Admin")) {
+			throw new Unauthorized("You can't do this request because you are not allowed to!");
+		}
+		
 	}
 }

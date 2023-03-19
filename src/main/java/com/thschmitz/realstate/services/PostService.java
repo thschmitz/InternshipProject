@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.thschmitz.realstate.domain.Comments;
+import com.thschmitz.realstate.domain.Feedbacks;
 import com.thschmitz.realstate.domain.Posts;
+import com.thschmitz.realstate.domain.PostsImages;
 import com.thschmitz.realstate.domain.Users;
 import com.thschmitz.realstate.exception.ObjectNotFoundException;
-import com.thschmitz.realstate.exception.ParametersNotPassedException;
 import com.thschmitz.realstate.repository.PostRepository;
 import com.thschmitz.realstate.util.Session;
 import com.thschmitz.realstate.util.Util;
@@ -29,6 +30,12 @@ public class PostService {
 	
 	@Autowired
 	private CommentService commentService;
+	
+	@Autowired
+	private FeedbackService feedbackService;
+	
+	@Autowired
+	private PostImageService postImageService;
 	
 	public List<Posts> findAll() {
 		return (List<Posts>) postRepository.findAll();
@@ -60,9 +67,19 @@ public class PostService {
 	
 	public void delete(Integer id) {
 		List<Comments> comments = commentService.findCommentsByPost(id);
+		List<Feedbacks> feedbacks = feedbackService.findFeedbacksByPost(id);
+		List<PostsImages> postImages = postImageService.findPostImagesByPost(id);
 		
 		for(Comments comment : comments) {
 			commentService.delete(comment.getId());
+		}
+		
+		for(Feedbacks feedback : feedbacks) {
+			feedbackService.delete(feedback.getId());
+		}
+		
+		for(PostsImages postImage : postImages) {
+			postImageService.delete(postImage.getId());
 		}
 	
 		postRepository.deleteById(id);

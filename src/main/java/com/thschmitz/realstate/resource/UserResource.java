@@ -75,7 +75,6 @@ public class UserResource {
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public ResponseEntity<String> login(@RequestBody Users user, HttpServletResponse response) {
-		System.out.println("LOGIN");
 		String jwt = service.login(user);
 		response.setHeader("JWT", jwt);
 		

@@ -26,4 +26,12 @@ public class PostImageService {
 	public List<PostsImages> listAll() {
 		return (List<PostsImages>) postsImagesRepository.findAll();
 	}
+	
+	public void delete(Integer id) {
+		postsImagesRepository.deleteById(id);
+	}
+	
+	public List<PostsImages> findPostImagesByPost(Integer id) {
+		return postsImagesRepository.findPostImagesByPostId(id);
+	}
 }

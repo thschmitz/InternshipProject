@@ -43,4 +43,12 @@ public class FeedbackService {
 		}
 
 	}
+	
+	public List<Feedbacks> findFeedbacksByPost(Integer id) {
+		return feedbackRepository.findFeedbacksByPostId(id);
+	}
+	
+	public void delete(Integer id) {
+		feedbackRepository.deleteById(id);
+	}
 }

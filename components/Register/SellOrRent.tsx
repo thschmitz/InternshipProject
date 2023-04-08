@@ -1,4 +1,5 @@
 import React from 'react'
+import Heading from "./components/Heading"
 
 export const SellOrRent = ({setType, type, setStep}:any) => {
   return(
@@ -7,8 +8,7 @@ export const SellOrRent = ({setType, type, setStep}:any) => {
         <div className="flex-col">
           <div className="flex">
             <div className="w-full items-center justify-center text-xl">
-              <p className="">Etapa 2</p>
-              <h1 className="font-bold text-5xl mt-5">Vender ou alugar?</h1>
+              <Heading step={2} title={"Vender ou alugar?"} />
               <div className="mt-10">
                 <p>Marque a opção que mais se adeque às suas necessidades</p>
                 <div className="flex">

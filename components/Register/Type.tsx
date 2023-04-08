@@ -1,6 +1,7 @@
 import React from "react";
 import {BsFillHouseFill} from "react-icons/bs"
 import { MdApartment, MdCabin } from "react-icons/md"
+import Heading from "./components/Heading"
 
 export const Type = ({setType, type, setStep}:any) => {
   return (
@@ -9,9 +10,10 @@ export const Type = ({setType, type, setStep}:any) => {
         <div className="flex-col">
           <div className="flex">
             <div className="w-full items-center justify-center text-xl">
+              <Heading step={2} title={"Quais características mais se enquadram em seu imóvel"} />
               <p className="">Etapa 3</p>
               <h1 className="font-bold text-5xl mt-5">
-                Qual o tipo do imóvel?
+                
               </h1>
               <div className="mt-10">
                 <p>

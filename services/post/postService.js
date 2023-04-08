@@ -108,6 +108,20 @@ export const postService = {
       console.log(error)
       return error;
     }
+  },
+
+  async searchPostById(id) {
+    try {
+      const response = await axios.get(`http://localhost:8080/posts/${id}`, {headers: {"Content-Type": "application/json"}})
+
+
+      console.log(response);
+
+
+      return response;
+    } catch {
+
+    }
   }
 }
 

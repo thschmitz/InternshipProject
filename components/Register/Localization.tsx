@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import { GoogleMap, Marker, StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api';
+import Heading from "./components/Heading"
 
 const places = ['geometry', 'drawing', "places"];
 
@@ -32,23 +33,24 @@ export const Localization = ({setLocation, setStep, setAddress, address}:any) =>
   }
 
   const onPlacesChanged = () => {
-    const places = searchBox!.getPlaces();
-
-    const place = places![0];
-    const location = {
-      lat: place?.geometry?.location?.lat() || 0,
-      lng: place?.geometry?.location?.lng() || 0,
+    if(searchBox != undefined) {
+      const places = searchBox!.getPlaces();
+      const place = places![0];
+      const location = {
+        lat: place?.geometry?.location?.lat() || 0,
+        lng: place?.geometry?.location?.lng() || 0,
+      }
+  
+      setLocation(location)
+  
+      setMarkers([location])
+  
+      var latLng = new google.maps.LatLng(location.lat, location.lng)
+  
+      console.log("MAP: ", map)
+  
+      map?.panTo(latLng) // Coloca o centro na nova posicao
     }
-
-    setLocation(location)
-
-    setMarkers([location])
-
-    var latLng = new google.maps.LatLng(location.lat, location.lng)
-
-    console.log("MAP: ", map)
-
-    map?.panTo(latLng) // Coloca o centro na nova posicao
   }
 
   const { isLoaded } = useJsApiLoader({
@@ -67,15 +69,12 @@ export const Localization = ({setLocation, setStep, setAddress, address}:any) =>
   }
 
   return (
-    <div>
+    <div className="-mt-10">
       <div className="max-w-7xl mx-auto items-center flex w-full justify-center mt-32">
         <div className="flex-col">
           <div className="flex">
             <div className="w-full items-center justify-center text-xl">
-              <p className="">Etapa 4</p>
-              <h1 className="font-bold text-5xl mt-5">
-                Qual a localizacao do imovel?
-              </h1>
+              <Heading step={4} title={"Qual a localizacao do imovel?"} />
               <div className="mt-10">
                 <p>
                   Digite no campo indicado o endereço do seu imóvel e verifique
@@ -119,7 +118,7 @@ export const Localization = ({setLocation, setStep, setAddress, address}:any) =>
             </p>
             <p
               className="bg-black max-w-fit text-white rounded-lg p-5 cursor-pointer"
-              onClick={() => setStep("Informations")}
+              onClick={() => setStep("Images")}
             >
               Avancar
             </p>

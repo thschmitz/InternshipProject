@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import { postService } from 'services/post/postService';
 import { Informations } from "./Informations"
 import { Localization } from "./Localization"
@@ -12,8 +11,8 @@ export const CreateHub = () => {
   const [ step, setStep ] = useState("Hub");
   const [ type, setType ] = useState();
   const [ title, setTitle ] = useState();
-  const [ restrooms, setRestrooms ] = useState();
-  const [ bedrooms, setBedrooms ] = useState();
+  const [ restrooms, setRestrooms ] = useState(0);
+  const [ bedrooms, setBedrooms ] = useState(0);
   const [ size, setSize ] = useState();
   const [ image, setImage ] = useState();
   const [ price, setPrice ] = useState();
@@ -41,6 +40,12 @@ export const CreateHub = () => {
   if(step === "Localization") {
     return(
       <Localization setLocation={setLocation} setStep={setStep} setAddress={setAddress} address={address} />
+    )
+  }
+
+  if(step === "Images") {
+    return (
+      <Images image={image} setImage={setImage}/>
     )
   }
 

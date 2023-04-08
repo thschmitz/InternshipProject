@@ -1,8 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
-import { EditFields } from "components/Edit/EditFields";
 import { Post } from "components/Post/Post"
 import {useRouter} from "next/router"
-import React, {useState} from 'react'
+import React from 'react'
 
 export const Feed = ({posts, editor, deletor, setShowFields, setData, deleted, setDeleted}) => {
   const router = useRouter();

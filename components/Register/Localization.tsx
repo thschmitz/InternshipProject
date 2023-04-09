@@ -51,8 +51,6 @@ export const Localization = ({setLocation, setStep, setAddress, address, markers
   
       var latLng = new google.maps.LatLng(location.lat, location.lng)
   
-      console.log("MAP: ", map)
-  
       map?.panTo(latLng) // Coloca o centro na nova posicao
     }
   }
@@ -69,6 +67,7 @@ export const Localization = ({setLocation, setStep, setAddress, address, markers
       lng: e?.latLng?.lng(),
     }
 
+    console.log(location)
     setMarkers([location])
   }
 

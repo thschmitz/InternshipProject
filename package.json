@@ -31,6 +31,7 @@
     "nookies": "^2.5.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-geocode": "^0.2.3",
     "react-google-maps": "^9.4.5",
     "react-icons": "^4.8.0",
     "react-imask": "^6.5.1-alpha.1",
@@ -51,6 +52,7 @@
   "devDependencies": {
     "@types/node": "^18.13.0",
     "@types/node-fetch": "^2.6.2",
+    "@types/react-geocode": "^0.2.1",
     "@types/redux-logger": "^3.0.9",
     "@types/redux-persist": "^4.3.1",
     "@ubilabs/google-maps-react-hooks": "^2.0.2",

@@ -1,20 +1,24 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {FaEdit} from "react-icons/fa"
 import {AiFillDelete} from "react-icons/ai"
 import { postService } from "../../services/post/postService.js";
 import { useNotification } from "use-toast-notification";
 import { Toast } from "../../services/notification/toast.js";
 import HeartButton from "./HeartButton"
+import { util } from "services/util/util.js";
+import Image from "next/image.js";
 
 export const Post = ({post, editor, deletor, setShowFields, setData, deleted, setDeleted}) => {
   const notification = useNotification();
+  const [city, setCity] = useState("")
+  const [state, setState] = useState("")
+  const [country, setCountry] = useState("")
 
   function editorShow(e) {
     e.preventDefault();
     setShowFields(true);
     setData(post)
   }
-
 
   async function handleDelete(e) {
     e.preventDefault();
@@ -26,6 +30,20 @@ export const Post = ({post, editor, deletor, setShowFields, setData, deleted, se
     } else {
       Toast.notifyError(notification, "Delete Error!", "You cannot delete this post because you don´t have permissions!")
     }
+  }
+
+  useEffect(() => {
+    getAddress();
+  }, [])
+    
+  async function getAddress() {
+    const response = await util.addressFromLatitudeAndLongitude(post.latitude, post.longitude);
+    console.log("RESPOSTA: ", response)
+    setCity(response.city)
+    setState(response.state)
+    setCountry(response.country)
+
+    return response;
   }
 
   return (
@@ -55,8 +73,16 @@ export const Post = ({post, editor, deletor, setShowFields, setData, deleted, se
               <HeartButton postId={post.id}/>
             </div>
           </div>
-          <div className="font-semibold text-lg">
-            {post.latitude}, {post.longitude}
+          <div className="font-semibold text-sm">
+            {country}, {state} 
+          </div>
+          <div className="font-light text-neutral-500">
+            {post.type} em {city.length > 20? city.substring(0, 20) + "..." : city}
+          </div>
+          <div className="flex flex-row items-center gap-1">
+            <div className="font-semibold">
+              $ {post.price}
+            </div>
           </div>
         </div>
       </div>

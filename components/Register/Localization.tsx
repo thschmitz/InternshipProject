@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { GoogleMap, Marker, StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api';
 import Heading from "./components/Heading"
 import PreviousNextButton from './components/PreviousNextButton';
@@ -8,7 +8,10 @@ const places = ['geometry', 'drawing', "places"]
 export const Localization = ({setLocation, setStep, setAddress, address, markers, setMarkers}:any) => {
   const [ searchBox, setSearchBox ] = useState<google.maps.places.SearchBox>();
   const [ map, setMap] = useState<google.maps.Map>();
-  
+
+  useEffect(() => {
+    console.log("markers: ", markers)
+  }, [])
 
   const containerStyle = {
     width: '100%',

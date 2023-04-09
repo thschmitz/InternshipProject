@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { postService } from 'services/post/postService';
 import { Informations } from "./Informations"
 import {Localization } from "./Localization"
@@ -22,6 +22,17 @@ export const CreateHub = () => {
   const [ location, setLocation ] = useState({lat: null, lng: null})
   const [ markers, setMarkers ] = useState<any[]>([]);
   const notification = useNotification();
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+      const location = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      }
+      setMarkers([location])
+    })
+  }, [])
 
   function onHandleSubmitDone(e:any) {
     e.preventDefault();

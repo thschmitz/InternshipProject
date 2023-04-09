@@ -3,13 +3,13 @@ import { GoogleMap, Marker, StandaloneSearchBox, useJsApiLoader } from '@react-g
 import Heading from "./components/Heading"
 import PreviousNextButton from './components/PreviousNextButton';
 
-const places = ['geometry', 'drawing', "places"];
+const places = ['geometry', 'drawing', "places"]
 
-export const Localization = ({setLocation, setStep, setAddress, address}:any) => {
+export const Localization = ({setLocation, setStep, setAddress, address, markers, setMarkers}:any) => {
   const [ searchBox, setSearchBox ] = useState<google.maps.places.SearchBox>();
   const [ map, setMap] = useState<google.maps.Map>();
-  const [ markers, setMarkers ] = useState<any[]>([]);
   
+
   const containerStyle = {
     width: '100%',
     height: '100%',
@@ -56,8 +56,8 @@ export const Localization = ({setLocation, setStep, setAddress, address}:any) =>
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: process.env.NEXT_PUBLIC_MAP_API_KEY,
-    libraries: places
+    googleMapsApiKey: process.env.NEXT_PUBLIC_MAP_API_KEY || "",
+    libraries: places || []
   });
 
   const onMapClick = (e:google.maps.MapMouseEvent) => {

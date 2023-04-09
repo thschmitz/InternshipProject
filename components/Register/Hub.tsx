@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { postService } from 'services/post/postService';
 import { Informations } from "./Informations"
-import { Localization } from "./Localization"
+import {Localization } from "./Localization"
 import { Type } from "./Type"
 import { SellOrRent } from "./SellOrRent"
 import { useNotification } from 'use-toast-notification';
@@ -20,6 +20,7 @@ export const CreateHub = () => {
   const [ body, setBody ] = useState();
   const [ address, setAddress ] = useState();
   const [ location, setLocation ] = useState({lat: null, lng: null})
+  const [ markers, setMarkers ] = useState<any[]>([]);
   const notification = useNotification();
 
   function onHandleSubmitDone(e:any) {
@@ -40,7 +41,7 @@ export const CreateHub = () => {
 
   if(step === "Localization") {
     return(
-      <Localization setLocation={setLocation} setStep={setStep} setAddress={setAddress} address={address} />
+      <Localization setLocation={setLocation} setStep={setStep} setAddress={setAddress} address={address} markers={markers} setMarkers={setMarkers} />
     )
   }
 

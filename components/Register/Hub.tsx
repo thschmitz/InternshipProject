@@ -6,6 +6,7 @@ import { Type } from "./Type"
 import { SellOrRent } from "./SellOrRent"
 import { useNotification } from 'use-toast-notification';
 import { Toast } from 'services/notification/toast';
+import Images from "./Images"
 
 export const CreateHub = () => {
   const [ step, setStep ] = useState("Hub");
@@ -45,7 +46,7 @@ export const CreateHub = () => {
 
   if(step === "Images") {
     return (
-      <Images image={image} setImage={setImage}/>
+      <Images setStep={setStep} setImage={setImage} image={image}/>
     )
   }
 

@@ -11,7 +11,7 @@ export const Informations = ({setRestrooms, restrooms, setBedrooms, bedrooms, se
         <div className="flex-col">
           <div className="flex">
             <div className="w-full items-center justify-center text-xl">
-              <Heading step={5} title={"Compartilhe algumas informações básica do seu imóvel"}/>
+              <Heading step={6} title={"Compartilhe algumas informações básica do seu imóvel"}/>
 
               <div className="flex flex-col gap-8 mt-10">
                 <Counter title={"Número de Banheiros"} subtitle={"Quantos Banheiros"} value={restrooms} onChange={(value) => setRestrooms(value)}/>
@@ -27,7 +27,7 @@ export const Informations = ({setRestrooms, restrooms, setBedrooms, bedrooms, se
           <div className="mt-20 flex text-center">
             <p
               className="bg-black max-w-fit text-white rounded-lg p-5 mr-5 cursor-pointer"
-              onClick={() => setStep("Localization")}
+              onClick={() => setStep("Images")}
             >
               Voltar
             </p>

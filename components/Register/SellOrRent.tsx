@@ -1,5 +1,6 @@
 import React from 'react'
 import Heading from "./components/Heading"
+import PreviousNextButton from './components/PreviousNextButton'
 
 export const SellOrRent = ({setType, type, setStep}:any) => {
   return(
@@ -24,10 +25,7 @@ export const SellOrRent = ({setType, type, setStep}:any) => {
             </div>
 
           </div>
-          <div className="mt-20 flex text-center">
-            <p className="bg-black max-w-fit text-white rounded-lg p-5 mr-5 cursor-pointer" onClick={() => setStep("Hub")}>Voltar</p>
-            <p className="bg-black max-w-fit text-white rounded-lg p-5 cursor-pointer" onClick={() => setStep("Type")}>Avançar</p>
-          </div>
+          <PreviousNextButton setStep={setStep} previous={"Hub"} next={"Type"}/>
         </div>
       </div>
     </div>

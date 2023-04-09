@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { GoogleMap, Marker, StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api';
 import Heading from "./components/Heading"
+import PreviousNextButton from './components/PreviousNextButton';
 
 const places = ['geometry', 'drawing', "places"];
 
@@ -109,20 +110,7 @@ export const Localization = ({setLocation, setStep, setAddress, address}:any) =>
               </div>
             </div>
           </div>
-          <div className="mt-20 flex text-center">
-            <p
-              className="bg-black max-w-fit text-white rounded-lg p-5 mr-5 cursor-pointer"
-              onClick={() => setStep("Type")}
-            >
-              Voltar
-            </p>
-            <p
-              className="bg-black max-w-fit text-white rounded-lg p-5 cursor-pointer"
-              onClick={() => setStep("Images")}
-            >
-              Avancar
-            </p>
-          </div>
+          <PreviousNextButton setStep={setStep} previous={"Type"} next={"Images"}/>
         </div>
       </div>
     </div>

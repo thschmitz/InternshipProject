@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { postService } from 'services/post/postService';
 import { Informations } from "./Informations"
 import {Localization } from "./Localization"
-import { Type } from "./Type"
+import { Label } from "./Label"
 import { SellOrRent } from "./SellOrRent"
 import { useNotification } from 'use-toast-notification';
 import { Toast } from 'services/notification/toast';
@@ -11,6 +11,7 @@ import Images from "./Images"
 export const CreateHub = () => {
   const [ step, setStep ] = useState("Hub");
   const [ type, setType ] = useState();
+  const [ label, setLabel] = useState();
   const [ title, setTitle ] = useState();
   const [ restrooms, setRestrooms ] = useState(0);
   const [ bedrooms, setBedrooms ] = useState(0);
@@ -25,7 +26,6 @@ export const CreateHub = () => {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
-      const { latitude, longitude } = position.coords;
       const location = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
@@ -68,9 +68,9 @@ export const CreateHub = () => {
     )
   }
 
-  if(step === "Type") {
+  if(step === "Label") {
     return(
-      <Type setType={setType} type={type} setStep={setStep}/>
+      <Label setLabel={setLabel} label={label} setStep={setStep}/>
     )
   }
 

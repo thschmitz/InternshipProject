@@ -7,12 +7,14 @@ import { Toast } from "../../services/notification/toast.js";
 import HeartButton from "./HeartButton"
 import { util } from "services/util/util.js";
 import Image from "next/image.js";
+import { useRouter } from "next/router.js";
 
 export const Post = ({post, editor, deletor, setShowFields, setData, deleted, setDeleted}) => {
   const notification = useNotification();
   const [city, setCity] = useState("")
   const [state, setState] = useState("")
   const [country, setCountry] = useState("")
+  const router = useRouter();
 
   function editorShow(e) {
     e.preventDefault();
@@ -65,25 +67,28 @@ export const Post = ({post, editor, deletor, setShowFields, setData, deleted, se
           ""
       }
 
-      <div onClick={() => router.push(`/post/${post.id}`)} className="col-span-1 cursor-pointer group">
+      <div className="col-span-1 cursor-pointer group">
         <div className="flex flex-col gap-2 w-full">
           <div className="aspect-square w-full relative overflow-hidden rounded-xl">
-            <img fill alt="Imóvel" src={post.main_image} className="object-cover h-full w-full group-hover:scale-110 transition" />
+            <img fill onClick={() => router.push(`/post/${post.id}`)} alt="Imóvel" src={post.main_image} className="object-cover h-full w-full group-hover:scale-110 transition" />
             <div className="absolute top-3 right-3">
               <HeartButton postId={post.id}/>
             </div>
           </div>
-          <div className="font-semibold text-sm">
-            {country}, {state} 
-          </div>
-          <div className="font-light text-neutral-500">
-            {post.type} em {city.length > 20? city.substring(0, 20) + "..." : city}
-          </div>
-          <div className="flex flex-row items-center gap-1">
-            <div className="font-semibold">
-              $ {post.price}
+          <div onClick={() => router.push(`/post/${post.id}`)}>
+            <div className="font-semibold text-sm p-2">
+              {country}, {state} 
+            </div>
+            <div className="font-light text-neutral-500 p-2">
+              {post.type} em {city.length > 20? city.substring(0, 20) + "..." : city}
+            </div>
+            <div className="flex flex-row items-center gap-1 pl-2">
+              <div className="font-semibold">
+                $ {post.price}
+              </div>
             </div>
           </div>
+
         </div>
       </div>
 

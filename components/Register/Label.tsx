@@ -4,7 +4,7 @@ import { MdApartment, MdCabin } from "react-icons/md"
 import Heading from "./components/Heading"
 import PreviousNextButton from "./components/PreviousNextButton"
 
-export const Type = ({setType, type, setStep}:any) => {
+export const Label = ({setType, type, setStep}:any) => {
   return (
     <div>
       <div className="max-w-7xl mx-auto items-center flex w-full justify-center mt-32">

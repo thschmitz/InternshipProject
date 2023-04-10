@@ -112,7 +112,7 @@ export const Localization = ({setLocation, setStep, setAddress, address, markers
               </div>
             </div>
           </div>
-          <PreviousNextButton setStep={setStep} previous={"Type"} next={"Images"}/>
+          <PreviousNextButton setStep={setStep} previous={"Label"} next={"Images"}/>
         </div>
       </div>
     </div>

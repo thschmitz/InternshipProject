@@ -25,7 +25,7 @@ export const SellOrRent = ({setType, type, setStep}:any) => {
             </div>
 
           </div>
-          <PreviousNextButton setStep={setStep} previous={"Hub"} next={"Type"}/>
+          <PreviousNextButton setStep={setStep} previous={"Hub"} next={"Label"}/>
         </div>
       </div>
     </div>

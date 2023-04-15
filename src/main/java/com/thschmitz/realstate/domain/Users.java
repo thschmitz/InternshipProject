@@ -25,12 +25,13 @@ public class Users implements Serializable {
 	private Date created_at;
 	private String image;
 	private Boolean admin;
+	private Integer phone;
 	
 	public Users() {
 		
 	}
 	
-	public Users(Integer id, String name, String email, String password, Date created_at, String image, Boolean admin) {
+	public Users(Integer id, String name, String email, String password, Date created_at, String image, Boolean admin, Integer phone) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -38,6 +39,7 @@ public class Users implements Serializable {
 		this.created_at = created_at;
 		this.image = image;
 		this.admin = admin;
+		this.phone = phone;
 	}
 
 	public Integer getId() {
@@ -119,5 +121,13 @@ public class Users implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Integer getPhone() {
+		return phone;
+	}
+
+	public void setPhone(Integer phone) {
+		this.phone = phone;
 	}
 }

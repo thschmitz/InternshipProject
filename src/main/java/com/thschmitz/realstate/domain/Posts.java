@@ -1,9 +1,7 @@
 package com.thschmitz.realstate.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -11,8 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="Posts")
@@ -34,14 +30,14 @@ public class Posts implements Serializable {
 	private String latitude;
 	private String type;
 	private String main_image;
-	private String label;
+	private Integer label_id;
 	
 	public Posts() {
 		
 	}
 
 	public Posts(Integer id, Date created_at, String title, String body, Double price, Double size,
-		Integer author_id, Integer restrooms, Integer bedrooms, String latitude, String longitude, String type, String main_image, String label) {
+		Integer author_id, Integer restrooms, Integer bedrooms, String latitude, String longitude, String type, String main_image, Integer label_id) {
 		this.id = id;
 		this.created_at = created_at;
 		this.title = title;
@@ -55,7 +51,7 @@ public class Posts implements Serializable {
 		this.latitude = latitude;
 		this.type = type;
 		this.main_image = main_image;
-		this.setLabel(label);
+		this.setLabel_id(label_id);
 	}
 
 	public Integer getId() {
@@ -162,12 +158,12 @@ public class Posts implements Serializable {
 		this.main_image = main_image;
 	}
 
-	public String getLabel() {
-		return label;
+	public Integer getLabel_id() {
+		return label_id;
 	}
 
-	public void setLabel(String label) {
-		this.label = label;
+	public void setLabel_id(Integer label_id) {
+		this.label_id = label_id;
 	}
 	
 	@Override
@@ -186,5 +182,4 @@ public class Posts implements Serializable {
 		Posts other = (Posts) obj;
 		return Objects.equals(id, other.id);
 	}
-
 }

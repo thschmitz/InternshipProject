@@ -6,7 +6,6 @@ import { useNotification } from "use-toast-notification";
 import { Toast } from "../../services/notification/toast.js";
 import HeartButton from "./HeartButton"
 import { util } from "services/util/util.js";
-import Image from "next/image.js";
 import { useRouter } from "next/router.js";
 
 export const Post = ({post, editor, deletor, setShowFields, setData, deleted, setDeleted}) => {
@@ -84,7 +83,7 @@ export const Post = ({post, editor, deletor, setShowFields, setData, deleted, se
             </div>
             <div className="flex flex-row items-center gap-1 pl-2">
               <div className="font-semibold">
-                $ {post.price}
+                {Intl.NumberFormat("pt-br", {style: "currency", currency: "BRL"}).format(post.price)}
               </div>
             </div>
           </div>

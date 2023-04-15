@@ -5,6 +5,7 @@ import NotificationProvider from 'use-toast-notification'
 import {Provider} from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import React from "react";
+import { Header } from 'components/Header/Header';
 
 function App({ Component, pageProps }: AppProps){
 

@@ -1,15 +1,18 @@
 import Heading from "../../../components/Post/Individual/Heading";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { userService } from "services/users/userService";
+import { labelService } from "services/label/labelService"
 import { postService } from "services/post/postService";
 import { util } from "services/util/util";
-import Info from "../../../components/Post/Individual/Info"
-import { userService } from "services/users/userService";
+import Info1 from "../../../components/Post/Individual/Info1"
+import Info2 from "../../../components/Post/Individual/Info2"
+import Price from "../../../components/Post/Individual/Price"
 
 interface postData {
+  id: Number,
   title: string,
   body: string,
-  price: string,
+  price: Number,
   created_at: Date,
   size: number,
   restrooms: number,
@@ -18,12 +21,21 @@ interface postData {
   latitude: string,
   longitude: string,
   main_image: string,
+  label_id: Number,
+}
+
+interface label {
+  id: Number,
+  created_at: Date,
   label: string,
+  icon: string,
+  description: string
 }
 
 interface props {
-  data: postData,
-  user: any
+  post: postData,
+  user: any,
+  label: label,
 }
 
 interface Address {
@@ -34,7 +46,7 @@ interface Address {
 
 const Post = (props:props) => {
   const [address, setAddress] = useState<Address>({city: "", state: "", country: ""})
-  const locationLatLng = {lat: props.data.latitude, lng: props.data.longitude}
+  const locationLatLng = {lat: props.post.latitude, lng: props.post.longitude}
 
   async function getFullAddress() {
     const response = await util.addressFromLatitudeAndLongitude(locationLatLng.lat, locationLatLng.lng)
@@ -46,15 +58,19 @@ const Post = (props:props) => {
 
   useEffect(() => {
     getFullAddress()
-    console.log("USER: ", props.user)
+    console.log("LABEL: ", props.label)
   }, [])
 
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="flex flex-col gap-6">
-        <Heading title={props.data.title} locationValue={address} imageSrc={props.data.main_image} id={props.data.id}/>
+        <Heading title={props.post.title} locationValue={address} imageSrc={props.post.main_image} id={props.post.id}/>
         <div className="grid grid-cols-1 md:grid-cols-7 md:gap-10 mt-6">
-          <Info user={props.user} category={props.data.type} description={props.data.body} bedrooms={props.data.bedrooms} restrooms={props.data.restrooms} locationValue={locationLatLng} label={props.data.label}/>
+          <Info1 user={props.post} category={props.post.type} description={props.post.body} locationValue={locationLatLng} label={props.label} created_at={props.post.created_at}/>
+          <div className="order-1 mb-10 md:order-last md:col-span-3">
+            <Price price={props.post.price} />
+            <Info2 bedrooms={props.post.bedrooms} restrooms={props.post.restrooms} size={props.post.size}/>
+          </div>
         </div>
       </div>
     </div>
@@ -65,12 +81,15 @@ export const getServerSideProps = async(ctx:any) => {
   const id = Object.values(ctx.query)[0];
   const post:any = await postService.searchPostById(id)
 
-  const user:any = await userService.searchUserById(post.data.authorId)
+  const user:any = await userService.searchUserById(post?.data?.authorId)
+
+  const label:any = await labelService.getLabelById(post?.data?.label_id)
 
   return {
     props: {
-      data: post.data || {},
-      user: user.data || {}
+      post: post.data || {},
+      user: user.data || {},
+      label: label || {}
     }
   }
 }

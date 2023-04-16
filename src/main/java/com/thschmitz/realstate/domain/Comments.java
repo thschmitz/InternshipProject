@@ -91,4 +91,12 @@ public class Comments implements Serializable {
 		Comments other = (Comments) obj;
 		return Objects.equals(id, other.id);
 	}
+	
+	public Boolean isEmpty() {
+		if(this.id != null & this.body != "" & this.created_at != null & this.author_id != null & this.post_id != null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }

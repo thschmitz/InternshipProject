@@ -26,7 +26,7 @@ public class FeedbackService {
 		return feedbackQuery;
 	}
 	
-	public void like(Integer id, Integer author_id) {
+	public Feedbacks like(Integer id, Integer author_id) {
 		Date created_at = new Date();
 		Feedbacks feedback = new Feedbacks();
 		
@@ -41,6 +41,8 @@ public class FeedbackService {
 			
 			feedbackRepository.save(feedback);
 		}
+		
+		return feedback;
 
 	}
 	

@@ -88,9 +88,7 @@ public class PostService {
 	
 	public Posts update(Posts post) {
 		Posts newObj = findById(post.getId());
-		System.out.println("Dentro do service update");
 		updateData(newObj, post);
-		System.out.println("Deu update");
 		return postRepository.save(newObj);
 	}
 	

@@ -63,4 +63,12 @@ public class Feedbacks implements Serializable{
 	public String toString() {
 		return "LikeDTO [created_at=" + created_at + ", author_id=" + author_id + "]";
 	}
+
+	public Boolean isEmpty() {
+		if(this.id != null & this.created_at != null & this.author_id != null & this.post_id != null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }

@@ -1,5 +1,6 @@
 package com.thschmitz.realstate.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.thschmitz.realstate.domain.Comments;
 import com.thschmitz.realstate.exception.ObjectNotFoundException;
+import com.thschmitz.realstate.exception.ParametersNotPassedException;
 import com.thschmitz.realstate.repository.CommentRepository;
 
 import io.jsonwebtoken.Claims;
@@ -29,11 +31,17 @@ public class CommentService {
 		return comment.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 	
-	public Comments create(Integer id, Jws<Claims> session, Comments comment, PostService postService, UserService userService) {
+	public Comments create(Integer post_id, Comments comment, Integer author_id) {
+		comment.setCreated_at(new Date());
+		comment.setAuthor(author_id);
+		comment.setPost(post_id);
 		
-		commentRepository.save(comment);
-		
-		return comment;
+		if(comment.isEmpty()) {
+			throw new ParametersNotPassedException("Você precisa passar todas as informações para concluir a operação!");
+		} else {
+			commentRepository.save(comment);
+			return comment;
+		}
 	}
 	
 	public void delete(Integer id) {

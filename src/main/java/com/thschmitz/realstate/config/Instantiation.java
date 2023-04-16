@@ -66,11 +66,11 @@ public class Instantiation implements CommandLineRunner {
 		userRepository.saveAll(Arrays.asList(maria, alex, bob));
 		
 		Labels l1 = new Labels(null, sdf.parse("15/04/2023"), "Praia", "TbBeach", "A propriedade fica perto da praia!");
-		Labels l2 = new Labels(null, sdf.parse("15/04/2023"), "Moderno", "MdOutlineVilla", "A propriedade fica perto da praia!");
+		Labels l2 = new Labels(null, sdf.parse("15/04/2023"), "Moderno", "MdOutlineVilla", "A propriedade é moderna!");
 		Labels l3 = new Labels(null, sdf.parse("15/04/2023"), "Interior", "TbMountain", "A propriedade fica no interior!");
 		Labels l4 = new Labels(null, sdf.parse("15/04/2023"), "Piscina", "TbPool", "A propriedade tem piscina!");
 		Labels l5 = new Labels(null, sdf.parse("15/04/2023"), "Ilha", "GiIsland", "A propriedade fica situada em uma ilha!");
-		Labels l6 = new Labels(null, sdf.parse("15/04/2023"), "Luxo", "IoDiamond", "A propriedade é de luxo!");
+		Labels l6 = new Labels(null, sdf.parse("15/04/2023"), "Luxo", "GrDiamond", "A propriedade é de luxo!");
 		
 		labelRepository.saveAll(Arrays.asList(l1, l2, l3, l4, l5, l6));
 		

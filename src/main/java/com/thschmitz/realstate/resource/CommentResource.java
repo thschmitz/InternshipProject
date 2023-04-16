@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.thschmitz.realstate.domain.Comments;
 import com.thschmitz.realstate.services.CommentService;
-import com.thschmitz.realstate.services.PostService;
-import com.thschmitz.realstate.services.UserService;
 import com.thschmitz.realstate.util.Session;
 
 import io.jsonwebtoken.Claims;
@@ -28,12 +26,6 @@ public class CommentResource {
 	
 	@Autowired
 	private CommentService commentService;
-	
-	@Autowired 
-	private PostService postService;
-	
-	@Autowired
-	private UserService userService;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<Comments>> findAll() {
@@ -53,8 +45,9 @@ public class CommentResource {
 	@RequestMapping(value="/{id}", method=RequestMethod.POST)
 	public ResponseEntity<Comments> create(@RequestBody Comments comment, @PathVariable Integer id, @RequestHeader(value="JWT") String header) {
 		Jws<Claims> session = Session.session(header);
+		Integer author_id = Session.getSessionId(session);
 		
-		return ResponseEntity.ok().body(commentService.create(id, session, comment, postService, userService));
+		return ResponseEntity.ok().body(commentService.create(id, comment, author_id));
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)

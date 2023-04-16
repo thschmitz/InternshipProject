@@ -86,4 +86,12 @@ public class PostsImages implements Serializable{
 		PostsImages other = (PostsImages) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	public Boolean isEmpty() {
+		if(this.id != null & this.created_at != null & this.image_url != "" & this.post_id != null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }

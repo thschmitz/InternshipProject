@@ -91,4 +91,12 @@ public class Labels implements Serializable{
 		Labels other = (Labels) obj;
 		return Objects.equals(id, other.id);
 	}
+	
+	public Boolean isEmpty() {
+		if(this.id != null & this.created_at != null & this.label != "" & this.icon != null & this.description != null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }

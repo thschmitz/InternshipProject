@@ -82,7 +82,7 @@ public class PostResource {
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id, @RequestHeader(value="JWT") String header) {
 		Jws<Claims> session = Session.session(header);
-		Integer author_id = Session.getSessionId(session);
+		
 		
 		Util.isAdmin(session);
 		

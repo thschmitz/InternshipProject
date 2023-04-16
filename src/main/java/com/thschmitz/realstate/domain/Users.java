@@ -106,6 +106,14 @@ public class Users implements Serializable {
 		return result;
 	}
 	
+	public Integer getPhone() {
+		return phone;
+	}
+
+	public void setPhone(Integer phone) {
+		this.phone = phone;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -122,12 +130,12 @@ public class Users implements Serializable {
 			return false;
 		return true;
 	}
-
-	public Integer getPhone() {
-		return phone;
-	}
-
-	public void setPhone(Integer phone) {
-		this.phone = phone;
+	
+	public Boolean isEmpty() {
+		if(this.id != null & this.name != "" & this.email != "" & this.password != "" & this.created_at!= null & this.image != "") {
+			return false;
+		} else {
+			return true;
+		}
 	}
 }

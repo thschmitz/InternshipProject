@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
+import React from 'react'
 import Category from "./Category"
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
-import TimeAgo from "react-timeago"
+import { GoogleMap, useJsApiLoader, MarkerF } from '@react-google-maps/api';
+import TimeAgo from "react-timeago";
 
 interface Info {
   category: string,
@@ -17,14 +17,15 @@ interface Info {
     password: string,
     created_at: Date,
     image: string,
-    admin: Boolean
+    admin: Boolean,
+    phone: Number
   },
   label: {
     id: Number,
     created_at: Date,
     label: string,
     icon: string,
-    descriptions: string,
+    description: string,
   },
   created_at: string
 }
@@ -44,6 +45,8 @@ const Info1: React.FC<Info> = ({user, category, description, locationValue, labe
     libraries: places || []
   })
 
+  console.log({lat: Number(locationValue.lat), lng: Number(locationValue.lng)})
+
   return (
     <div className="col-span-4 flex flex-col gap-8">
       <div className="flex flex-col gap-2">
@@ -55,27 +58,32 @@ const Info1: React.FC<Info> = ({user, category, description, locationValue, labe
           Publicado há <TimeAgo date={created_at} locale="pt-BR"></TimeAgo>
         </div>
       </div>
+
       <hr/>
 
       {category && (
         <Category label={label}/>
       )}
+
       <hr/>
+
       <div className="text-lg font-light text-neutral-500">
         {description}
       </div>
+
       <hr/>
+
       {isLoaded && 
         <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={{lat: Number(locationValue.lat), lng: Number(locationValue.lng)}}
-        zoom={14}
-        onLoad={map => {
-          const bounds = new window.google.maps.LatLngBounds();
-          map.fitBounds(bounds);
-        }}
+          mapContainerStyle={containerStyle}
+          center={{lat: Number(locationValue.lat), lng: Number(locationValue.lng)}}
+          zoom={15}
+          onLoad={map => {
+            const bounds = new window.google.maps.LatLngBounds();
+            map.fitBounds(bounds);
+          }}
       >
-        <Marker position={{lat: Number(locationValue.lat), lng: Number(locationValue.lng)}}/>
+          <MarkerF position={{lat: Number(locationValue.lat), lng: Number(locationValue.lng)}}/>
         { /* Child components, such as markers, info windows, etc. */ }
         <></>
       </GoogleMap>

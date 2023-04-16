@@ -7,6 +7,7 @@ import { util } from "services/util/util";
 import Info1 from "../../../components/Post/Individual/Info1"
 import Info2 from "../../../components/Post/Individual/Info2"
 import Price from "../../../components/Post/Individual/Price"
+import { Header } from "components/Header/Header";
 
 interface postData {
   id: Number,
@@ -58,22 +59,25 @@ const Post = (props:props) => {
 
   useEffect(() => {
     getFullAddress()
-    console.log("LABEL: ", props.label)
   }, [])
 
   return (
-    <div className="max-w-screen-lg mx-auto">
-      <div className="flex flex-col gap-6">
-        <Heading title={props.post.title} locationValue={address} imageSrc={props.post.main_image} id={props.post.id}/>
-        <div className="grid grid-cols-1 md:grid-cols-7 md:gap-10 mt-6">
-          <Info1 user={props.post} category={props.post.type} description={props.post.body} locationValue={locationLatLng} label={props.label} created_at={props.post.created_at}/>
-          <div className="order-1 mb-10 md:order-last md:col-span-3">
-            <Price price={props.post.price} />
-            <Info2 bedrooms={props.post.bedrooms} restrooms={props.post.restrooms} size={props.post.size}/>
+    <>
+      <Header />
+      <div className="max-w-screen-lg mx-auto">
+        <div className="flex flex-col gap-6">
+          <Heading title={props.post.title} locationValue={address} imageSrc={props.post.main_image} id={props.post.id}/>
+          <div className="grid grid-cols-1 md:grid-cols-7 md:gap-10 mt-6">
+            <Info1 user={props.user} category={props.post.type} description={props.post.body} locationValue={locationLatLng} label={props.label} created_at={props.post.created_at}/>
+            <div className="order-1 mb-10 md:order-last md:col-span-3">
+              <Price price={props.post.price} />
+              <Info2 bedrooms={props.post.bedrooms} restrooms={props.post.restrooms} size={props.post.size}/>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
+
   )
 }
 

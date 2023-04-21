@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.thschmitz.realstate.domain.Users;
 import com.thschmitz.realstate.exception.MissingRequestHeaderException;
+import com.thschmitz.realstate.repository.UserRepository;
 import com.thschmitz.realstate.services.UserService;
 import com.thschmitz.realstate.util.Session;
 import com.thschmitz.realstate.util.URL;
@@ -32,6 +33,8 @@ public class UserResource {
 
 	@Autowired
 	private UserService service;
+	
+	private UserRepository userRepository;
 	
 	@RequestMapping(method=RequestMethod.GET)
  	public ResponseEntity<Iterable<Users>> findAll() {

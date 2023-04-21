@@ -51,7 +51,7 @@ public class Instantiation implements CommandLineRunner {
 		
 		System.out.println("ENTROU AQUI");
 		
-		postsImagesRepository.deleteAll();
+		/*postsImagesRepository.deleteAll();
 		feedbackRepository.deleteAll();
 		userRepository.deleteAll(); // AQUI TA DELETANDO TUDOOOO
 		postRepository.deleteAll();
@@ -103,7 +103,7 @@ public class Instantiation implements CommandLineRunner {
 		
 		postRepository.saveAll(Arrays.asList(post1, post2, post3));
 		commentRepository.saveAll(Arrays.asList(c1, c2, c3));
-		feedbackRepository.saveAll(Arrays.asList(f1, f2, f3, f4, f5));
+		feedbackRepository.saveAll(Arrays.asList(f1, f2, f3, f4, f5));*/
 		
 	}
 }

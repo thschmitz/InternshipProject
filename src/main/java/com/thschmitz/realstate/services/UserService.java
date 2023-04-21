@@ -18,28 +18,28 @@ import com.thschmitz.realstate.util.Password;
 public class UserService {
 
 	@Autowired
-	private UserRepository repository;
+	UserRepository userRepository;
 
 	public Iterable<Users> findAll() {
-		return repository.findAll();
+		return userRepository.findAll();
 	}
 	
 	public Users findById(Integer id) {
-		Optional<Users> user = repository.findById(id);
+		Optional<Users> user = userRepository.findById(id);
 		
 		return user.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 	
 	public String insert(Users obj) {
 		obj.setPassword(Password.encodePassword(obj));
-		repository.save(obj); // Encoding the password and sending the object
+		userRepository.save(obj); // Encoding the password and sending the object
 		return JWT.createJWT(obj);
 	}
 	
 	
 	public void delete(Integer id) {
 		findById(id);
-		repository.deleteById(id);
+		userRepository.deleteById(id);
 	}
 	
 	public Users update(Users obj) {
@@ -47,7 +47,7 @@ public class UserService {
 		
 		updateData(newObj, obj);
 		
-		return repository.save(newObj);
+		return userRepository.save(newObj);
 	}
 	
 	public void updateData(Users newObj, Users obj) {
@@ -61,7 +61,8 @@ public class UserService {
 	}
 	
 	public String login(Users obj) {
-		Users newObj = repository.findByEmail(obj.getEmail());
+		
+		Users newObj = userRepository.findByEmail(obj.getEmail());
 		
 		if(newObj == null) {
 			throw new AuthenticationException(null);
@@ -72,12 +73,14 @@ public class UserService {
 		if(passwordIsValid == false) {
 			throw new AuthenticationException(null);
 		}
+		
+		obj.setName(newObj.getName());
 
-		return JWT.createJWT(newObj);
+		return "4";
 		
 	}
 	
 	public List<Users> findbyText(String text) {
-		return repository.findByNameContainingIgnoreCase(text);
+		return userRepository.findByNameContainingIgnoreCase(text);
 	}
 }

@@ -61,23 +61,26 @@ public class UserService {
 	}
 	
 	public String login(Users obj) {
-		
 		Users newObj = userRepository.findByEmail(obj.getEmail());
 		
 		if(newObj == null) {
-			throw new AuthenticationException(null);
+			throw new AuthenticationException("O email está errado");
 		}
+		
+		System.out.println(obj.getPassword());
 		
 		boolean passwordIsValid = Password.matchPassword(obj, newObj);
 		
 		if(passwordIsValid == false) {
-			throw new AuthenticationException(null);
+			throw new AuthenticationException("A senha está errada");
 		}
 		
 		obj.setName(newObj.getName());
 
-		return "4";
+		String jwt = JWT.createJWT(newObj);
 		
+		
+		return jwt;
 	}
 	
 	public List<Users> findbyText(String text) {

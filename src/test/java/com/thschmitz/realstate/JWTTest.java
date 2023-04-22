@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.thschmitz.realstate.domain.Users;
-import com.thschmitz.realstate.exception.ParseException;
 import com.thschmitz.realstate.util.JWT;
 
 @SpringBootTest
@@ -36,5 +35,31 @@ public class JWTTest {
 		maria.setName("Maria Brown");
 		
 		assertThrows(NullPointerException.class, () -> {JWT.createJWT(maria);});
+	}
+	
+	@Test
+	void validateJWTSuccessForMaria() {
+		var maria = new Users();
+		
+		maria.setId(244);
+		maria.setName("Maria Brown");
+		maria.setAdmin(true);
+		
+		String jwt = JWT.createJWT(maria);
+		
+		assertDoesNotThrow(() -> {JWT.validateJWT(jwt);});
+	}
+	
+	@Test
+	void validateJWTErrorForMaria() {
+		var maria = new Users();
+		
+		maria.setId(244);
+		maria.setName("Maria Brown");
+		maria.setAdmin(true);
+		
+		String jwt = JWT.createJWT(maria);
+		
+		assertThrows(NullPointerException.class, () ->  {JWT.validateJWT(jwt+"a");});
 	}
 }

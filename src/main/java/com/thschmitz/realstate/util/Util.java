@@ -30,10 +30,6 @@ public class Util {
 		}
 	}
 	
-	public static Users toUser(Integer id, UserService service) {
-		return service.findById(id);
-	}
-	
 	public static void isAllowed(Integer id_post, Integer id_author, PostService service) {
 		Posts post = service.findById(id_post);
 		

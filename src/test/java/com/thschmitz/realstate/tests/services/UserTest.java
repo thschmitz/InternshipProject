@@ -1,13 +1,13 @@
-package com.thschmitz.realstate;
+package com.thschmitz.realstate.tests.services;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mockStatic;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.TimeZone;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -91,13 +91,23 @@ class UserTest {
 		mariaTest.setEmail("maria@gmail.com");
 		mariaTest.setPassword("maria05");
 		
+
 		Mockito.when(userRepository.findByEmail(maria.getEmail())).thenReturn(this.maria);
+		
+		try(MockedStatic<Password> utilities = Mockito.mockStatic(Password.class)) {
+			utilities.when(() -> Password.matchPassword(mariaTest, this.maria)).thenReturn(true);
+			
+			assertTrue(Password.matchPassword(mariaTest, this.maria));
+		}
+		
 		try (MockedStatic<JWT> utilities = Mockito.mockStatic(JWT.class)){
 			utilities.when(() -> JWT.createJWT(this.maria)).thenReturn("Maria Brown");
 
+			assertEquals("Maria Brown", JWT.createJWT(maria));
 		}
 		
 		userService.login(mariaTest);
+		
 		Mockito.verify(userRepository).findByEmail(mariaTest.getEmail());
 	}
 	
@@ -115,5 +125,4 @@ class UserTest {
 	void mariaIsNotEmpty() {
 		assertFalse(maria.isEmpty());
 	}
-
 }

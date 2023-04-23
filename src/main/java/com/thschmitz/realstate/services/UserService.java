@@ -75,12 +75,7 @@ public class UserService {
 			throw new AuthenticationException("A senha está errada");
 		}
 		
-		obj.setName(newObj.getName());
-
-		String jwt = JWT.createJWT(newObj);
-		
-		
-		return jwt;
+		return JWT.createJWT(newObj);
 	}
 	
 	public List<Users> findbyText(String text) {

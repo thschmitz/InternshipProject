@@ -11,6 +11,7 @@ import com.thschmitz.realstate.domain.Users;
 import com.thschmitz.realstate.exception.AuthenticationException;
 import com.thschmitz.realstate.exception.ExpiredJwtException;
 import com.thschmitz.realstate.exception.InvalidJWT;
+import com.thschmitz.realstate.exception.MissingRequestHeaderException;
 import com.thschmitz.realstate.exception.ParseException;
 
 import io.github.cdimascio.dotenv.Dotenv;
@@ -28,6 +29,12 @@ public class JWT {
 			Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(secret), 
 	                SignatureAlgorithm.HS256.getJcaName());
 			String role;
+			
+			System.out.println(newObj.getAdmin());
+			
+			if(newObj.isEmpty()) {
+				throw new MissingRequestHeaderException("This action requires a user!");
+			}
 			
 			if(newObj.getAdmin()) {
 				role = "Admin";
@@ -69,8 +76,6 @@ public class JWT {
 	    } catch(io.jsonwebtoken.ExpiredJwtException e) {
 	    	throw new ExpiredJwtException("JWT has expired");
 	    } catch(io.jsonwebtoken.security.SignatureException s) {
-	    	throw new NullPointerException("JWT doesn´t exist");
-	    } catch(NullPointerException n) {
 	    	throw new NullPointerException("JWT doesn´t exist");
 	    }
 	}

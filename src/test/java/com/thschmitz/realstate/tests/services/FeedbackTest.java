@@ -29,7 +29,7 @@ public class FeedbackTest {
 
 	@Mock
 	private FeedbackRepository feedbackRepository;
-
+	
 	private Feedbacks feedback;
 	
 	@Autowired
@@ -55,5 +55,6 @@ public class FeedbackTest {
 		Mockito.verify(feedbackRepository).findByAuthorAndPostId(245, 365);
 		Mockito.verify(feedbackRepository).save(Mockito.any(Feedbacks.class));
 		
+		Mockito.verifyNoMoreInteractions(feedbackRepository);
 	}
 }

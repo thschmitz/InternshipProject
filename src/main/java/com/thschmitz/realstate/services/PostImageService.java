@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.thschmitz.realstate.domain.Comments;
 import com.thschmitz.realstate.domain.PostsImages;
+import com.thschmitz.realstate.exception.ParametersNotPassedException;
 import com.thschmitz.realstate.repository.PostsImagesRepository;
 
 @Service
@@ -17,6 +18,10 @@ public class PostImageService {
 	
 	
 	public PostsImages insert(PostsImages images) {
+		
+		if(images.isEmpty()) {
+			throw new ParametersNotPassedException("You need to inform the image_url to request!");
+		}
 		
 		postsImagesRepository.save(images);
 		

@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.TimeZone;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -33,6 +32,9 @@ import com.thschmitz.realstate.services.UserService;
 import com.thschmitz.realstate.util.JWT;
 import com.thschmitz.realstate.util.Password;
 import com.thschmitz.realstate.util.Util;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
@@ -124,5 +126,16 @@ class UserTest {
 	@Test
 	void mariaIsNotEmpty() {
 		assertFalse(maria.isEmpty());
+	}
+	
+	@Test
+	void JWTForMariaIsCorrectGenerating() {
+		String jwtMaria = JWT.createJWT(maria);
+		Jws<Claims> validationMaria = JWT.validateJWT(jwtMaria);
+		
+		Integer author_id = (Integer) validationMaria.getBody().get("id");
+		Boolean idCompare = author_id.equals(maria.getId());
+		
+		assertTrue(idCompare);
 	}
 }

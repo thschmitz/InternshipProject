@@ -30,6 +30,13 @@ public class Feedbacks implements Serializable{
 		this.author_id = author_id;
 		this.post_id = post_id;
 	}
+	
+	public Feedbacks(Integer id, Date created_at, Integer author_id, Integer post_id) {
+		this.id = id;
+		this.created_at = created_at;
+		this.author_id = author_id;
+		this.post_id = post_id;
+	}
 
 	public Date getCreated_at() {
 		return created_at;

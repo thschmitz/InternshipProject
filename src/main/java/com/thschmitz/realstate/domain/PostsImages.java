@@ -88,7 +88,7 @@ public class PostsImages implements Serializable{
 	}
 
 	public Boolean isEmpty() {
-		if(this.id != null & this.created_at != null & this.image_url != "" & this.post_id != null) {
+		if(this.id != null & this.created_at != null & this.image_url != "" & this.image_url != null & this.post_id != null) {
 			return false;
 		} else {
 			return true;

@@ -14,8 +14,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.thschmitz.realstate.domain.Users;
+import com.thschmitz.realstate.exception.InvalidJWT;
 import com.thschmitz.realstate.exception.MissingRequestHeaderException;
 import com.thschmitz.realstate.util.JWT;
+import com.thschmitz.realstate.util.Session;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -51,10 +53,12 @@ public class JWTTest {
 	}
 	
 	@Test
-	void validateJWTErrorForMaria() {
-
-		String jwt = JWT.createJWT(maria);
-		
-		assertThrows(NullPointerException.class, () ->  {JWT.validateJWT(jwt+"a");});
+	void returnsInvalidJWTExceptionHandled() {
+		assertThrows(InvalidJWT.class, () -> Session.session("ounsgerugergpioasddifdija"));
+	}
+	
+	@Test
+	void returnsNoneJWTExceptionHandled() {
+		assertThrows(MissingRequestHeaderException.class, () -> Session.session(null));
 	}
 }

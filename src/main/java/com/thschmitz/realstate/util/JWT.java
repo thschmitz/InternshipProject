@@ -23,13 +23,10 @@ public class JWT {
 	public static String createJWT(Users newObj) {
 		try {
 			Dotenv dotenv = Dotenv.configure().directory("./.env").load();
-			
+			String role;
 			String secret = dotenv.get("secret_JWT");
 			Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(secret), 
 	                SignatureAlgorithm.HS256.getJcaName());
-			String role;
-			
-			System.out.println(newObj.getAdmin());
 			
 			if(newObj.isEmpty()) {
 				throw new MissingRequestHeaderException("This action requires a user!");
@@ -64,8 +61,6 @@ public class JWT {
 		String secret = dotenv.get("secret_JWT");
 	    Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(secret), 
                 SignatureAlgorithm.HS256.getJcaName());
-	    
-	    System.out.println(jwt);
 	    
 	    try {
 	    	Jws<Claims> jwtResponse = Jwts.parserBuilder()

@@ -20,7 +20,7 @@ public class PostImageService {
 	public PostsImages insert(PostsImages images) {
 		
 		if(images.isEmpty()) {
-			throw new ParametersNotPassedException("You need to inform the image_url to request!");
+			throw new ParametersNotPassedException("Você precisa informar a URL da imagem para realizar a operação!");
 		}
 		
 		postsImagesRepository.save(images);

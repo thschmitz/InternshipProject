@@ -25,12 +25,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.thschmitz.realstate.domain.Users;
 import com.thschmitz.realstate.exception.AuthenticationException;
+import com.thschmitz.realstate.exception.InvalidJWT;
+import com.thschmitz.realstate.exception.MissingRequestHeaderException;
 import com.thschmitz.realstate.exception.Unauthorized;
 import com.thschmitz.realstate.repository.UserRepository;
 import com.thschmitz.realstate.services.PostService;
 import com.thschmitz.realstate.services.UserService;
 import com.thschmitz.realstate.util.JWT;
 import com.thschmitz.realstate.util.Password;
+import com.thschmitz.realstate.util.Session;
 import com.thschmitz.realstate.util.Util;
 
 import io.jsonwebtoken.Claims;
@@ -138,4 +141,21 @@ class UserTest {
 		
 		assertTrue(idCompare);
 	}
+	
+	@Test
+	void returnsUndefinedJWTExceptionHandled() {
+		assertThrows(RuntimeException.class, () -> Session.session(""));
+	}
+	
+	// PROBLEM
+	@Test
+	void returnsInvalidJWTExceptionHandled() {
+		assertThrows(InvalidJWT.class, () -> Session.session("ounsgerugergpioasddifdija"));
+	}
+	
+	@Test
+	void returnsNoneJWTExceptionHandled() {
+		assertThrows(MissingRequestHeaderException.class, () -> Session.session(null));
+	}
+
 }

@@ -8,16 +8,15 @@ import java.util.Date;
 import javax.crypto.spec.SecretKeySpec;
 
 import com.thschmitz.realstate.domain.Users;
-import com.thschmitz.realstate.exception.AuthenticationException;
 import com.thschmitz.realstate.exception.ExpiredJwtException;
 import com.thschmitz.realstate.exception.InvalidJWT;
 import com.thschmitz.realstate.exception.MissingRequestHeaderException;
-import com.thschmitz.realstate.exception.ParseException;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 public class JWT {
@@ -59,12 +58,14 @@ public class JWT {
 		
 	}
 	
-	public static Jws<Claims> validateJWT(String jwt) {
+	public static Jws<Claims> validateJWT(String jwt) throws ExpiredJwtException, MissingRequestHeaderException {
 		Dotenv dotenv = Dotenv.configure().directory("./.env").load();
 		
 		String secret = dotenv.get("secret_JWT");
 	    Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(secret), 
                 SignatureAlgorithm.HS256.getJcaName());
+	    
+	    System.out.println(jwt);
 	    
 	    try {
 	    	Jws<Claims> jwtResponse = Jwts.parserBuilder()
@@ -73,10 +74,12 @@ public class JWT {
 		            .parseClaimsJws(jwt);
 	    	
 	    	return jwtResponse;
-	    } catch(io.jsonwebtoken.ExpiredJwtException e) {
-	    	throw new ExpiredJwtException("JWT has expired");
-	    } catch(io.jsonwebtoken.security.SignatureException s) {
-	    	throw new NullPointerException("JWT doesn´t exist");
+	    } catch(ExpiredJwtException e) {
+	    	throw new ExpiredJwtException("JWT expirou");
+	    } catch(MalformedJwtException e) {
+	    	throw new InvalidJWT("O JWT está incorreto");
+	    } catch(IllegalArgumentException e) { 
+	    	throw new MissingRequestHeaderException("JWT não existe");
 	    }
 	}
 }

@@ -24,7 +24,7 @@ public class FeedbackService {
 		Date created_at = new Date();
 		Feedbacks feedback = new Feedbacks();
 		
-		Feedbacks feedbackQuery = feedbackRepository.findByAuthorAndPostId(author_id, post_id);;
+		Feedbacks feedbackQuery = feedbackRepository.findByAuthorAndPostId(author_id, post_id);
 		
 		if(feedbackQuery != null) {
 			feedbackRepository.deleteById(feedbackQuery.getId());

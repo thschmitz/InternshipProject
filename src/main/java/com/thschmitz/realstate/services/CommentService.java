@@ -37,7 +37,7 @@ public class CommentService {
 		comment.setPost(post_id);
 		
 		if(comment.isEmpty()) {
-			throw new ParametersNotPassedException("Você precisa passar todas as informações para concluir a operação!");
+			throw new ParametersNotPassedException("Você precisa incluir todas as informações para concluir a operação!");
 		} else {
 			commentRepository.save(comment);
 			return comment;

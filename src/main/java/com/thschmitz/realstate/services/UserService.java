@@ -52,7 +52,7 @@ public class UserService {
 	
 	public void updateData(Users newObj, Users obj) {
 		if(obj.getName() == null || obj.getEmail() == null) {
-			throw new ParametersNotPassedException("You need to inform all the parameters to update!");
+			throw new ParametersNotPassedException("Você precisa incluir todas as informações para concluir a operação!");
 		} else {
 			newObj.setName(obj.getName());
 			newObj.setEmail(obj.getEmail());

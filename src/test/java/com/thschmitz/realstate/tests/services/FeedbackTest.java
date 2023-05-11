@@ -47,14 +47,25 @@ public class FeedbackTest {
 	@DisplayName("Realizar o like, sem ter dado like anteriormente")
 	void doTheLikeAndHaventDoneItYet() {
 		
-		Mockito.when(feedbackRepository.findByAuthorAndPostId(245, 365)).thenReturn(null);
+		Mockito.when(feedbackRepository.findByAuthorAndPostId(feedback.getAuthor(), feedback.getPost())).thenReturn(null);
 		Mockito.when(feedbackRepository.save(Mockito.any(Feedbacks.class))).thenReturn(null);
 		
 		feedbackService.like(365, 245);
 		
-		Mockito.verify(feedbackRepository).findByAuthorAndPostId(245, 365);
+		Mockito.verify(feedbackRepository).findByAuthorAndPostId(feedback.getAuthor(), feedback.getPost());
 		Mockito.verify(feedbackRepository).save(Mockito.any(Feedbacks.class));
 		
 		Mockito.verifyNoMoreInteractions(feedbackRepository);
+	}
+	
+	@Test
+	@DisplayName("Desmarcando o like")
+	void doTheLikeButHaveAlreadyDoneIt() {
+		feedback.setAuthor(244);
+		Mockito.when(feedbackRepository.findByAuthorAndPostId(feedback.getAuthor(), feedback.getPost())).thenReturn(feedback);
+		
+		feedbackService.like(feedback.getPost(), feedback.getAuthor());
+		
+		Mockito.verify(feedbackRepository).deleteById(feedback.getId());
 	}
 }

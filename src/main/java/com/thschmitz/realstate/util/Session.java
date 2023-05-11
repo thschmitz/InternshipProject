@@ -1,16 +1,20 @@
 package com.thschmitz.realstate.util;
 
-import com.thschmitz.realstate.exception.ExpiredJwtException;
+import com.thschmitz.realstate.exception.InvalidJWT;
+import com.thschmitz.realstate.exception.MissingRequestHeaderException;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.MalformedJwtException;
 
 public class Session {
 	public static Jws<Claims> session(String jwt){
-		if(jwt != "") {
-			return JWT.validateJWT(jwt);	
-		} else {
-			throw new ExpiredJwtException("JWT doesnt exist");
+		try {
+			return JWT.validateJWT(jwt);
+		} catch(MalformedJwtException e) {
+			throw new InvalidJWT("JWT Incorreto!");
+		} catch(MissingRequestHeaderException e) {
+			throw new MissingRequestHeaderException("O JWT não está informado");
 		}
 	}
 	

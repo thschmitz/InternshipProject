@@ -86,13 +86,7 @@ public class UserResource {
 	
 	@RequestMapping(value="/session", method=RequestMethod.GET)
 	public ResponseEntity<Jws<Claims>> session(@RequestHeader(value="JWT") String header) {
-		
-		if(header == null) {
-			throw new MissingRequestHeaderException("You need to inform JWT header to request!");
-		} else {
-			return ResponseEntity.ok().body(Session.session(header));	
-		}
-		
+		return ResponseEntity.ok().body(Session.session(header));	
 	}
 	
 	@RequestMapping(value="/namesearch", method=RequestMethod.GET)

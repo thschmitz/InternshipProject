@@ -15,18 +15,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.thschmitz.realstate.domain.Posts;
+import com.thschmitz.realstate.domain.chatgpt.BotRequest;
+import com.thschmitz.realstate.domain.chatgpt.ChatGptResponse;
 import com.thschmitz.realstate.services.FeedbackService;
 import com.thschmitz.realstate.services.PostService;
+import com.thschmitz.realstate.services.chatgpt.ChatGPTService;
 import com.thschmitz.realstate.util.Session;
 import com.thschmitz.realstate.util.URL;
 import com.thschmitz.realstate.util.Util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping(value="/posts")
 @CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 public class PostResource {
 
 	@Autowired
@@ -34,6 +39,9 @@ public class PostResource {
 	
 	@Autowired
 	private FeedbackService feedbackService;
+	
+	@Autowired
+	private ChatGPTService chatGPTService;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<Posts>> findAll() {
@@ -103,5 +111,10 @@ public class PostResource {
 		feedbackService.like(id, author_id);
 		
 		return ResponseEntity.noContent().build();
+	}
+
+	@RequestMapping(value="/send", method=RequestMethod.POST)
+	public ResponseEntity<ChatGptResponse> sendMessage(@RequestBody BotRequest botRequest) {
+		return ResponseEntity.ok().body(chatGPTService.askQuestion(botRequest));
 	}
 }

@@ -11,10 +11,12 @@ import com.thschmitz.realstate.domain.Feedbacks;
 import com.thschmitz.realstate.domain.Posts;
 import com.thschmitz.realstate.domain.PostsImages;
 import com.thschmitz.realstate.domain.Users;
+import com.thschmitz.realstate.domain.chatgpt.BotRequest;
+import com.thschmitz.realstate.domain.chatgpt.ChatGptResponse;
 import com.thschmitz.realstate.exception.ObjectNotFoundException;
 import com.thschmitz.realstate.repository.PostRepository;
+import com.thschmitz.realstate.util.ChatGPTServiceImpl;
 import com.thschmitz.realstate.util.Session;
-import com.thschmitz.realstate.util.Util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

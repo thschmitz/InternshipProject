@@ -12,9 +12,6 @@ import com.thschmitz.realstate.exception.ObjectNotFoundException;
 import com.thschmitz.realstate.exception.ParametersNotPassedException;
 import com.thschmitz.realstate.repository.CommentRepository;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-
 @Service
 public class CommentService {
 

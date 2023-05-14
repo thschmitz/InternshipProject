@@ -1,5 +1,6 @@
 package com.thschmitz.realstate.util;
 
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -12,12 +13,15 @@ import com.thschmitz.realstate.domain.chatgpt.BotRequest;
 import com.thschmitz.realstate.domain.chatgpt.ChatGptRequest;
 import com.thschmitz.realstate.domain.chatgpt.ChatGptResponse;
 import com.thschmitz.realstate.services.chatgpt.ChatGPTService;
-
 @Service
 public class ChatGPTServiceImpl implements ChatGPTService{
 
     private static RestTemplate restTemplate = new RestTemplate();
 
+    public ChatGPTServiceImpl(RestTemplateBuilder restTemplateBuilder) {
+    	this.restTemplate = restTemplateBuilder.build();
+    }
+    
     //    Build headers
     public HttpEntity<ChatGptRequest> buildHttpEntity(ChatGptRequest chatRequest) {
         HttpHeaders headers = new HttpHeaders();
@@ -35,7 +39,7 @@ public class ChatGPTServiceImpl implements ChatGPTService{
 
         return responseEntity.getBody();
     }
-
+    
     public ChatGptResponse askQuestion(BotRequest botRequest) {
     	System.out.println(ChatGPTConfig.MODEL);
     	System.out.println(botRequest.getMessage());

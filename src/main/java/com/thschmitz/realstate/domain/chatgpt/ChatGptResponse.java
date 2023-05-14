@@ -8,6 +8,8 @@ import lombok.Data;
 
 @Data
 public class ChatGptResponse implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private String id;
     private String object;
     private String model;

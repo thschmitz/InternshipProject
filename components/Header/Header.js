@@ -38,7 +38,7 @@ export const Header = (props) => {
 
         <button className="navResponsiveButton">Quem Somos</button>
         <button className="navResponsiveButton">Contato</button>
-        <button className="navResponsiveButton">Servicos</button>
+        <button className="navResponsiveButton">Serviços</button>
       </div>
     )
   }
@@ -68,7 +68,7 @@ export const Header = (props) => {
       <div className="lg:flex xl:flex hidden">
         <button className="navButton">Quem Somos</button>
         <button className="navButton">Contato</button>
-        <button className="navButton">Servicos</button>
+        <button className="navButton">Serviços</button>
         {
         authState?
           <Popup

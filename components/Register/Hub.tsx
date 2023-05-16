@@ -7,6 +7,7 @@ import { SellOrRent } from "./SellOrRent"
 import { useNotification } from 'use-toast-notification';
 import { Toast } from 'services/notification/toast';
 import Images from "./Images"
+import { DescriptionBody } from "./DescriptionBody"
 
 export const CreateHub = () => {
   const [ step, setStep ] = useState("Hub");
@@ -64,7 +65,7 @@ export const CreateHub = () => {
 
   if(step === "Informations") {
     return (
-      <Informations setRestrooms={setRestrooms} restrooms={restrooms} setBedrooms={setBedrooms} bedrooms={bedrooms} setImage={setImage} image={image} setPrice={setPrice} price={price} setBody={setBody} body={body} setTitle={setTitle} title={title} type={type} setSize={setSize} size={size} setStep={setStep} onHandleSubmitDone={onHandleSubmitDone}/>
+      <Informations setRestrooms={setRestrooms} restrooms={restrooms} setBedrooms={setBedrooms} bedrooms={bedrooms} setPrice={setPrice} price={price} type={type} setSize={setSize} size={size} setStep={setStep}/>
     )
   }
 
@@ -77,6 +78,12 @@ export const CreateHub = () => {
   if(step === "SellOrRent") {
     return(
       <SellOrRent setType={setType} type={type} setStep={setStep}/>
+    )
+  }
+
+  if(step === "DescriptionBody") {
+    return(
+      <DescriptionBody setStep={setStep} setImage={setImage} onHandleSubmitDone={onHandleSubmitDone}/>
     )
   }
 

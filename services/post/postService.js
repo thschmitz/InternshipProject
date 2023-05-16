@@ -114,13 +114,21 @@ export const postService = {
     try {
       const response = await axios.get(`http://localhost:8080/posts/${id}`, {headers: {"Content-Type": "application/json"}})
 
+      return response;
+    } catch(error) {
+      console.log(error)
+    }
+  },
+
+  async generateTextWithChatGPT() {
+    try{
+      const response = await axios.post("http://localhost:8080/posts/send", {}, {headers: {"Content-Type": "application/json"}});
 
       console.log(response);
 
-
       return response;
-    } catch {
-
+    } catch(error) {
+      console.log(error)
     }
   }
 }

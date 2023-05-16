@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { GoogleMap, Marker, StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api';
 import Heading from "./components/Heading"
 import PreviousNextButton from './components/PreviousNextButton';
+import { postService } from 'services/post/postService';
 
 const places = ['geometry', 'drawing', "places"]
 
@@ -69,6 +70,23 @@ export const Localization = ({setLocation, setStep, setAddress, address, markers
 
     console.log(location)
     setMarkers([location])
+
+    let request = {
+      location: location,
+      rankBy: google.maps.places.RankBy.DISTANCE,
+      keyword: 'restaurant'
+    };
+
+    var service = new window.google.maps.places.PlacesService(map);
+
+    service.nearbySearch(request, nearbyCallback)
+
+  }
+
+  function nearbyCallback(results, status) {
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+      console.log(results)
+    }
   }
 
   return (

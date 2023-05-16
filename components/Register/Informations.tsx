@@ -2,8 +2,9 @@ import React from 'react'
 import Counter from './components/Counter';
 import BooleanFields from "./components/BooleanFields"
 import Heading from "./components/Heading"
+import PreviousNextButton from './components/PreviousNextButton';
 
-export const Informations = ({setRestrooms, restrooms, setBedrooms, bedrooms, setImage, image, setPrice, price, setBody, body, setTitle, title, type, setSize, size, setStep, onHandleSubmitDone}:any) => {
+export const Informations = ({setRestrooms, restrooms, setBedrooms, bedrooms, setPrice, price, type, setSize, size, setStep}:any) => {
 
   return (
     <div className="-mt-16 mb-10">
@@ -24,20 +25,8 @@ export const Informations = ({setRestrooms, restrooms, setBedrooms, bedrooms, se
               </div>
             </div>
           </div>
-          <div className="mt-20 flex text-center">
-            <p
-              className="bg-black max-w-fit text-white rounded-lg p-5 mr-5 cursor-pointer"
-              onClick={() => setStep("Images")}
-            >
-              Voltar
-            </p>
-            <p
-              className="bg-black max-w-fit text-white rounded-lg p-5 cursor-pointer"
-              onClick={(e) => onHandleSubmitDone(e)}
-            >
-              Finalizar
-            </p>
-          </div>
+          <PreviousNextButton setStep={setStep} previous={"Images"} next={"DescriptionBody"}/>
+
         </div>
       </div>
     </div>

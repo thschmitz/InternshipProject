@@ -38,7 +38,7 @@ const containerStyle = {
 
 const places = ['geometry', 'drawing', "places"]
 
-const Info1: React.FC<Info> = ({user, category, description, locationValue, label, created_at}) => {
+const Info1: React.FC<Info> = ({user, category, locationValue, label, created_at}) => {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: process.env.NEXT_PUBLIC_MAP_API_KEY || "",
@@ -65,11 +65,6 @@ const Info1: React.FC<Info> = ({user, category, description, locationValue, labe
         <Category label={label}/>
       )}
 
-      <hr/>
-
-      <div className="text-lg font-light text-neutral-500">
-        {description}
-      </div>
 
       <hr/>
 

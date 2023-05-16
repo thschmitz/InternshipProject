@@ -39,7 +39,6 @@ export const Post = ({post, editor, deletor, setShowFields, setData, deleted, se
     
   async function getAddress() {
     const response = await util.addressFromLatitudeAndLongitude(post.latitude, post.longitude);
-    console.log("RESPOSTA: ", response)
     setCity(response.city)
     setState(response.state)
     setCountry(response.country)

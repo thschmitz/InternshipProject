@@ -2,11 +2,10 @@ import React, {useEffect, useState} from 'react'
 import { GoogleMap, Marker, StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api';
 import Heading from "./components/Heading"
 import PreviousNextButton from './components/PreviousNextButton';
-import { postService } from 'services/post/postService';
 
 const places = ['geometry', 'drawing', "places"]
 
-export const Localization = ({setLocation, setStep, setAddress, address, markers, setMarkers}:any) => {
+export const Localization = ({setLocation, setStep, setAddress, address, markers, setMarkers, setNearbySearch}:any) => {
   const [ searchBox, setSearchBox ] = useState<google.maps.places.SearchBox>();
   const [ map, setMap] = useState<google.maps.Map>();
 
@@ -26,6 +25,7 @@ export const Localization = ({setLocation, setStep, setAddress, address, markers
 
   const onMapLoad = (map:google.maps.Map) => {
     setMap(map);
+
     var centerLat = -29
     var centerLng = -52
 
@@ -47,9 +47,7 @@ export const Localization = ({setLocation, setStep, setAddress, address, markers
       }
   
       setLocation(location)
-  
-      setMarkers([location])
-  
+      // Retirei um setMarkers daqui
       var latLng = new google.maps.LatLng(location.lat, location.lng)
   
       map?.panTo(latLng) // Coloca o centro na nova posicao
@@ -85,7 +83,8 @@ export const Localization = ({setLocation, setStep, setAddress, address, markers
 
   function nearbyCallback(results, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
-      console.log(results)
+      setNearbySearch(results)
+      console.log("RESULTADOS: ", results)
     }
   }
 

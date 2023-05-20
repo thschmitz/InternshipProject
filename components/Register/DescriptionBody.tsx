@@ -2,7 +2,8 @@ import React from "react";
 import Heading from "./components/Heading"
 import TextArea from "./components/TextArea";
 
-export const DescriptionBody = ({ setStep, onHandleSubmitDone }: any) => {
+export const DescriptionBody = ({ setStep, onHandleSubmitDone, nearbySearch }: any) => {
+
   return (
     <div className="-mt-16 mb-10">
       <div className="max-w-7xl mx-auto items-center flex w-full justify-center mt-32">
@@ -14,7 +15,7 @@ export const DescriptionBody = ({ setStep, onHandleSubmitDone }: any) => {
                 title={"Escreva sobre o seu imóvel, como os estabelecimentos próximos que mostrem o quão localizado é a propriedade"}
               />
 
-              <TextArea />
+              <TextArea nearbySearch={nearbySearch}/>
             </div>
           </div>
           <div className="mt-20 flex text-center">

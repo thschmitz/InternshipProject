@@ -120,11 +120,11 @@ export const postService = {
     }
   },
 
-  async generateTextWithChatGPT() {
+  async generateTextWithChatGPT(string) {
     try{
-      const response = await axios.post("http://localhost:8080/posts/send", {}, {headers: {"Content-Type": "application/json"}});
+      const response = await axios.post("http://localhost:8080/posts/send", {message: string}, {headers: {"Content-Type": "application/json"}});
 
-      console.log(response);
+      console.log("RESPOSTA: ", response);
 
       return response;
     } catch(error) {

@@ -2,14 +2,49 @@ import React, { useState } from 'react'
 import {FaRobot} from "react-icons/fa"
 import { postService } from 'services/post/postService';
 
-const TextArea = () => {
+interface textArea {
+  nearbySearch: any
+}
 
-  const [textValue, setTextValue] = useState<string>("Escreva o texto para o seu imóvel");
+const TextArea: React.FC<textArea>  = ({nearbySearch}) => {
 
-  function generateTextWithChatGPT(e: React.ChangeEvent<HTMLTextAreaElement>) {
+  const [textValue, setTextValue] = useState<string>("");
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
+
+  async function grammarChecker(text:string) {
+    const stringForChatGPT = "Corrija o seguinte texto: " + text;
+
+    const response = await postService.generateTextWithChatGPT(stringForChatGPT);
+    setTextValue(response?.data.choices[0].text) 
+    setIsDisabled(false)
+  }
+
+  async function generateTextWithChatGPT(e: any) {
     e.preventDefault();
 
-    postService.generateTextWithChatGPT();    
+    setIsDisabled(true)
+    
+    const listRestaurantsName = [];
+    for(var i = 0; i < nearbySearch.length; i++){
+      console.log(nearbySearch[i].name)
+      listRestaurantsName.push(nearbySearch[i].name);
+    }
+
+    const stringForChatGPT = "Faça um texto de vendas de um imóvel, falando o quão bem localizado ele é, citando os restaurantes que estão perto dele a seguir: " + listRestaurantsName
+    setTextValue("ChatGPT Digitando....");
+    const response = await postService.generateTextWithChatGPT(stringForChatGPT);
+
+    grammarChecker(response?.data.choices[0].text);
+  }
+
+  async function checkTextWithChatGPT(e: any) {
+    e.preventDefault();
+
+    if(textValue != "") {
+      setIsDisabled(true)
+      grammarChecker(textValue)
+      setTextValue("ChatGPT Corrigindo....");
+    }
   }
 
   return(
@@ -18,10 +53,16 @@ const TextArea = () => {
           <div className="flex items-center justify-between px-3 py-2 border-b dark:border-gray-400">
               <div className="flex flex-wrap items-center divide-gray-300 sm:divide-x dark:divide-gray-600">
                   <div className="flex items-center space-x-1 sm:pr-4">
-                     <button type="button" className="p-2 text-gray-200 rounded cursor-pointer ">
-                        <div className="flex border p-1 border-gray-400 rounded-lg hover:text-gray-200 hover:bg-gray-200 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-600">
+                     <button disabled={isDisabled} type="button" className="p-2 text-gray-200 rounded cursor-pointer" onClick={(e) => generateTextWithChatGPT(e)}>
+                        <div className={`flex border p-1 border-gray-400 rounded-lg hover:text-gray-200 hover:bg-gray-200 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-600 ${isDisabled? "bg-gray-600 text-white " : ""} `}>
                           <FaRobot/>
                           <p className="text-sm ml-2 mt-0.5">Gerar Texto Com ChatGPT</p>
+                        </div>
+                      </button>
+                      <button disabled={isDisabled} type="button" className="p-2 text-gray-200 rounded cursor-pointer" onClick={(e) => checkTextWithChatGPT(e)}>
+                        <div className={`flex border p-1 border-gray-400 rounded-lg hover:text-gray-200 hover:bg-gray-200 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-600 ${isDisabled? "bg-gray-600 text-white " : ""} `}>
+                          <FaRobot/>
+                          <p className="text-sm ml-2 mt-0.5">Correção Automática do Texto Com ChatGPT</p>
                         </div>
                       </button>
                       <button type="button" className="p-2 text-gray-200 rounded cursor-pointer hover:text-gray-200 hover:bg-gray-200 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-600">
@@ -32,8 +73,7 @@ const TextArea = () => {
               </div>
           </div>
           <div className="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-200">
-              <label htmlFor="editor" className="sr-only">Publish post</label>
-              <textarea id="editor" rows={8} value={textValue} onChange={(e) => setTextValue(e.target.value)} className="outline-none block w-full px-0 text-sm text-gray-200 bg-white border-0 dark:bg-gray-200 focus:ring-0 dark:text-black dark:placeholder-gray-400" placeholder="Write an article..." required></textarea>
+              <textarea disabled={isDisabled} id="editor" rows={8} value={textValue} onChange={(e) => setTextValue(e.target.value)} className="outline-none block w-full px-0 text-sm text-gray-200 bg-white border-0 dark:bg-gray-200 focus:ring-0 dark:text-black dark:placeholder-gray-400" placeholder="Escreva a descrição do seu imóvel..." required></textarea>
           </div>
       </div>
     </form>

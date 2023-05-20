@@ -23,6 +23,7 @@ export const CreateHub = () => {
   const [ address, setAddress ] = useState();
   const [ location, setLocation ] = useState({lat: null, lng: null})
   const [ markers, setMarkers ] = useState<any[]>([]);
+  const [ nearbySearch , setNearbySearch] = useState<any[]>([]);
   const notification = useNotification();
 
   useEffect(() => {
@@ -31,6 +32,8 @@ export const CreateHub = () => {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       }
+
+      setLocation(location)
       setMarkers([location])
     })
   }, [])
@@ -53,7 +56,7 @@ export const CreateHub = () => {
 
   if(step === "Localization") {
     return(
-      <Localization setLocation={setLocation} setStep={setStep} setAddress={setAddress} address={address} markers={markers} setMarkers={setMarkers} />
+      <Localization setLocation={setLocation} setStep={setStep} setAddress={setAddress} address={address} markers={markers} setMarkers={setMarkers} setNearbySearch={setNearbySearch} />
     )
   }
 
@@ -83,7 +86,7 @@ export const CreateHub = () => {
 
   if(step === "DescriptionBody") {
     return(
-      <DescriptionBody setStep={setStep} setImage={setImage} onHandleSubmitDone={onHandleSubmitDone}/>
+      <DescriptionBody setStep={setStep} onHandleSubmitDone={onHandleSubmitDone} nearbySearch={nearbySearch}/>
     )
   }
 

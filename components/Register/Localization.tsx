@@ -44,6 +44,8 @@ export const Localization = ({setLocation, setStep, setAddress, address, markers
         lng: place?.geometry?.location?.lng() || 0,
       }
   
+      console.log(location)
+
       setLocation(location)
       // Retirei um setMarkers daqui
       var latLng = new google.maps.LatLng(location.lat, location.lng)

@@ -4,7 +4,13 @@ import { MdApartment, MdCabin } from "react-icons/md"
 import Heading from "./components/Heading"
 import PreviousNextButton from "./components/PreviousNextButton"
 
-export const Label = ({setType, type, setStep}:any) => {
+type LabelPropsType = {
+  setLabel : (type: string) => void,
+  type: string,
+  setStep: (type: string) => void,
+}
+
+export const Label = ({setLabel, type, setStep}:LabelPropsType) => {
   return (
     <div>
       <div className="max-w-7xl mx-auto items-center flex w-full justify-center mt-32">
@@ -26,7 +32,7 @@ export const Label = ({setType, type, setStep}:any) => {
                     className={`typeAdminButton ${
                       type === "Casa" ? "bg-gray-100" : ""
                     }`}
-                    onClick={() => setType("Casa")}
+                    onClick={() => setLabel("Casa")}
                   >
                     <BsFillHouseFill className="w-10 h-10" />
                     <p>Casa</p>
@@ -35,7 +41,7 @@ export const Label = ({setType, type, setStep}:any) => {
                     className={`typeAdminButton ${
                       type === "Apartamento" ? "bg-gray-100" : ""
                     }`}
-                    onClick={() => setType("Apartamento")}
+                    onClick={() => setLabel("Apartamento")}
                   >
                     <MdApartment className="w-10 h-10" />
                     <p>Apartamento</p>
@@ -44,7 +50,7 @@ export const Label = ({setType, type, setStep}:any) => {
                     className={`typeAdminButton ${
                       type === "Cabana" ? "bg-gray-100" : ""
                     }`}
-                    onClick={() => setType("Cabana")}
+                    onClick={() => setLabel("Cabana")}
                   >
                     <MdCabin className="w-10 h-10" />
                     <p>Cabana</p>

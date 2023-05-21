@@ -3,12 +3,13 @@ import {FaRobot} from "react-icons/fa"
 import { postService } from 'services/post/postService';
 
 interface textArea {
-  nearbySearch: any
+  nearbySearch: (type: Object) => void,
+  setTextValue: (type: string) => void,
+  textValue: string,
 }
 
-const TextArea: React.FC<textArea>  = ({nearbySearch}) => {
+const TextArea: React.FC<textArea>  = ({nearbySearch, textValue, setTextValue}) => {
 
-  const [textValue, setTextValue] = useState<string>("");
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   async function grammarChecker(text:string) {

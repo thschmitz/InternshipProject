@@ -13,13 +13,12 @@ export const CreateHub = () => {
   const [ step, setStep ] = useState("Hub");
   const [ type, setType ] = useState();
   const [ label, setLabel] = useState();
-  const [ title, setTitle ] = useState();
+  const [ description, setDescription ] = useState();
   const [ restrooms, setRestrooms ] = useState(0);
   const [ bedrooms, setBedrooms ] = useState(0);
   const [ size, setSize ] = useState();
   const [ image, setImage ] = useState();
   const [ price, setPrice ] = useState();
-  const [ body, setBody ] = useState();
   const [ address, setAddress ] = useState();
   const [ location, setLocation ] = useState({lat: null, lng: null})
   const [ markers, setMarkers ] = useState<any[]>([]);
@@ -32,12 +31,14 @@ export const CreateHub = () => {
     const longitude = location.lng;
     const latitude = location.lat;
     const status = type;
-    const listValues = [title, body, image, price, size, restrooms, bedrooms, longitude, latitude, status];
+    const listValues = [image, price, size, restrooms, bedrooms, longitude, latitude, status, description];
+
+    console.log("LISTA DE VALORES PARA INSERIR: ", listValues)
 
     if(listValues.includes(undefined)) {
       Toast.notifyError(notification, "Failed to create a new post!", "Check if all the informations has been fully completed and try again later!")
     } else {
-      postService.createPost({title, body, image, price, size, restrooms, bedrooms, longitude, latitude, status});
+      postService.createPost({image, price, size, restrooms, bedrooms, longitude, latitude, status, description});
       Toast.notifySuccess(notification, "Success to create a new post!", "You have successfully created a new post")
     }
   }
@@ -74,7 +75,7 @@ export const CreateHub = () => {
 
   if(step === "DescriptionBody") {
     return(
-      <DescriptionBody setStep={setStep} onHandleSubmitDone={onHandleSubmitDone} nearbySearch={nearbySearch}/>
+      <DescriptionBody setStep={setStep} onHandleSubmitDone={onHandleSubmitDone} nearbySearch={nearbySearch} textValue={description} setTextValue={setDescription}/>
     )
   }
 

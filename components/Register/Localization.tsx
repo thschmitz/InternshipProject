@@ -34,6 +34,16 @@ export const Localization = ({setLocation, setStep, setAddress, address, markers
       lng: Number(centerLng)
     });
 
+    let request = {
+      location: {lat: centerLat, lng: centerLng},
+      radius: 500,
+      keyword: 'restaurant',
+    };
+
+    var service = new window.google.maps.places.PlacesService(map);
+
+    service.nearbySearch(request, nearbyCallback)
+
     map.setZoom(8)
   }
 
@@ -71,8 +81,8 @@ export const Localization = ({setLocation, setStep, setAddress, address, markers
 
     let request = {
       location: location,
-      rankBy: google.maps.places.RankBy.DISTANCE,
-      keyword: 'restaurant'
+      keyword: 'restaurant',
+      radius: 500,
     };
 
     var service = new window.google.maps.places.PlacesService(map);

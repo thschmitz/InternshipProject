@@ -56,7 +56,7 @@ export const CreateHub = () => {
 
   if(step === "Localization") {
     return(
-      <Localization setLocation={setLocation} setStep={setStep} setAddress={setAddress} address={address} markers={markers} setMarkers={setMarkers} setNearbySearch={setNearbySearch} />
+      <Localization location={location} setLocation={setLocation} setStep={setStep} setAddress={setAddress} address={address} markers={markers} setMarkers={setMarkers} setNearbySearch={setNearbySearch} />
     )
   }
 

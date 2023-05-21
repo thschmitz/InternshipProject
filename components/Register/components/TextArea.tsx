@@ -12,6 +12,7 @@ const TextArea: React.FC<textArea>  = ({nearbySearch}) => {
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   async function grammarChecker(text:string) {
+    setTextValue("ChatGPT Corrigindo....");
     const stringForChatGPT = "Corrija o seguinte texto: " + text;
 
     const response = await postService.generateTextWithChatGPT(stringForChatGPT);

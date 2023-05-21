@@ -22,7 +22,6 @@ export const util = {
     Geocode.setApiKey(process.env.NEXT_PUBLIC_MAP_API_KEY || "")
     const response = Geocode.fromLatLng(latitude, longitude).then(
       (response) => {
-        const address = response.results[0].formatted_address;
         let city, state, country;
         for (let i = 0; i < response.results[0].address_components.length; i++) {
           for (let j = 0; j < response.results[0].address_components[i].types.length; j++) {

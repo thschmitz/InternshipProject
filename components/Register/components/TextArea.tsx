@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {FaRobot} from "react-icons/fa"
 import { postService } from 'services/post/postService';
 
@@ -26,12 +26,34 @@ const TextArea: React.FC<textArea>  = ({nearbySearch}) => {
     setIsDisabled(true)
     
     const listRestaurantsName = [];
+    const listRestaurantRating = [];
+    const listSchoolsName = [];
+    const listSchoolRating = [];
+    const listHospitalsName = [];
+    const listHospitalsRating = [];
+
+    console.log(nearbySearch)
+
     for(var i = 0; i < nearbySearch.length; i++){
-      console.log(nearbySearch[i].name)
-      listRestaurantsName.push(nearbySearch[i].name);
+      if(nearbySearch[i].types.includes("restaurant")) {
+        if(nearbySearch[i].rating > 3) {
+          listRestaurantsName.push(nearbySearch[i].name);
+          listRestaurantRating.push(nearbySearch[i].rating)
+        }
+      } else if(nearbySearch[i].types.includes("school")) {
+        if(nearbySearch[i].rating > 3) {
+          listSchoolsName.push(nearbySearch[i].name);
+          listSchoolRating.push(nearbySearch[i].rating)
+        }
+      } else if(nearbySearch[i].types.includes("hospital")) {
+        if(nearbySearch[i].rating > 3) {
+          listHospitalsName.push(nearbySearch[i].name);
+          listHospitalsRating.push(nearbySearch[i].rating)
+        }
+      }
     }
 
-    const stringForChatGPT = "Faça um texto de vendas de um imóvel, falando o quão bem localizado ele é, citando os restaurantes que estão perto dele a seguir: " + listRestaurantsName
+    const stringForChatGPT = "Faça um texto de vendas de um imóvel, citando alguns dos restaurantes que estão perto dele, a um raio de 500 metros, a seguir: " + listRestaurantsName + ". Com suas respectivas notas de avaliação: " + listRestaurantRating + ". Além disso, cite algumas das escolas que estão presentes em um raio de 2000 metros do imóvel: " + listSchoolsName + ". Com suas respectivas notas de avaliação: " + listSchoolRating +". Ainda, diga fale de alguns centros de saúde qeu estão pertos do estabelecimento imobiliário, ao redor de 500 metros: " + listHospitalsName + ". Com suas respectivas notas de avaliação: " + listHospitalsRating
     setTextValue("ChatGPT Digitando....");
     const response = await postService.generateTextWithChatGPT(stringForChatGPT);
 
@@ -47,6 +69,10 @@ const TextArea: React.FC<textArea>  = ({nearbySearch}) => {
       setTextValue("ChatGPT Corrigindo....");
     }
   }
+
+  useEffect(() => {
+    console.log(nearbySearch)
+  }, [])
 
   return(
     <form>

@@ -9,9 +9,7 @@ export const Localization = ({setLocation, setStep, setAddress, address, markers
   const [ searchBox, setSearchBox ] = useState<google.maps.places.SearchBox>();
   const [ map, setMap] = useState<google.maps.Map>();
 
-  useEffect(() => {
-    console.log("markers: ", markers)
-  }, [])
+  const listNearbySearch = []
 
   const containerStyle = {
     width: '100%',
@@ -33,16 +31,6 @@ export const Localization = ({setLocation, setStep, setAddress, address, markers
       lat: Number(centerLat),
       lng: Number(centerLng)
     });
-
-    let request = {
-      location: {lat: centerLat, lng: centerLng},
-      radius: 500,
-      keyword: 'restaurant',
-    };
-
-    var service = new window.google.maps.places.PlacesService(map);
-
-    service.nearbySearch(request, nearbyCallback)
 
     map.setZoom(8)
   }
@@ -76,25 +64,44 @@ export const Localization = ({setLocation, setStep, setAddress, address, markers
       lng: e?.latLng?.lng(),
     }
 
-    console.log(location)
+    console.log("clicou")
+
     setMarkers([location])
 
-    let request = {
+    let restaurantRequest = {
       location: location,
       keyword: 'restaurant',
       radius: 500,
     };
 
+    let schoolRequest = {
+      location: location,
+      keyword: "school",
+      radius: 2000
+    }
+
+    let hospitalRequest = {
+      location: location,
+      keyword: "hospital",
+      radius: 500
+    }
+
     var service = new window.google.maps.places.PlacesService(map);
 
-    service.nearbySearch(request, nearbyCallback)
+    service.nearbySearch(restaurantRequest, nearbyCallback);
+    service.nearbySearch(schoolRequest, nearbyCallback);
+    service.nearbySearch(hospitalRequest, nearbyCallback);
 
+    console.log("listNearbySearch: ", listNearbySearch)
   }
 
   function nearbyCallback(results, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
-      setNearbySearch(results)
-      console.log("RESULTADOS: ", results)
+      for(var i = 0; i < results.length; i++) {
+        listNearbySearch.push(results[i])
+      }
+
+      setNearbySearch(listNearbySearch);
     }
   }
 

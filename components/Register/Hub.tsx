@@ -26,18 +26,6 @@ export const CreateHub = () => {
   const [ nearbySearch , setNearbySearch] = useState<any[]>([]);
   const notification = useNotification();
 
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const location = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      }
-
-      setLocation(location)
-      setMarkers([location])
-    })
-  }, [])
-
   function onHandleSubmitDone(e:any) {
     e.preventDefault();
 

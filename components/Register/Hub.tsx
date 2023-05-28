@@ -12,7 +12,7 @@ import { DescriptionBody } from "./DescriptionBody"
 export const CreateHub = () => {
   const [ step, setStep ] = useState("Hub");
   const [ type, setType ] = useState();
-  const [ label, setLabel] = useState();
+  const [ labelId, setLabelId] = useState();
   const [ description, setDescription ] = useState();
   const [ restrooms, setRestrooms ] = useState(0);
   const [ bedrooms, setBedrooms ] = useState(0);
@@ -22,7 +22,8 @@ export const CreateHub = () => {
   const [ address, setAddress ] = useState();
   const [ location, setLocation ] = useState({lat: null, lng: null})
   const [ markers, setMarkers ] = useState<any[]>([]);
-  const [ nearbySearch , setNearbySearch] = useState<any[]>([]);
+  const [ nearbySearch , setNearbySearch] = useState<any>([]);
+  const [ title, setTitle ] = useState<string>();
   const notification = useNotification();
 
   function onHandleSubmitDone(e:any) {
@@ -30,15 +31,14 @@ export const CreateHub = () => {
 
     const longitude = location.lng;
     const latitude = location.lat;
-    const status = type;
-    const listValues = [image, price, size, restrooms, bedrooms, longitude, latitude, status, description];
+    const listValues = [description, price, size, address, restrooms, bedrooms, type, latitude, longitude, image, labelId];
 
     console.log("LISTA DE VALORES PARA INSERIR: ", listValues)
 
-    if(listValues.includes(undefined)) {
+    if(listValues.includes(undefined) || listValues.includes(null)) {
       Toast.notifyError(notification, "Failed to create a new post!", "Check if all the informations has been fully completed and try again later!")
     } else {
-      postService.createPost({image, price, size, restrooms, bedrooms, longitude, latitude, status, description});
+      postService.createPost({description, price, size, address, restrooms, bedrooms, type, latitude, longitude, image, labelId});
       Toast.notifySuccess(notification, "Success to create a new post!", "You have successfully created a new post")
     }
   }
@@ -63,7 +63,7 @@ export const CreateHub = () => {
 
   if(step === "Label") {
     return(
-      <Label setLabel={setLabel} label={label} setStep={setStep}/>
+      <Label setLabelId={setLabelId} setStep={setStep}/>
     )
   }
 
@@ -75,7 +75,7 @@ export const CreateHub = () => {
 
   if(step === "DescriptionBody") {
     return(
-      <DescriptionBody setStep={setStep} onHandleSubmitDone={onHandleSubmitDone} nearbySearch={nearbySearch} textValue={description} setTextValue={setDescription}/>
+      <DescriptionBody setTitle={setTitle} title={title} setStep={setStep} onHandleSubmitDone={onHandleSubmitDone} nearbySearch={nearbySearch} textValue={description} setTextValue={setDescription}/>
     )
   }
 

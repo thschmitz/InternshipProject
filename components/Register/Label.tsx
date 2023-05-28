@@ -1,23 +1,47 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {BsFillHouseFill} from "react-icons/bs"
 import { MdApartment, MdCabin } from "react-icons/md"
 import Heading from "./components/Heading"
 import PreviousNextButton from "./components/PreviousNextButton"
+import { labelService } from "services/label/labelService";
 
 type LabelPropsType = {
-  setLabel : (type: string) => void,
-  type: string,
+  setLabelId : (type: string) => void,
   setStep: (type: string) => void,
 }
 
-export const Label = ({setLabel, type, setStep}:LabelPropsType) => {
+
+
+export const Label = ({setLabelId, setStep}:LabelPropsType) => {
+
+  const [labels, setLabels] = useState<any>([]);
+  const [ label, setLabel] = useState();
+
+
+  useEffect(() => {
+    getAllLabels();
+  }, [])
+
+  async function getAllLabels() {
+    const response = await labelService.getAllLabels();
+
+    setLabels(response);
+  }
+
+  function onClickSubmit(e: React.MouseEvent<HTMLDivElement, MouseEvent>, currentLabel:any) {
+    e.preventDefault();
+
+    setLabel(currentLabel.label)
+    setLabelId(currentLabel.id)
+  }
+
   return (
     <div>
       <div className="max-w-7xl mx-auto items-center flex w-full justify-center mt-32">
         <div className="flex-col">
           <div className="flex">
             <div className="w-full items-center justify-center text-xl">
-              <Heading step={3} title={"Quais características mais se enquadram em seu imóvel"} />
+              <Heading step={3} title={"Qual característica mais se enquadra em seu imóvel"} />
               <h1 className="font-bold text-5xl mt-5">
                 
               </h1>
@@ -28,33 +52,13 @@ export const Label = ({setLabel, type, setStep}:LabelPropsType) => {
                   encontrado pelos seus clientes!
                 </p>
                 <div className="flex">
-                  <div
-                    className={`typeAdminButton ${
-                      type === "Casa" ? "bg-gray-100" : ""
-                    }`}
-                    onClick={() => setLabel("Casa")}
-                  >
-                    <BsFillHouseFill className="w-10 h-10" />
-                    <p>Casa</p>
-                  </div>
-                  <div
-                    className={`typeAdminButton ${
-                      type === "Apartamento" ? "bg-gray-100" : ""
-                    }`}
-                    onClick={() => setLabel("Apartamento")}
-                  >
-                    <MdApartment className="w-10 h-10" />
-                    <p>Apartamento</p>
-                  </div>
-                  <div
-                    className={`typeAdminButton ${
-                      type === "Cabana" ? "bg-gray-100" : ""
-                    }`}
-                    onClick={() => setLabel("Cabana")}
-                  >
-                    <MdCabin className="w-10 h-10" />
-                    <p>Cabana</p>
-                  </div>
+                  {
+                    labels?.map((currentLabel:any, index:any) => (
+                      <div key={currentLabel.id} className={`typeAdminButton ${label === currentLabel.label ? "bg-gray-300" : ""}`} onClick={(e) => onClickSubmit(e, currentLabel)}>
+                        <p>{currentLabel.label}</p>
+                      </div>
+                    )) 
+                  }
                 </div>
               </div>
             </div>

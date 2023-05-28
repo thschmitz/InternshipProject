@@ -2,20 +2,33 @@ import React, {useEffect, useState} from 'react'
 import { GoogleMap, Marker, StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api';
 import Heading from "./components/Heading"
 import PreviousNextButton from './components/PreviousNextButton';
+import { util } from 'services/util/util';
 
 const places = ['geometry', 'drawing', "places"]
 
-export const Localization = ({setLocation, setStep, setAddress, address, markers, setMarkers, setNearbySearch}:any) => {
+interface LocationCoordenates {
+  lat: number | undefined,
+  lng: number | undefined
+}
+
+
+
+
+export const Localization = ({setLocation, location, setStep, setAddress, address, markers, setMarkers, setNearbySearch}:any) => {
   const [ searchBox, setSearchBox ] = useState<google.maps.places.SearchBox>();
   const [ map, setMap] = useState<google.maps.Map>();
 
-  const listNearbySearch = []
+  const listNearbySearch: any = []
 
   const containerStyle = {
     width: '100%',
     height: '100%',
   };
 
+  async function getAddress(location: LocationCoordenates) {
+    const response = util.addressFromLatitudeAndLongitude(location.lat, location.lng)
+    setAddress(response)
+  }
 
   const onLoad = (ref: google.maps.places.SearchBox) => {
     setSearchBox(ref)
@@ -39,12 +52,16 @@ export const Localization = ({setLocation, setStep, setAddress, address, markers
     if(searchBox != undefined) {
       const places = searchBox!.getPlaces();
       const place = places![0];
+
+      console.log("PLACE: ", place)
+
       const location = {
         lat: place?.geometry?.location?.lat() || 0,
         lng: place?.geometry?.location?.lng() || 0,
       }
+
+      getAddress(location)
   
-      console.log(location)
 
       setLocation(location)
       // Retirei um setMarkers daqui
@@ -60,14 +77,16 @@ export const Localization = ({setLocation, setStep, setAddress, address, markers
     libraries: places || []
   });
 
+
   const onMapClick = (e:google.maps.MapMouseEvent) => {
     const location = {
       lat: e?.latLng?.lat(),
       lng: e?.latLng?.lng(),
     }
 
-    console.log("clicou")
+    getAddress(location);
 
+    setLocation({lat: location.lat, lng: location.lng})
     setMarkers([location])
 
     let restaurantRequest = {
@@ -93,14 +112,13 @@ export const Localization = ({setLocation, setStep, setAddress, address, markers
     service.nearbySearch(restaurantRequest, nearbyCallback);
     service.nearbySearch(schoolRequest, nearbyCallback);
     service.nearbySearch(hospitalRequest, nearbyCallback);
-
-    console.log("listNearbySearch: ", listNearbySearch)
   }
 
   function nearbyCallback(results, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
       for(var i = 0; i < results.length; i++) {
         listNearbySearch.push(results[i])
+        console.log(results[i])
       }
 
       setNearbySearch(listNearbySearch);

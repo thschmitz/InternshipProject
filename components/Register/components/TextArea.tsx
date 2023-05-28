@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import {FaRobot} from "react-icons/fa"
 import { postService } from 'services/post/postService';
+import TextField from '@material-ui/core/TextField';
+import { Toast } from 'services/notification/toast';
+import { useNotification } from 'use-toast-notification';
 
 interface textArea {
-  nearbySearch: (type: Object) => void,
+  nearbySearch: (type: any) => void,
   setTextValue: (type: string) => void,
   textValue: string,
 }
 
 const TextArea: React.FC<textArea>  = ({nearbySearch, textValue, setTextValue}) => {
+  const notification = useNotification();
 
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
@@ -33,32 +37,34 @@ const TextArea: React.FC<textArea>  = ({nearbySearch, textValue, setTextValue}) 
     const listHospitalsName = [];
     const listHospitalsRating = [];
 
-    console.log(nearbySearch)
-
-    for(var i = 0; i < nearbySearch.length; i++){
-      if(nearbySearch[i].types.includes("restaurant")) {
-        if(nearbySearch[i].rating > 3) {
-          listRestaurantsName.push(nearbySearch[i].name);
-          listRestaurantRating.push(nearbySearch[i].rating)
-        }
-      } else if(nearbySearch[i].types.includes("school")) {
-        if(nearbySearch[i].rating > 3) {
-          listSchoolsName.push(nearbySearch[i].name);
-          listSchoolRating.push(nearbySearch[i].rating)
-        }
-      } else if(nearbySearch[i].types.includes("hospital")) {
-        if(nearbySearch[i].rating > 3) {
-          listHospitalsName.push(nearbySearch[i].name);
-          listHospitalsRating.push(nearbySearch[i].rating)
+    if(nearbySearch.length > 0) {
+      for(var i = 0; i < nearbySearch.length; i++){
+        if(nearbySearch[i].types.includes("restaurant")) {
+          if(nearbySearch[i].rating > 3) {
+            listRestaurantsName.push(nearbySearch[i].name);
+            listRestaurantRating.push(nearbySearch[i].rating)
+          }
+        } else if(nearbySearch[i].types.includes("school")) {
+          if(nearbySearch[i].rating > 3) {
+            listSchoolsName.push(nearbySearch[i].name);
+            listSchoolRating.push(nearbySearch[i].rating)
+          }
+        } else if(nearbySearch[i].types.includes("hospital")) {
+          if(nearbySearch[i].rating > 3) {
+            listHospitalsName.push(nearbySearch[i].name);
+            listHospitalsRating.push(nearbySearch[i].rating)
+          }
         }
       }
+
+      const stringForChatGPT = "Faça um texto de vendas de um imóvel, falando sobre alguns dos restaurantes que estão perto dele, a um raio de 500 metros, a seguir: " + listRestaurantsName + ". Com suas respectivas notas de avaliação: " + listRestaurantRating + ". Além disso, cite algumas das escolas que estão presentes em um raio de 2000 metros do imóvel: " + listSchoolsName + ". Com suas respectivas notas de avaliação: " + listSchoolRating +". Ainda, diga fale de alguns centros de saúde qeu estão pertos do estabelecimento imobiliário, ao redor de 500 metros: " + listHospitalsName + ". Com suas respectivas notas de avaliação: " + listHospitalsRating
+      setTextValue("ChatGPT Digitando....");
+      const response = await postService.generateTextWithChatGPT(stringForChatGPT);
+  
+      grammarChecker(response?.data.choices[0].text);
+    } else {
+      Toast.notifyError(notification, "Error to call ChatGPT", "You have to mark any location in the map to complete this action!")
     }
-
-    const stringForChatGPT = "Faça um texto de vendas de um imóvel, citando alguns dos restaurantes que estão perto dele, a um raio de 500 metros, a seguir: " + listRestaurantsName + ". Com suas respectivas notas de avaliação: " + listRestaurantRating + ". Além disso, cite algumas das escolas que estão presentes em um raio de 2000 metros do imóvel: " + listSchoolsName + ". Com suas respectivas notas de avaliação: " + listSchoolRating +". Ainda, diga fale de alguns centros de saúde qeu estão pertos do estabelecimento imobiliário, ao redor de 500 metros: " + listHospitalsName + ". Com suas respectivas notas de avaliação: " + listHospitalsRating
-    setTextValue("ChatGPT Digitando....");
-    const response = await postService.generateTextWithChatGPT(stringForChatGPT);
-
-    grammarChecker(response?.data.choices[0].text);
   }
 
   async function checkTextWithChatGPT(e: any) {
@@ -71,37 +77,38 @@ const TextArea: React.FC<textArea>  = ({nearbySearch, textValue, setTextValue}) 
     }
   }
 
-  useEffect(() => {
-    console.log(nearbySearch)
-  }, [])
-
   return(
     <form>
-      <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-500 dark:border-gray-200 mt-10">
-          <div className="flex items-center justify-between px-3 py-2 border-b dark:border-gray-400">
-              <div className="flex flex-wrap items-center divide-gray-300 sm:divide-x dark:divide-gray-600">
+      <div className="w-full mb-4 mt-10">
+          <div className="flex items-center justify-between px-3 py-2 border-b ">
+              <div className="flex flex-wrap items-center">
                   <div className="flex items-center space-x-1 sm:pr-4">
-                     <button disabled={isDisabled} type="button" className="p-2 text-gray-200 rounded cursor-pointer" onClick={(e) => generateTextWithChatGPT(e)}>
-                        <div className={`flex border p-1 border-gray-400 rounded-lg hover:text-gray-200 hover:bg-gray-200 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-600 ${isDisabled? "bg-gray-600 text-white " : ""} `}>
+                     <button disabled={isDisabled} type="button" className="p-2 rounded cursor-pointer" onClick={(e) => generateTextWithChatGPT(e)}>
+                        <div className={`flex border p-1 hover:bg-gray-200 ${isDisabled? "text-gray-200" : ""} `}>
                           <FaRobot/>
                           <p className="text-sm ml-2 mt-0.5">Gerar Texto Com ChatGPT</p>
                         </div>
                       </button>
-                      <button disabled={isDisabled} type="button" className="p-2 text-gray-200 rounded cursor-pointer" onClick={(e) => checkTextWithChatGPT(e)}>
-                        <div className={`flex border p-1 border-gray-400 rounded-lg hover:text-gray-200 hover:bg-gray-200 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-600 ${isDisabled? "bg-gray-600 text-white " : ""} `}>
+                      <button disabled={isDisabled} type="button" className="p-2 rounded cursor-pointer " onClick={(e) => checkTextWithChatGPT(e)}>
+                        <div className={`flex border p-1 hover:bg-gray-200 ${isDisabled? "text-gray-200 " : ""} `}>
                           <FaRobot/>
                           <p className="text-sm ml-2 mt-0.5">Correção Automática do Texto Com ChatGPT</p>
                         </div>
                       </button>
-                      <button type="button" className="p-2 text-gray-200 rounded cursor-pointer hover:text-gray-200 hover:bg-gray-200 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-600">
-                        <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z" clip-rule="evenodd"></path></svg>
-                          <span className="sr-only">Adicionar Emoji</span>
-                      </button>
                   </div>
               </div>
           </div>
-          <div className="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-200">
-              <textarea disabled={isDisabled} id="editor" rows={8} value={textValue} onChange={(e) => setTextValue(e.target.value)} className="outline-none block w-full px-0 text-sm text-gray-200 bg-white border-0 dark:bg-gray-200 focus:ring-0 dark:text-black dark:placeholder-gray-400" placeholder="Escreva a descrição do seu imóvel..." required></textarea>
+          <div className="px-4 py-2 bg-white rounded-b-lg ">
+            <TextField
+              id="outlined-multiline-static"
+              label="Escreva a descrição de seu imóvel"
+              multiline
+              value={textValue}
+              variant="outlined"
+              onChange={(e) => setTextValue(e.target.value)}
+              className="w-full"
+              disabled={isDisabled}
+            />
           </div>
       </div>
     </form>

@@ -13,10 +13,10 @@ export const SellOrRent = ({setType, type, setStep}:any) => {
               <div className="mt-10">
                 <p>Marque a opção que mais se adeque às suas necessidades</p>
                 <div className="flex">
-                  <div className={`typeAdminButton ${type==="Venda"? "bg-gray-100" : ""}`} onClick={() => setType("Venda")}>
+                  <div className={`typeAdminButton ${type==="Venda"? "bg-gray-300" : ""}`} onClick={() => setType("Venda")}>
                     Venda
                   </div>
-                  <div className={`typeAdminButton ${type==="Aluguel"? "bg-gray-100" : ""}`} onClick={() => setType("Aluguel")}>
+                  <div className={`typeAdminButton ${type==="Aluguel"? "bg-gray-300" : ""}`} onClick={() => setType("Aluguel")}>
                     Alugar
                   </div>
                 </div>

@@ -78,7 +78,7 @@ export const Post = ({post, editor, deletor, setShowFields, setData, deleted, se
               {country}, {state} 
             </div>
             <div className="font-light text-neutral-500 p-2">
-              {post.type} em {city.length > 20? city.substring(0, 20) + "..." : city}
+              {post.type} em {city?.length > 20? city.substring(0, 20) + "..." : city}
             </div>
             <div className="flex flex-row items-center gap-1 pl-2">
               <div className="font-semibold">

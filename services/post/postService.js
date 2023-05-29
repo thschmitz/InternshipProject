@@ -50,8 +50,9 @@ export const postService = {
 
   async createPost(data) {
     try {
+      console.log("DATACAO: ", data)
       const token = tokenService.get(null);
-      const response = await axios.post(`http://localhost:8080/posts`, {body: data.description, price: body.price, size: body.size, }, { headers: {"Content-Type": "application/json", "JWT": token} })
+      const response = await axios.post(`http://localhost:8080/posts`, {body: data.description, price: data.price, size: data.size, title: data.title, restrooms: data.restrooms, bedrooms: data.bedrooms, type: data.type, latitude: data.latitude, longitude: data.longitude, main_image: data.image, label_id: data.labelId}, { headers: {"Content-Type": "application/json", "JWT": token} })
 
       console.log(response.data);
 

@@ -31,14 +31,14 @@ export const CreateHub = () => {
 
     const longitude = location.lng;
     const latitude = location.lat;
-    const listValues = [description, price, size, address, restrooms, bedrooms, type, latitude, longitude, image, labelId];
+    const listValues = [description, price, size, title, restrooms, bedrooms, type, latitude, longitude, image, labelId];
 
     console.log("LISTA DE VALORES PARA INSERIR: ", listValues)
 
     if(listValues.includes(undefined) || listValues.includes(null)) {
       Toast.notifyError(notification, "Failed to create a new post!", "Check if all the informations has been fully completed and try again later!")
     } else {
-      postService.createPost({description, price, size, address, restrooms, bedrooms, type, latitude, longitude, image, labelId});
+      postService.createPost({description, price, size, title, restrooms, bedrooms, type, latitude, longitude, image, labelId});
       Toast.notifySuccess(notification, "Success to create a new post!", "You have successfully created a new post")
     }
   }

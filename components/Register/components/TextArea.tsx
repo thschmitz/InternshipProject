@@ -64,6 +64,7 @@ const TextArea: React.FC<textArea>  = ({nearbySearch, textValue, setTextValue}) 
       grammarChecker(response?.data.choices[0].text);
     } else {
       Toast.notifyError(notification, "Error to call ChatGPT", "You have to mark any location in the map to complete this action!")
+      setIsDisabled(false)
     }
   }
 
@@ -79,6 +80,7 @@ const TextArea: React.FC<textArea>  = ({nearbySearch, textValue, setTextValue}) 
 
   return(
     <form>
+      <p className="text-sm mt-10 ml-5 -mb-10 font-bold">Faça uma descrição do seu imóvel</p>
       <div className="w-full mb-4 mt-10">
           <div className="flex items-center justify-between px-3 py-2 border-b ">
               <div className="flex flex-wrap items-center">
@@ -101,7 +103,6 @@ const TextArea: React.FC<textArea>  = ({nearbySearch, textValue, setTextValue}) 
           <div className="px-4 py-2 bg-white rounded-b-lg ">
             <TextField
               id="outlined-multiline-static"
-              label="Escreva a descrição de seu imóvel"
               multiline
               value={textValue}
               variant="outlined"

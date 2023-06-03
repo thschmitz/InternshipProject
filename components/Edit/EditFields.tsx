@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { GoogleMap, Marker, StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, MarkerF, StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api';
 import { postService } from 'services/post/postService';
 import { MdKeyboardReturn } from "react-icons/md"
 import { useNotification } from "use-toast-notification";
@@ -18,12 +18,13 @@ export const EditFields = ({data, setShowFields}: any) => {
   const [ price, setPrice ] = useState(data.price);
   const [ body, setBody ] = useState<string>(data.body);
   const [ address, setAddress ] = useState<string>("");
-  const [ location, setLocation ] = useState({lat: data.latitude, lng: data.longitude})
+  const [ location, setLocation ] = useState({lat: null, lng: null})
   const [ type, setType ] = useState<string>(data.type);
   const [ searchBox, setSearchBox ] = useState<google.maps.places.SearchBox>();
   const [ map, setMap] = useState<google.maps.Map>();
   const [ markers, setMarkers ] = useState<any[]>([]);
   const notification = useNotification();
+
 
   function onHandleSubmitDone(e: React.MouseEvent<HTMLParagraphElement, MouseEvent>) {
     e.preventDefault();
@@ -57,41 +58,42 @@ export const EditFields = ({data, setShowFields}: any) => {
   }
 
   const onMapLoad = (map:google.maps.Map) => {
-    var centerLat = parseFloat(data.latitude).toFixed(0);
-    var centerLng = parseFloat(data.longitude).toFixed(0);
+    
+    setMarkers([{lat: Number(data.latitude), lng: Number(data.longitude)}])
 
     map.setCenter({
-      lat: Number(centerLat),
-      lng: Number(centerLng)
+      lat: Number(data.latitude),
+      lng: Number(data.longitude)
     });
 
     map.setZoom(8)
     setMap(map);
-
   }
 
   const onPlacesChanged = () => {
-    const places = searchBox!.getPlaces();
+    if(searchBox != undefined) {
+      const places = searchBox!.getPlaces();
+      const place = places![0];
 
-    const place = places![0];
-    const location = {
-      lat: place?.geometry?.location?.lat() || 0,
-      lng: place?.geometry?.location?.lng() || 0,
+      console.log("PLACE: ", place)
+
+      const location = {
+        lat: place?.geometry?.location?.lat() || 0,
+        lng: place?.geometry?.location?.lng() || 0,
+      }
+
+      setLocation(location)
+      // Retirei um setMarkers daqui
+      var latLng = new google.maps.LatLng(location.lat, location.lng)
+  
+      map?.panTo(latLng) // Coloca o centro na nova posicao
     }
-
-    setLocation(location)
-
-    setMarkers([location])
-
-    var latLng = new google.maps.LatLng(location.lat, location.lng)
-
-    map?.panTo(latLng) // Coloca o centro na nova posicao
   }
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: process.env.NEXT_PUBLIC_MAP_API_KEY,
-    libraries: places
+    googleMapsApiKey: process.env.NEXT_PUBLIC_MAP_API_KEY || "",
+    libraries: places || []
   });
 
   const onMapClick = (e:google.maps.MapMouseEvent) => {
@@ -100,6 +102,8 @@ export const EditFields = ({data, setShowFields}: any) => {
       lng: e?.latLng?.lng(),
     }
 
+
+    setLocation({lat: location.lat, lng: location.lng})
     setMarkers([location])
   }
 
@@ -184,7 +188,7 @@ export const EditFields = ({data, setShowFields}: any) => {
                   </div>
                 </div>
                 <div className="h-96 w-full text-center mt-10">
-                  {isLoaded && (
+                {isLoaded && (
                     <GoogleMap
                       onLoad={onMapLoad}
                       mapContainerStyle={containerStyle}
@@ -202,8 +206,9 @@ export const EditFields = ({data, setShowFields}: any) => {
                           onChange={(e) => setAddress(e.target.value)}
                         />
                       </StandaloneSearchBox>
+
                       {markers.map((marker, index) => (
-                        <Marker key={index} position={marker} />
+                        <MarkerF key={index} position={marker} />
                       ))}
                     </GoogleMap>
                   )}

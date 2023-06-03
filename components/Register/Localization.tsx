@@ -14,7 +14,7 @@ interface LocationCoordenates {
 
 
 
-export const Localization = ({setLocation, location, setStep, setAddress, address, markers, setMarkers, setNearbySearch}:any) => {
+export const Localization = ({setLocation, setStep, setAddress, address, markers, setMarkers, setNearbySearch}:any) => {
   const [ searchBox, setSearchBox ] = useState<google.maps.places.SearchBox>();
   const [ map, setMap] = useState<google.maps.Map>();
 

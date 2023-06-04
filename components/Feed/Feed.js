@@ -2,9 +2,12 @@
 import { Post } from "components/Post/Post"
 import {useRouter} from "next/router"
 import React from 'react'
+import { selectAuthState } from "../../src/store/authSlice";
+import { useSelector } from "react-redux";
 
 export const Feed = ({posts, editor, deletor, setShowFields, setData, deleted, setDeleted}) => {
   const router = useRouter();
+  const authState = useSelector(selectAuthState)
 
   return (
     <>
@@ -14,7 +17,7 @@ export const Feed = ({posts, editor, deletor, setShowFields, setData, deleted, s
           {
             posts?.map((post, index) => (
               <div key={index} className="max-w-sm max-h-sm pr-3">
-                <Post post={post[0] || post} editor={editor} deletor={deletor} setShowFields={setShowFields} setData={setData} deleted={deleted} setDeleted={setDeleted}/>
+                <Post post={post[0] || post} editor={editor} deletor={deletor} setShowFields={setShowFields} setData={setData} deleted={deleted} setDeleted={setDeleted} authState={authState}/>
               </div>
             ))
           }

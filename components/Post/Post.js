@@ -8,7 +8,7 @@ import HeartButton from "./HeartButton"
 import { util } from "services/util/util.js";
 import { useRouter } from "next/router.js";
 
-export const Post = ({post, editor, deletor, setShowFields, setData, deleted, setDeleted}) => {
+export const Post = ({post, editor, deletor, setShowFields, setData, deleted, setDeleted, authState}) => {
   const notification = useNotification();
   const [city, setCity] = useState("")
   const [state, setState] = useState("")
@@ -70,7 +70,7 @@ export const Post = ({post, editor, deletor, setShowFields, setData, deleted, se
           <div className="aspect-square w-full relative overflow-hidden rounded-xl">
             <img fill onClick={() => router.push(`/post/${post.id}`)} alt="Imóvel" src={post.main_image} className="object-cover h-full w-full group-hover:scale-110 transition" />
             <div className="absolute top-3 right-3">
-              <HeartButton postId={post.id}/>
+              <HeartButton postId={post.id} authState={authState}/>
             </div>
           </div>
           <div onClick={() => router.push(`/post/${post.id}`)}>

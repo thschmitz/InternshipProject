@@ -1,13 +1,25 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import {feedbackService} from "../../services/feedback/feedbackService"
 
 interface HeartButtonProps {
   postId: Number,
+  authState: Boolean,
 }
 
-const HeartButton: React.FC<HeartButtonProps> = ({postId}) => {
+const HeartButton: React.FC<HeartButtonProps> = ({postId, authState}) => {
   const [liked, setLiked] = useState(false);
+
+  useEffect(() => {
+    checkIfLiked();
+  }, [authState])
+
+  async function checkIfLiked() {
+    const response = await feedbackService.checkIfLiked(postId);
+    setLiked(response);
+
+    return response;
+  }
 
   async function toogleFavorite(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     e.preventDefault();
@@ -30,9 +42,6 @@ const HeartButton: React.FC<HeartButtonProps> = ({postId}) => {
       }
     </div>
   )
-}
-
-export const getServerSideProps = async(ctx: any) => {
 }
 
 export default HeartButton;

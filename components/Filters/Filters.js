@@ -10,27 +10,22 @@ export const Filters = ({setUserData, setPostsData, searchText}) => {
 
   async function handleApplyFilters(e) {
     e.preventDefault();
-    console.log(titleClick, bodyClick, userClick)
-    console.log("TEXT: ", searchText)
     let posts = [];
 
     if(titleClick || !bodyClick && !userClick) {
       // postData
       const titleResponse = await postService.searchPostsByQuery(searchText);
-      console.log("titleResponse: ", titleResponse)
       posts.push(titleResponse)
     }
 
     if(bodyClick) {
       const bodyResponse = await postService.searchPostsByBody(searchText);
-      console.log("BODYRESPONSE: ", bodyResponse)
       posts.push(bodyResponse)
     }
     
 
     if(userClick) {
       const userResponse = await userService.searchUserByName(searchText);
-      console.log("USERRESPONSE: ", userResponse)
       setUserData(userResponse)
     } else {
       setUserData([])

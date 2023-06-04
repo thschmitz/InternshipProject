@@ -13,10 +13,10 @@ export const authService = {
       const session = await this.session(response.data);
       const userData = await this.userData(session.data.body.id);
   
-      console.log("USERADATA: ", userData)
       return userData;
     } catch (error) {
       console.error(error);
+      return error;
     }
   },
     
@@ -32,6 +32,7 @@ export const authService = {
       return response;
     } catch(error) {
       console.log(error);
+      return error;
     }
 
   },
@@ -56,6 +57,7 @@ export const authService = {
       
     } catch (error) {
       console.error(error);
+      return error;
     }
   },
 
@@ -67,11 +69,12 @@ export const authService = {
       return response.data;
     } catch(error) {
       console.log(error);
+
+      return error;
     }
   },
 
   async signUp(data) {
-    console.log(data);
     try {
       const response = await axios.post('http://localhost:8080/users', data, { headers: { 'Content-Type': 'application/json'}});
       console.log("Response.data: ", response);
@@ -81,6 +84,7 @@ export const authService = {
       return response.data;
     } catch(error){
       console.log(error);
+      return error;
     }
   }
 }

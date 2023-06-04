@@ -1,7 +1,6 @@
 import { UserRow } from "./UserRow"
 
 export const User = ({userData}) => {
-  console.log("USERUSERDATA: ", userData)
   return (
     <>
       <div className="flex-1 flex justify-center mt-10">

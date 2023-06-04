@@ -2,7 +2,6 @@ import Geocode from "react-geocode";
 
 export const util = {
   removeDuplicatesFromArray(array){
-    console.log(array);
     array = array.filter((item, index) => array.indexOf(item) === index);
 
     let new_array = [];
@@ -38,7 +37,6 @@ export const util = {
             }
           }
         }
-        console.log("ADDRESS: ", response)
         return {city, state, country}
       },
       (error) => {

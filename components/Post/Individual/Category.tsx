@@ -16,8 +16,6 @@ interface Props {
 
 const Category: React.FC<Props> = ({label}) => {
 
-  console.log("LABEL: ", label)
-
   const Icon = IconsTb[label.icon] || IconsMd[label.icon] || IconsGi[label.icon] || IconsGr[label.icon];
 
   return(

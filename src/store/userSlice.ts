@@ -30,7 +30,6 @@ export const userSlice = createSlice({
   reducers: {
     // Action to set the authentication status
     setUserData(state, action) {
-      console.log("PAYLOAD: ", action.payload)
       state.id = action.payload.id;
       state.name = action.payload.name;
       state.email = action.payload.email;
@@ -54,8 +53,6 @@ export const { setUserData, cleanUserData } = userSlice.actions
 
 async function verifySession(token:any) {
   const session = await authService.session(token);
-  console.log("SESSION USER SLICE: ", session)
-
 
   return await session;
 }

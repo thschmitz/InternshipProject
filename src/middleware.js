@@ -20,9 +20,6 @@ export async function middleware(req) {
   const session = await response.json();
   
   
-  console.log("MIDDLEWARE: ", session)
-
-
   if(session?.body?.id) {
     if(url.includes("/login") || url.includes("/signup")) {
       return NextResponse.redirect("http://localhost:3000/")

@@ -8,11 +8,10 @@ export const postService = {
         console.log("ERR:", err)
       });
 
-      console.log("RESPONSEPOSTS: ", response)
-  
       return response.data;
     } catch (error) {
       console.error(error);
+      return error;
     }
   },
 
@@ -23,6 +22,7 @@ export const postService = {
       return response.data;
     } catch (error) {
       console.log(error);
+      return error;
     }
   },
 
@@ -33,6 +33,7 @@ export const postService = {
       return response.data;
     } catch(error) {
       console.log(error);
+      return error;
     }
   },
 
@@ -40,26 +41,21 @@ export const postService = {
     try {
       const response =  await axios.get(`http://localhost:8080/posts/profile/${id}`)
 
-      console.log("GET SERVER SIDE PROPS POST: ", response.data)
-
       return response.data;
     } catch (error) {
       console.log(error);
+      return error;
     }
   },
 
   async createPost(data) {
     try {
-      console.log("DATACAO: ", data)
       const token = tokenService.get(null);
       const response = await axios.post(`http://localhost:8080/posts`, {body: data.description, price: data.price, size: data.size, title: data.title, restrooms: data.restrooms, bedrooms: data.bedrooms, type: data.type, latitude: data.latitude, longitude: data.longitude, main_image: data.image, label_id: data.labelId}, { headers: {"Content-Type": "application/json", "JWT": token} })
-
-      console.log(response.data);
 
       return response.data;
     } catch(error) {
       console.log(error);
-
       return error;
     }
   },
@@ -68,13 +64,9 @@ export const postService = {
     try {
       const response = await axios.get(`http://localhost:8080/postimage`, {headers: {"Content-Type": "application/json"}})
 
-
-      console.log("Images: ", response.data)
-
       return response.data;
     } catch(error) {
       console.log(error);
-
       return error;
     }
   },
@@ -82,7 +74,6 @@ export const postService = {
   async updatePost(id, {title, restrooms, bedrooms, size, main_image, price, latitude, longitude, body, type}) {
     try{
       const token = tokenService.get(null);
-      console.log({title, restrooms, bedrooms, size, main_image, price, latitude, longitude, body, type})
       const response = await axios.put(`http://localhost:8080/posts/${id}`, {title, restrooms, bedrooms, size, main_image, price, latitude, longitude, body, type}, {headers: {"Content-Type": "application/json", "JWT": token}})
 
       console.log(response);
@@ -102,8 +93,6 @@ export const postService = {
 
       const response = await axios.delete(`http://localhost:8080/posts/${id}`, {headers: {"Content-Type": "application/json", "JWT": token}})
 
-      console.log(response)
-
       return response.status;
     } catch(error) {
       console.log(error)
@@ -118,6 +107,7 @@ export const postService = {
       return response;
     } catch(error) {
       console.log(error)
+      return error;
     }
   },
 
@@ -125,11 +115,10 @@ export const postService = {
     try{
       const response = await axios.post("http://localhost:8080/posts/send", {message: string}, {headers: {"Content-Type": "application/json"}});
 
-      console.log("RESPOSTA: ", response);
-
       return response;
     } catch(error) {
       console.log(error)
+      return error;
     }
   }
 }

@@ -45,8 +45,6 @@ const Info1: React.FC<Info> = ({user, category, locationValue, label, created_at
     libraries: places || []
   })
 
-  console.log({lat: Number(locationValue.lat), lng: Number(locationValue.lng)})
-
   return (
     <div className="col-span-4 flex flex-col gap-8">
       <div className="flex flex-col gap-2">

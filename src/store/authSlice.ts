@@ -39,9 +39,6 @@ async function verifySession(token:any) {
 const token = tokenService.get(null);
 const session = await verifySession(token);
 
-console.log("AUTH SLICE SESSION: ", session);
-console.log(session?.data?.body?.id)
-
 // Selector
 export const selectAuthState = (state: RootState) => state.auth.authState;
 

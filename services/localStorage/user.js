@@ -35,6 +35,8 @@ export function useLocalStorage(key, initialValue={}) {
       localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
       console.log(error);
+
+      return error;
     }
   }, [key])
 

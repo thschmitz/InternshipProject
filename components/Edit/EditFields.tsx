@@ -75,8 +75,6 @@ export const EditFields = ({data, setShowFields}: any) => {
       const places = searchBox!.getPlaces();
       const place = places![0];
 
-      console.log("PLACE: ", place)
-
       const location = {
         lat: place?.geometry?.location?.lat() || 0,
         lng: place?.geometry?.location?.lng() || 0,

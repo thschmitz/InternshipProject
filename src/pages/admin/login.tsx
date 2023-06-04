@@ -33,7 +33,6 @@ function Login() {
         router.push("/admin")
       } else {
         Toast.notifyError(notification, "Login Error!", "Your credentials are wrong")
-        console.log("ERRO NO LOGIN")
       }
     }
 

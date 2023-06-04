@@ -17,8 +17,6 @@ interface HeadProps {
 
 const Heading: React.FC<HeadProps> = ({title, locationValue, imageSrc, id}) => {
 
-  console.log("DADOS: ", title, locationValue, imageSrc, id)
-
   return(
     <>
       <div className='text-start mt-10'>

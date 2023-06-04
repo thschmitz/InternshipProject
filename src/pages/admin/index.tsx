@@ -42,7 +42,6 @@ const Home = () => {
 
   async function getPosts() {
     const posts = await postService.searchAllPosts();
-    console.log(posts)
     setPosts(posts);
   }
 

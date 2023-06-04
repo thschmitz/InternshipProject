@@ -53,8 +53,6 @@ export const Localization = ({setLocation, setStep, setAddress, address, markers
       const places = searchBox!.getPlaces();
       const place = places![0];
 
-      console.log("PLACE: ", place)
-
       const location = {
         lat: place?.geometry?.location?.lat() || 0,
         lng: place?.geometry?.location?.lng() || 0,
@@ -118,7 +116,6 @@ export const Localization = ({setLocation, setStep, setAddress, address, markers
     if (status == google.maps.places.PlacesServiceStatus.OK) {
       for(var i = 0; i < results.length; i++) {
         listNearbySearch.push(results[i])
-        console.log(results[i])
       }
 
       setNearbySearch(listNearbySearch);

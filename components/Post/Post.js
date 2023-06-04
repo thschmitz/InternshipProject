@@ -86,10 +86,8 @@ export const Post = ({post, editor, deletor, setShowFields, setData, deleted, se
               </div>
             </div>
           </div>
-
         </div>
       </div>
-
     </>
   );
 };

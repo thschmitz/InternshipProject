@@ -11,9 +11,6 @@ const Search = (props:any) => {
   const [postData, setPostData] = useState<any[]>([]);
   const [userData, setUserData] = useState<any[]>([]);
 
-  console.log("PROPS SEARCH: ", props?.search);
-  console.log("POST DATA: ", postData.length === 0)
-
   return (
     <>
       <Header searchText={router.query.searchMsg}/>
@@ -37,8 +34,6 @@ const Search = (props:any) => {
   )
 }
 export const getServerSideProps = async(ctx:any) => {
-
-  console.log("QUERIES: ", Object.values(ctx.query))
   const search = await postService.searchPostsByQuery(ctx.query.searchMsg);
 
   return {

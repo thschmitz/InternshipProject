@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.thschmitz.realstate.domain.User;
-import com.thschmitz.realstate.exception.MissingRequestHeaderException;
 import com.thschmitz.realstate.repository.UserRepository;
 import com.thschmitz.realstate.services.UserService;
 import com.thschmitz.realstate.util.Session;

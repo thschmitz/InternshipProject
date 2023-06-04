@@ -33,14 +33,15 @@ public class FeedbackResource {
 	
 	@RequestMapping(value="/post/{id}", method=RequestMethod.POST)
 	public ResponseEntity<Feedback> like(@PathVariable Integer id, @RequestHeader(value="JWT") String header) {
-		System.out.println(header);
 		Jws<Claims> session = Session.session(header);
 		Integer author_id = Session.getSessionId(session);
 		return ResponseEntity.ok().body(feedbackService.like(id, author_id));
 	}
 	
-	@RequestMapping(value="/post/{id}", method=RequestMethod.GET)
-	public ResponseEntity<List<Feedback>> findByPost(@PathVariable Integer id) {
-		return ResponseEntity.ok().body(feedbackService.findFeedbacksByPost(id));
+	@RequestMapping(value="/check/post/{postId}", method=RequestMethod.GET)
+	public ResponseEntity<Boolean> findByAuthorAndPostId(@PathVariable Integer postId, @RequestHeader(value="JWT") String header) {
+		Jws<Claims> session = Session.session(header);
+		Integer author_id = Session.getSessionId(session);
+		return ResponseEntity.ok().body(feedbackService.findByAuthorAndPostId(author_id, postId));
 	}
 }

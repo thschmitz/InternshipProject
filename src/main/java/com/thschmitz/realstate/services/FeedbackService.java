@@ -47,4 +47,14 @@ public class FeedbackService {
 	public void delete(Integer id) {
 		feedbackRepository.deleteById(id);
 	}
+	
+	public Boolean findByAuthorAndPostId(Integer userId, Integer postId) {
+		Feedback feedbackReturned = feedbackRepository.findByAuthorAndPostId(userId, postId);
+		
+		if(feedbackReturned != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

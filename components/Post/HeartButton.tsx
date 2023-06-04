@@ -9,10 +9,20 @@ interface HeartButtonProps {
 
 const HeartButton: React.FC<HeartButtonProps> = ({postId, authState}) => {
   const [liked, setLiked] = useState(false);
+  const [lengthLikes, setLengthLikes] = useState();
 
   useEffect(() => {
     checkIfLiked();
   }, [authState])
+
+  useEffect(() => {
+    renderLikes();
+  }, [liked])
+
+  async function renderLikes() {
+    const response = await feedbackService.getAllFeedbacksByPost(postId);
+    setLengthLikes(response.length)
+  }
 
   async function checkIfLiked() {
     const response = await feedbackService.checkIfLiked(postId);
@@ -35,11 +45,15 @@ const HeartButton: React.FC<HeartButtonProps> = ({postId, authState}) => {
 
   return (
     <div onClick={(e) => toogleFavorite(e)} className="relative hover:opacity-80 transition cursor-pointer">
-      {liked?
-        <AiFillHeart size={28} className={liked? "fill-rose-500" : "fill-neutral-500/70"} />
-        :
-        <AiOutlineHeart size={28} className="fill-white"/>
-      }
+      <div className="flex">
+        <p className="text-white mr-2 font-bold text-lg">{lengthLikes}</p>
+        {liked?
+          <AiFillHeart size={28} className={liked? "fill-rose-500" : "fill-neutral-500/70"} />
+          :
+          <AiOutlineHeart size={28} className="fill-white"/>
+        }
+      </div>
+
     </div>
   )
 }

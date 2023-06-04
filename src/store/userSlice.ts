@@ -60,6 +60,8 @@ async function verifySession(token:any) {
 const token = tokenService.get(null);
 const session = await verifySession(token);
 
+console.log("SESSION: ", session)
+
 // Selector
 export const selectUserData = (state: RootState) => state.user;
 

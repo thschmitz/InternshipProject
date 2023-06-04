@@ -95,14 +95,14 @@ export const Header = (props) => {
               <p className="navButtonAccount" onClick={(e) => signOut(e)}>Logout</p>
             </div>
           </Popup>
-        : 
-          <div className="navButton">
-              <div>
-                <Link href="/login"><p className="text-black">Sign In</p></Link>
-              </div>
+          : 
+            <div className="navButton">
+                <div>
+                  <Link href="/login"><p className="text-black">Sign In</p></Link>
+                </div>
 
-          </div>
-      }
+            </div>
+        }
       </div>
     </div>
   )

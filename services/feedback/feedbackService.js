@@ -9,7 +9,6 @@ export const feedbackService = {
 
       return response.data;
     } catch(error) {
-      console.log(error)
       return error;
     }
   },
@@ -18,7 +17,6 @@ export const feedbackService = {
       const token = tokenService.get(null);
       if(token) {
         const response = await axios.get(`http://localhost:8080/feedbacks/check/post/${postId}`, {headers: {"Content-Type": "application/json", "JWT": token} })
-        console.log("RESPOSNE CHECKIFLIKED: ", response.data)
 
         return response.data;
       } else {
@@ -27,8 +25,17 @@ export const feedbackService = {
 
       
     } catch(error) {
-      console.log(error);
 
+      return error;
+    }
+  },
+
+  async getAllFeedbacksByPost(postId) {
+    try {
+      const response = await axios.get(`http://localhost:8080/feedbacks/post/${postId}`)
+
+      return response.data;
+    } catch(error) {
       return error;
     }
   }

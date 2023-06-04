@@ -9,6 +9,7 @@ import io.jsonwebtoken.MalformedJwtException;
 
 public class Session {
 	public static Jws<Claims> session(String jwt){
+		System.out.println(jwt);
 		try {
 			return JWT.validateJWT(jwt);
 		} catch(MalformedJwtException e) {

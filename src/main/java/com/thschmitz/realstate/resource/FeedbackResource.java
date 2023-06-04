@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.thschmitz.realstate.domain.Feedbacks;
+import com.thschmitz.realstate.domain.Feedback;
 import com.thschmitz.realstate.services.FeedbackService;
 import com.thschmitz.realstate.util.Session;
 
@@ -27,19 +27,20 @@ public class FeedbackResource {
 	private FeedbackService feedbackService;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<Feedbacks>> findAll() {
+	public ResponseEntity<List<Feedback>> findAll() {
 		return ResponseEntity.ok().body(feedbackService.findAll());
 	}
 	
 	@RequestMapping(value="/post/{id}", method=RequestMethod.POST)
-	public ResponseEntity<Feedbacks> like(@PathVariable Integer id, @RequestHeader(value="JWT") String header) {
+	public ResponseEntity<Feedback> like(@PathVariable Integer id, @RequestHeader(value="JWT") String header) {
+		System.out.println(header);
 		Jws<Claims> session = Session.session(header);
 		Integer author_id = Session.getSessionId(session);
 		return ResponseEntity.ok().body(feedbackService.like(id, author_id));
 	}
 	
 	@RequestMapping(value="/post/{id}", method=RequestMethod.GET)
-	public ResponseEntity<List<Feedbacks>> findByPost(@PathVariable Integer id) {
+	public ResponseEntity<List<Feedback>> findByPost(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(feedbackService.findFeedbacksByPost(id));
 	}
 }

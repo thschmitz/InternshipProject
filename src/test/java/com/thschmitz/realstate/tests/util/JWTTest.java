@@ -13,7 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.thschmitz.realstate.domain.Users;
+import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.exception.InvalidJWT;
 import com.thschmitz.realstate.exception.MissingRequestHeaderException;
 import com.thschmitz.realstate.util.JWT;
@@ -24,13 +24,13 @@ import com.thschmitz.realstate.util.Session;
 @RunWith(SpringRunner.class)
 public class JWTTest {
 
-	private Users maria;
+	private User maria;
 	
 	@BeforeEach
 	void setup() throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-		maria = new Users(244, "Maria Brown", "maria@gmail.com", "$2a$10$daJmJ.qCBUfFK4LC91C5be5Lcc6tQufVhrLkSDrGKWAA6XnYNlqri", sdf.parse("21/03/2018"), "https://img.freepik.com/fotos-gratis/mulher-jovem-e-elegante-magnifica-com-grandes-olhos-castanhos-e-um-sorriso-incrivel_291049-2575.jpg?w=2000", true, 996969102);
+		maria = new User(244, "Maria Brown", "maria@gmail.com", "$2a$10$daJmJ.qCBUfFK4LC91C5be5Lcc6tQufVhrLkSDrGKWAA6XnYNlqri", sdf.parse("21/03/2018"), "https://img.freepik.com/fotos-gratis/mulher-jovem-e-elegante-magnifica-com-grandes-olhos-castanhos-e-um-sorriso-incrivel_291049-2575.jpg?w=2000", true, 996969102);
 	}
 	
 	@Test

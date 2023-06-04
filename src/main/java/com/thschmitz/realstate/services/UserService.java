@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.thschmitz.realstate.domain.Users;
+import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.exception.AuthenticationException;
 import com.thschmitz.realstate.exception.ObjectNotFoundException;
 import com.thschmitz.realstate.exception.ParametersNotPassedException;
@@ -20,17 +20,17 @@ public class UserService {
 	@Autowired
 	UserRepository userRepository;
 
-	public Iterable<Users> findAll() {
+	public Iterable<User> findAll() {
 		return userRepository.findAll();
 	}
 	
-	public Users findById(Integer id) {
-		Optional<Users> user = userRepository.findById(id);
+	public User findById(Integer id) {
+		Optional<User> user = userRepository.findById(id);
 		
 		return user.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 	
-	public String insert(Users obj) {
+	public String insert(User obj) {
 		obj.setPassword(Password.encodePassword(obj));
 		userRepository.save(obj); // Encoding the password and sending the object
 		return JWT.createJWT(obj);
@@ -42,15 +42,15 @@ public class UserService {
 		userRepository.deleteById(id);
 	}
 	
-	public Users update(Users obj) {
-		Users newObj = findById(obj.getId());
+	public User update(User obj) {
+		User newObj = findById(obj.getId());
 		
 		updateData(newObj, obj);
 		
 		return userRepository.save(newObj);
 	}
 	
-	public void updateData(Users newObj, Users obj) {
+	public void updateData(User newObj, User obj) {
 		if(obj.getName() == null || obj.getEmail() == null) {
 			throw new ParametersNotPassedException("Você precisa incluir todas as informações para concluir a operação!");
 		} else {
@@ -60,8 +60,13 @@ public class UserService {
 		}
 	}
 	
-	public String login(Users obj) {
-		Users newObj = userRepository.findByEmail(obj.getEmail());
+	
+	
+	
+	
+	
+	public String login(User obj) {
+		User newObj = userRepository.findByEmail(obj.getEmail());
 		
 		if(newObj == null) {
 			throw new AuthenticationException("O email está errado");
@@ -78,7 +83,14 @@ public class UserService {
 		return JWT.createJWT(newObj);
 	}
 	
-	public List<Users> findbyText(String text) {
+	
+	
+	
+	
+	
+	
+	
+	public List<User> findbyText(String text) {
 		return userRepository.findByNameContainingIgnoreCase(text);
 	}
 }

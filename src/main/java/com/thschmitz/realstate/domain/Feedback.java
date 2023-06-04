@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Feedbacks")
-public class Feedbacks implements Serializable{
+public class Feedback implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -21,17 +21,17 @@ public class Feedbacks implements Serializable{
 	private Integer author_id;
 	private Integer post_id;
 	
-	public Feedbacks() {
+	public Feedback() {
 		
 	}
 	
-	public Feedbacks(Date created_at, Integer author_id, Integer post_id) {
+	public Feedback(Date created_at, Integer author_id, Integer post_id) {
 		this.created_at = created_at;
 		this.author_id = author_id;
 		this.post_id = post_id;
 	}
 	
-	public Feedbacks(Integer id, Date created_at, Integer author_id, Integer post_id) {
+	public Feedback(Integer id, Date created_at, Integer author_id, Integer post_id) {
 		this.id = id;
 		this.created_at = created_at;
 		this.author_id = author_id;
@@ -72,7 +72,7 @@ public class Feedbacks implements Serializable{
 	}
 
 	public Boolean isEmpty() {
-		if(this.id != null & this.created_at != null & this.author_id != null & this.post_id != null) {
+		if(this.id != null && this.created_at != null && this.author_id != null && this.post_id != null) {
 			return false;
 		} else {
 			return true;

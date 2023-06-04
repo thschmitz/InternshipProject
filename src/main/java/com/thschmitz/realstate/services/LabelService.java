@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.thschmitz.realstate.domain.Labels;
+import com.thschmitz.realstate.domain.Label;
 import com.thschmitz.realstate.repository.LabelRepository;
 
 @Service
@@ -15,11 +15,11 @@ public class LabelService {
 	private LabelRepository labelRepository;
 	
 	
-	public Optional<Labels> findById(Integer id) {
+	public Optional<Label> findById(Integer id) {
 		return labelRepository.findById(id);
 	}
 	
-	public List<Labels> findAll() {
+	public List<Label> findAll() {
 		return labelRepository.findAll();
 	}
 }

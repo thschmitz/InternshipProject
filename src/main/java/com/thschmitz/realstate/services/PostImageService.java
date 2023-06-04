@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.thschmitz.realstate.domain.Comments;
-import com.thschmitz.realstate.domain.PostsImages;
+import com.thschmitz.realstate.domain.Comment;
+import com.thschmitz.realstate.domain.PostImage;
 import com.thschmitz.realstate.exception.ParametersNotPassedException;
 import com.thschmitz.realstate.repository.PostsImagesRepository;
 
@@ -17,7 +17,7 @@ public class PostImageService {
 	private PostsImagesRepository postsImagesRepository;
 	
 	
-	public PostsImages insert(PostsImages images) {
+	public PostImage insert(PostImage images) {
 		
 		if(images.isEmpty()) {
 			throw new ParametersNotPassedException("Você precisa informar a URL da imagem para realizar a operação!");
@@ -28,15 +28,15 @@ public class PostImageService {
 		return images;
 	}
 	
-	public List<PostsImages> listAll() {
-		return (List<PostsImages>) postsImagesRepository.findAll();
+	public List<PostImage> listAll() {
+		return (List<PostImage>) postsImagesRepository.findAll();
 	}
 	
 	public void delete(Integer id) {
 		postsImagesRepository.deleteById(id);
 	}
 	
-	public List<PostsImages> findPostImagesByPost(Integer id) {
+	public List<PostImage> findPostImagesByPost(Integer id) {
 		return postsImagesRepository.findPostImagesByPostId(id);
 	}
 }

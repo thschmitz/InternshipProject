@@ -17,7 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.thschmitz.realstate.domain.Feedbacks;
+import com.thschmitz.realstate.domain.Feedback;
 import com.thschmitz.realstate.repository.FeedbackRepository;
 import com.thschmitz.realstate.services.FeedbackService;
 
@@ -30,7 +30,7 @@ public class FeedbackTest {
 	@Mock
 	private FeedbackRepository feedbackRepository;
 	
-	private Feedbacks feedback;
+	private Feedback feedback;
 	
 	@Autowired
 	@InjectMocks
@@ -40,7 +40,7 @@ public class FeedbackTest {
 	void setup() throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-		feedback = new Feedbacks(244, sdf.parse("12/03/2023"), 245, 365);
+		feedback = new Feedback(244, sdf.parse("12/03/2023"), 245, 365);
 	}
 	
 	@Test
@@ -48,12 +48,12 @@ public class FeedbackTest {
 	void doTheLikeAndHaventDoneItYet() {
 		
 		Mockito.when(feedbackRepository.findByAuthorAndPostId(feedback.getAuthor(), feedback.getPost())).thenReturn(null);
-		Mockito.when(feedbackRepository.save(Mockito.any(Feedbacks.class))).thenReturn(null);
+		Mockito.when(feedbackRepository.save(Mockito.any(Feedback.class))).thenReturn(null);
 		
 		feedbackService.like(365, 245);
 		
 		Mockito.verify(feedbackRepository).findByAuthorAndPostId(feedback.getAuthor(), feedback.getPost());
-		Mockito.verify(feedbackRepository).save(Mockito.any(Feedbacks.class));
+		Mockito.verify(feedbackRepository).save(Mockito.any(Feedback.class));
 		
 		Mockito.verifyNoMoreInteractions(feedbackRepository);
 	}

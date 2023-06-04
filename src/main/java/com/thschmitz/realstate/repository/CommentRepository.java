@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.thschmitz.realstate.domain.Comments;
+import com.thschmitz.realstate.domain.Comment;
 
-public interface CommentRepository extends JpaRepository<Comments, Integer> {
+public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
-	@Query("SELECT c from Comments c WHERE c.post_id = :id")
-	List<Comments> findCommentsByPostId(Integer id);
+	@Query("SELECT c from Comment c WHERE c.post_id = :id")
+	List<Comment> findCommentsByPostId(Integer id);
 }

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.thschmitz.realstate.domain.Users;
+import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.exception.MissingRequestHeaderException;
 import com.thschmitz.realstate.repository.UserRepository;
 import com.thschmitz.realstate.services.UserService;
@@ -37,20 +37,20 @@ public class UserResource {
 	private UserRepository userRepository;
 	
 	@RequestMapping(method=RequestMethod.GET)
- 	public ResponseEntity<Iterable<Users>> findAll() {
-		Iterable<Users> list = service.findAll();
+ 	public ResponseEntity<Iterable<User>> findAll() {
+		Iterable<User> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Users> findById(@PathVariable Integer id) {
-		Users user = service.findById(id);
+	public ResponseEntity<User> findById(@PathVariable Integer id) {
+		User user = service.findById(id);
 		
 		return ResponseEntity.ok().body(user);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<String> insert(@RequestBody Users user, HttpServletResponse response){
+	public ResponseEntity<String> insert(@RequestBody User user, HttpServletResponse response){
 		Date created_at = new Date();
 		user.setCreated_at(created_at);
 		
@@ -60,7 +60,7 @@ public class UserResource {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Users> update(@RequestBody Users user, @PathVariable Integer id, @RequestHeader(value="JWT") String header) {
+	public ResponseEntity<User> update(@RequestBody User user, @PathVariable Integer id, @RequestHeader(value="JWT") String header) {
 		Session.session(header);
 		user.setId(id);
 		user = service.update(user);
@@ -77,7 +77,7 @@ public class UserResource {
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public ResponseEntity<String> login(@RequestBody Users user, HttpServletResponse response) {
+	public ResponseEntity<String> login(@RequestBody User user, HttpServletResponse response) {
 		String jwt = service.login(user);
 		response.setHeader("JWT", jwt);
 		
@@ -90,9 +90,9 @@ public class UserResource {
 	}
 	
 	@RequestMapping(value="/namesearch", method=RequestMethod.GET)
-	public ResponseEntity<List<Users>> findByText(@RequestParam(value="text", defaultValue="") String text) {
+	public ResponseEntity<List<User>> findByText(@RequestParam(value="text", defaultValue="") String text) {
 		text = URL.decodeParam(text);
-		List<Users> list = service.findbyText(text);
+		List<User> list = service.findbyText(text);
 		
 		return ResponseEntity.ok().body(list);
 	}

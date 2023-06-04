@@ -6,11 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.thschmitz.realstate.domain.Comments;
-import com.thschmitz.realstate.domain.Feedbacks;
-import com.thschmitz.realstate.domain.Posts;
-import com.thschmitz.realstate.domain.PostsImages;
-import com.thschmitz.realstate.domain.Users;
+import com.thschmitz.realstate.domain.Comment;
+import com.thschmitz.realstate.domain.Feedback;
+import com.thschmitz.realstate.domain.Post;
+import com.thschmitz.realstate.domain.PostImage;
+import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.exception.ObjectNotFoundException;
 import com.thschmitz.realstate.repository.PostRepository;
 import com.thschmitz.realstate.util.Session;
@@ -36,48 +36,48 @@ public class PostService {
 	@Autowired
 	private PostImageService postImageService;
 	
-	public List<Posts> findAll() {
-		return (List<Posts>) postRepository.findAll();
+	public List<Post> findAll() {
+		return (List<Post>) postRepository.findAll();
 	}
 	
-	public Posts findById(Integer id) {
-		Optional<Posts> user = postRepository.findById(id);
+	public Post findById(Integer id) {
+		Optional<Post> user = postRepository.findById(id);
 		
 		return user.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado!"));
 	}
 	
-	public List<Posts> findByTitle(String text) {
+	public List<Post> findByTitle(String text) {
 		return postRepository.findByTitleContainingIgnoreCase(text);
 	}
 	
-	public List<Posts> findByBody(String body) {
+	public List<Post> findByBody(String body) {
 		return postRepository.findByBodyContainingIgnoreCase(body);
 	}
 	
-	public Posts insert(Posts post, Jws<Claims> session) {
+	public Post insert(Post post, Jws<Claims> session) {
 		
 		Integer author_id = Session.getSessionId(session);
 
-		Users user = service.findById(author_id);
+		User user = service.findById(author_id);
 		post.setAuthorId(user.getId());
 		
 		return postRepository.save(post);
 	}
 	
 	public void delete(Integer id) {
-		List<Comments> comments = commentService.findCommentsByPost(id);
-		List<Feedbacks> feedbacks = feedbackService.findFeedbacksByPost(id);
-		List<PostsImages> postImages = postImageService.findPostImagesByPost(id);
+		List<Comment> comments = commentService.findCommentsByPost(id);
+		List<Feedback> feedbacks = feedbackService.findFeedbacksByPost(id);
+		List<PostImage> postImages = postImageService.findPostImagesByPost(id);
 		
-		for(Comments comment : comments) {
+		for(Comment comment : comments) {
 			commentService.delete(comment.getId());
 		}
 		
-		for(Feedbacks feedback : feedbacks) {
+		for(Feedback feedback : feedbacks) {
 			feedbackService.delete(feedback.getId());
 		}
 		
-		for(PostsImages postImage : postImages) {
+		for(PostImage postImage : postImages) {
 			postImageService.delete(postImage.getId());
 		}
 	
@@ -85,13 +85,13 @@ public class PostService {
 		
 	}
 	
-	public Posts update(Posts post) {
-		Posts newObj = findById(post.getId());
+	public Post update(Post post) {
+		Post newObj = findById(post.getId());
 		updateData(newObj, post);
 		return postRepository.save(newObj);
 	}
 	
-	public void updateData(Posts newObj, Posts obj) {
+	public void updateData(Post newObj, Post obj) {
 		System.out.println(newObj.getBody());
 		System.out.println(newObj.getTitle());
 		
@@ -107,7 +107,7 @@ public class PostService {
 		newObj.setTitle(obj.getTitle());
 	}
 	
-	public List<Posts> getPostByProfileId(Integer id) {
+	public List<Post> getPostByProfileId(Integer id) {
 		return postRepository.findByAuthorId(id);
 	}
 }

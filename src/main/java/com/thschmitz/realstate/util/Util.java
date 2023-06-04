@@ -5,8 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-import com.thschmitz.realstate.domain.Posts;
-import com.thschmitz.realstate.domain.Users;
+import com.thschmitz.realstate.domain.Post;
+import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.exception.ParseException;
 import com.thschmitz.realstate.exception.Unauthorized;
 import com.thschmitz.realstate.services.PostService;
@@ -31,7 +31,7 @@ public class Util {
 	}
 	
 	public static void isAllowed(Integer id_post, Integer id_author, PostService service) {
-		Posts post = service.findById(id_post);
+		Post post = service.findById(id_post);
 		
 		if(!post.getAuthorId().equals(id_author)) {
 			throw new Unauthorized("You can't do this request because you are not allowed to!");

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Comments")
-public class Comments implements Serializable {
+public class Comment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -23,11 +23,11 @@ public class Comments implements Serializable {
 	private Integer author_id;
 	private Integer post_id;
 
-	public Comments() {
+	public Comment() {
 
 	}
 
-	public Comments(Integer id, String body, Date created_at, Integer author_id, Integer post_id) {
+	public Comment(Integer id, String body, Date created_at, Integer author_id, Integer post_id) {
 		this.id = id;
 		this.body = body;
 		this.created_at = created_at;
@@ -88,12 +88,12 @@ public class Comments implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Comments other = (Comments) obj;
+		Comment other = (Comment) obj;
 		return Objects.equals(id, other.id);
 	}
 	
 	public Boolean isEmpty() {
-		if(this.id != null & this.body != "" & this.created_at != null & this.author_id != null & this.post_id != null) {
+		if(this.id != null && this.body != "" && this.created_at != null && this.author_id != null && this.post_id != null) {
 			return false;
 		} else {
 			return true;

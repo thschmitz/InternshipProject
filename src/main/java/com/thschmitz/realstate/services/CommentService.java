@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.thschmitz.realstate.domain.Comments;
+import com.thschmitz.realstate.domain.Comment;
 import com.thschmitz.realstate.exception.ObjectNotFoundException;
 import com.thschmitz.realstate.exception.ParametersNotPassedException;
 import com.thschmitz.realstate.repository.CommentRepository;
@@ -18,17 +18,17 @@ public class CommentService {
 	@Autowired
 	private CommentRepository commentRepository;
 	
-	public List<Comments> findAll() {
-		return (List<Comments>) commentRepository.findAll();
+	public List<Comment> findAll() {
+		return (List<Comment>) commentRepository.findAll();
 	}
 	
-	public Comments findById(Integer id) {
-		Optional<Comments> comment = commentRepository.findById(id);
+	public Comment findById(Integer id) {
+		Optional<Comment> comment = commentRepository.findById(id);
 		
 		return comment.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 	
-	public Comments create(Integer post_id, Comments comment, Integer author_id) {
+	public Comment create(Integer post_id, Comment comment, Integer author_id) {
 		comment.setCreated_at(new Date());
 		comment.setAuthor(author_id);
 		comment.setPost(post_id);
@@ -45,7 +45,7 @@ public class CommentService {
 		commentRepository.deleteById(id);
 	}
 	
-	public List<Comments> findCommentsByPost(Integer id) {
+	public List<Comment> findCommentsByPost(Integer id) {
 		return commentRepository.findCommentsByPostId(id);
 	}
 }

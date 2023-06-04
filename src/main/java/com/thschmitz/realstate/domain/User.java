@@ -13,7 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="Users")
-public class Users implements Serializable {
+public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -27,11 +27,11 @@ public class Users implements Serializable {
 	private Boolean admin;
 	private Integer phone;
 	
-	public Users() {
+	public User() {
 		
 	}
 	
-	public Users(Integer id, String name, String email, String password, Date created_at, String image, Boolean admin, Integer phone) {
+	public User(Integer id, String name, String email, String password, Date created_at, String image, Boolean admin, Integer phone) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -122,7 +122,7 @@ public class Users implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Users other = (Users) obj;
+		User other = (User) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -132,7 +132,7 @@ public class Users implements Serializable {
 	}
 	
 	public Boolean isEmpty() {
-		if(this.id != null & this.name != "" & this.email != "" & this.password != "" & this.created_at!= null & this.image != "") {
+		if(this.id != null && this.name != "" && this.email != "" && this.password != "" && this.created_at!= null && this.image != "") {
 			return false;
 		} else {
 			return true;

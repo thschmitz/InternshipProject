@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
-import com.thschmitz.realstate.domain.Comments;
-import com.thschmitz.realstate.domain.Feedbacks;
-import com.thschmitz.realstate.domain.Labels;
-import com.thschmitz.realstate.domain.Posts;
-import com.thschmitz.realstate.domain.PostsImages;
-import com.thschmitz.realstate.domain.Users;
+import com.thschmitz.realstate.domain.Comment;
+import com.thschmitz.realstate.domain.Feedback;
+import com.thschmitz.realstate.domain.Label;
+import com.thschmitz.realstate.domain.Post;
+import com.thschmitz.realstate.domain.PostImage;
+import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.repository.CommentRepository;
 import com.thschmitz.realstate.repository.FeedbackRepository;
 import com.thschmitz.realstate.repository.LabelRepository;

@@ -8,71 +8,66 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
-@Table(name="Labels")
-public class Labels implements Serializable{
+@Table(name="PostsImages")
+public class PostImage implements Serializable{
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private Date created_at;
-	private String label;
-	private String icon;
-	private String description;
+	private String image_url;
+	private Integer post_id;
 	
-	public Labels() {
+	public PostImage() {
 		
 	}
 	
-	public Labels(Integer id, Date created_at, String label, String icon, String description) {
+	public PostImage(Integer id, Date created_at, String image_url, Integer post_id) {
+		super();
 		this.id = id;
 		this.created_at = created_at;
-		this.label = label;
-		this.icon = icon;
-		this.description = description;
+		this.setImage_url(image_url);
+		this.post_id = post_id;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
-	
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public Date getCreated_at() {
 		return created_at;
 	}
-	
+
 	public void setCreated_at(Date created_at) {
 		this.created_at = created_at;
 	}
-	
-	public String getLabel() {
-		return label;
+
+	public Integer getPostId() {
+		return post_id;
+	}
+
+	public void setPostId(Integer post_id) {
+		this.post_id = post_id;
 	}
 	
-	public void setLabel(String label) {
-		this.label = label;
+	public String getImage_url() {
+		return image_url;
 	}
-	
-	public String getIcon() {
-		return icon;
-	}
-	
-	public void setIcon(String icon) {
-		this.icon = icon;
-	}
-	
-	public String getDescription() {
-		return description;
-	}
-	
-	public void setDescription(String description) {
-		this.description = description;
+
+	public void setImage_url(String image_url) {
+		this.image_url = image_url;
 	}
 
 	@Override
@@ -88,12 +83,12 @@ public class Labels implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Labels other = (Labels) obj;
+		PostImage other = (PostImage) obj;
 		return Objects.equals(id, other.id);
 	}
-	
+
 	public Boolean isEmpty() {
-		if(this.id != null & this.created_at != null & this.label != "" & this.icon != null & this.description != null) {
+		if(this.id != null && this.created_at != null && this.image_url != "" && this.image_url != null && this.post_id != null) {
 			return false;
 		} else {
 			return true;

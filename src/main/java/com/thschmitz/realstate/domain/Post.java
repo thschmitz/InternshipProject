@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Posts")
-public class Posts implements Serializable {
+public class Post implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -32,11 +32,11 @@ public class Posts implements Serializable {
 	private String main_image;
 	private Integer label_id;
 	
-	public Posts() {
+	public Post() {
 		
 	}
 
-	public Posts(Integer id, Date created_at, String title, String body, Double price, Double size,
+	public Post(Integer id, Date created_at, String title, String body, Double price, Double size,
 		Integer author_id, Integer restrooms, Integer bedrooms, String latitude, String longitude, String type, String main_image, Integer label_id) {
 		this.id = id;
 		this.created_at = created_at;
@@ -179,14 +179,14 @@ public class Posts implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Posts other = (Posts) obj;
+		Post other = (Post) obj;
 		return Objects.equals(id, other.id);
 	}
 	
 	public Boolean isEmpty() {
-		if(this.id != null & this.created_at != null & this.title != "" & this.body != "" & this.price != null
-				& this.size != null & this.restrooms != null & this.bedrooms != null & this.latitude != null & this.longitude != null
-				& this.type != "" & this.main_image != "" & this.author_id != null & this.label_id != null) {
+		if(this.id != null && this.created_at != null && this.title != "" && this.body != "" && this.price != null
+				&& this.size != null && this.restrooms != null && this.bedrooms != null && this.latitude != null && this.longitude != null
+				&& this.type != "" && this.main_image != "" && this.author_id != null && this.label_id != null) {
 			return false;
 		} else {
 			return true;

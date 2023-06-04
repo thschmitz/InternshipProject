@@ -7,7 +7,7 @@ import java.util.Date;
 
 import javax.crypto.spec.SecretKeySpec;
 
-import com.thschmitz.realstate.domain.Users;
+import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.exception.ExpiredJwtException;
 import com.thschmitz.realstate.exception.InvalidJWT;
 import com.thschmitz.realstate.exception.MissingRequestHeaderException;
@@ -20,7 +20,7 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 public class JWT {
-	public static String createJWT(Users newObj) {
+	public static String createJWT(User newObj) {
 		try {
 			Dotenv dotenv = Dotenv.configure().directory("./.env").load();
 			String role;
@@ -44,7 +44,7 @@ public class JWT {
 			        .setSubject(newObj.getName())
 			        .setSubject(role)
 			        .setIssuedAt(Date.from(now))
-			        .setExpiration(Date.from(now.plus(10l, ChronoUnit.MINUTES)))
+			        .setExpiration(Date.from(now.plus(3l, ChronoUnit.HOURS)))
 			        .signWith(hmacKey)
 			        .compact();
 			

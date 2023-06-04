@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.thschmitz.realstate.domain.PostsImages;
+import com.thschmitz.realstate.domain.PostImage;
 import com.thschmitz.realstate.exception.ParametersNotPassedException;
 import com.thschmitz.realstate.services.PostImageService;
 import com.thschmitz.realstate.services.PostService;
@@ -31,7 +31,7 @@ public class PostImageResource {
 	private PostService postService;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.POST)
-	public ResponseEntity<PostsImages> insert(@RequestBody PostsImages images, @PathVariable Integer id, @RequestHeader(value="JWT") String header) {
+	public ResponseEntity<PostImage> insert(@RequestBody PostImage images, @PathVariable Integer id, @RequestHeader(value="JWT") String header) {
 		Session.session(header);
 		postService.findById(id);
 		
@@ -44,7 +44,7 @@ public class PostImageResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<PostsImages>> listAll() {
+	public ResponseEntity<List<PostImage>> listAll() {
 		return ResponseEntity.ok().body(postImageService.listAll());
 	}
 	

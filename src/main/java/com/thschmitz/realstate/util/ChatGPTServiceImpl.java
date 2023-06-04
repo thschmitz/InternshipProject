@@ -36,7 +36,7 @@ public class ChatGPTServiceImpl implements ChatGPTService{
                 ChatGPTConfig.URL,
                 chatRequestHttpEntity,
                 ChatGptResponse.class);
-
+        
         return responseEntity.getBody();
     }
     

@@ -8,66 +8,71 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
-
 @Entity
-@Table(name="PostsImages")
-public class PostsImages implements Serializable{
+@Table(name="Labels")
+public class Label implements Serializable{
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private Date created_at;
-	private String image_url;
-	private Integer post_id;
+	private String label;
+	private String icon;
+	private String description;
 	
-	public PostsImages() {
+	public Label() {
 		
 	}
 	
-	public PostsImages(Integer id, Date created_at, String image_url, Integer post_id) {
-		super();
+	public Label(Integer id, Date created_at, String label, String icon, String description) {
 		this.id = id;
 		this.created_at = created_at;
-		this.setImage_url(image_url);
-		this.post_id = post_id;
+		this.label = label;
+		this.icon = icon;
+		this.description = description;
 	}
-
+	
 	public Integer getId() {
 		return id;
 	}
-
+	
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
+	
 	public Date getCreated_at() {
 		return created_at;
 	}
-
+	
 	public void setCreated_at(Date created_at) {
 		this.created_at = created_at;
 	}
-
-	public Integer getPostId() {
-		return post_id;
-	}
-
-	public void setPostId(Integer post_id) {
-		this.post_id = post_id;
+	
+	public String getLabel() {
+		return label;
 	}
 	
-	public String getImage_url() {
-		return image_url;
+	public void setLabel(String label) {
+		this.label = label;
 	}
-
-	public void setImage_url(String image_url) {
-		this.image_url = image_url;
+	
+	public String getIcon() {
+		return icon;
+	}
+	
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Override
@@ -83,12 +88,12 @@ public class PostsImages implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PostsImages other = (PostsImages) obj;
+		Label other = (Label) obj;
 		return Objects.equals(id, other.id);
 	}
-
+	
 	public Boolean isEmpty() {
-		if(this.id != null & this.created_at != null & this.image_url != "" & this.image_url != null & this.post_id != null) {
+		if(this.id != null && this.created_at != null && this.label != "" && this.icon != null && this.description != null) {
 			return false;
 		} else {
 			return true;

@@ -15,7 +15,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.thschmitz.realstate.domain.Users;
+import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.exception.AuthenticationException;
 import com.thschmitz.realstate.exception.Unauthorized;
 import com.thschmitz.realstate.repository.UserRepository;
@@ -52,18 +51,18 @@ class UserTest {
 	@Mock
 	UserRepository userRepository;
 	
-	private Users maria;
+	private User maria;
 
 	@BeforeEach
 	void setup() throws Exception{
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-		maria = new Users(255, "Maria Brown", "maria@gmail.com", "$2a$10$daJmJ.qCBUfFK4LC91C5be5Lcc6tQufVhrLkSDrGKWAA6XnYNlqri", sdf.parse("21/03/2018"), "https://img.freepik.com/fotos-gratis/mulher-jovem-e-elegante-magnifica-com-grandes-olhos-castanhos-e-um-sorriso-incrivel_291049-2575.jpg?w=2000", true, 996969102);
+		maria = new User(255, "Maria Brown", "maria@gmail.com", "$2a$10$daJmJ.qCBUfFK4LC91C5be5Lcc6tQufVhrLkSDrGKWAA6XnYNlqri", sdf.parse("21/03/2018"), "https://img.freepik.com/fotos-gratis/mulher-jovem-e-elegante-magnifica-com-grandes-olhos-castanhos-e-um-sorriso-incrivel_291049-2575.jpg?w=2000", true, 996969102);
 	}
 	
 	@Test
 	void checkMariaPasswordBCryption() {
-		var maria = new Users();
+		var maria = new User();
 
 		String password = "maria05";
 		maria.setPassword(password);
@@ -74,7 +73,7 @@ class UserTest {
 		
 	}
 	
-	private Boolean checkIfUserIsAdmin(Users user) {
+	private Boolean checkIfUserIsAdmin(User user) {
 		return user.getAdmin();
 	}
 	
@@ -88,7 +87,7 @@ class UserTest {
 	@Test
 	void loginSucessWithMariaInfo() {
 
-		var mariaTest = new Users();
+		var mariaTest = new User();
 		
 		mariaTest.setEmail("maria@gmail.com");
 		mariaTest.setPassword("maria05");
@@ -96,38 +95,26 @@ class UserTest {
 
 		Mockito.when(userRepository.findByEmail(maria.getEmail())).thenReturn(this.maria);
 		
-		try(MockedStatic<Password> utilities = Mockito.mockStatic(Password.class)) {
-			utilities.when(() -> Password.matchPassword(mariaTest, this.maria)).thenReturn(true);
-			
-			assertTrue(Password.matchPassword(mariaTest, this.maria));
-		}
+		String jwt = userService.login(mariaTest);
 		
-		try (MockedStatic<JWT> utilities = Mockito.mockStatic(JWT.class)){
-			utilities.when(() -> JWT.createJWT(this.maria)).thenReturn("Maria Brown");
-
-			assertEquals("Maria Brown", JWT.createJWT(maria));
-		}
-		
-		userService.login(mariaTest);
-		
-		Mockito.verify(userRepository).findByEmail(mariaTest.getEmail());
+		assertEquals(JWT.createJWT(this.maria), jwt);
 	}
 	
 	@Test
 	void loginFailure() {
-		var maria = new Users();
+		var maria = new User();
 		
 		maria.setEmail("maria@gmail.com");
 		maria.setPassword("maria04"); // The password here is incorrect -> maria05 is the right one.
 		
 		assertThrows(AuthenticationException.class, () -> {userService.login(maria);});
 	}
-	
+
 	@Test
 	void mariaIsNotEmpty() {
 		assertFalse(maria.isEmpty());
 	}
-	
+
 	@Test
 	void JWTForMariaIsCorrectGenerating() {
 		String jwtMaria = JWT.createJWT(maria);
@@ -138,6 +125,4 @@ class UserTest {
 		
 		assertTrue(idCompare);
 	}
-
-
 }

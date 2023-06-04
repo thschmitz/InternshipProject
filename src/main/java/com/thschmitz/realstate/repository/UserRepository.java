@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.thschmitz.realstate.domain.Users;
+import com.thschmitz.realstate.domain.User;
 
-public interface UserRepository extends JpaRepository<Users, Integer> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 	
-	Users findByEmail(String name);
-	List<Users> findByNameContainingIgnoreCase(String text);
+	User findByEmail(String name);
+	List<User> findByNameContainingIgnoreCase(String text);
 }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.thschmitz.realstate.domain.Posts;
+import com.thschmitz.realstate.domain.Post;
 import com.thschmitz.realstate.domain.chatgpt.BotRequest;
 import com.thschmitz.realstate.domain.chatgpt.ChatGptResponse;
 import com.thschmitz.realstate.services.FeedbackService;
@@ -44,19 +44,19 @@ public class PostResource {
 	private ChatGPTService chatGPTService;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<Posts>> findAll() {
+	public ResponseEntity<List<Post>> findAll() {
 		return ResponseEntity.ok().body(postService.findAll());
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Posts> findById(@PathVariable Integer id) {
-		Posts post = postService.findById(id);
+	public ResponseEntity<Post> findById(@PathVariable Integer id) {
+		Post post = postService.findById(id);
 		
 		return ResponseEntity.ok().body(post);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Posts> update(@RequestBody Posts post, @PathVariable Integer id, @RequestHeader(value="JWT") String header) {
+	public ResponseEntity<Post> update(@RequestBody Post post, @PathVariable Integer id, @RequestHeader(value="JWT") String header) {
 		Jws<Claims> session = Session.session(header);
 		post.setId(id);
 		
@@ -65,22 +65,21 @@ public class PostResource {
 	}
 	
 	@RequestMapping(value="/titlesearch", method=RequestMethod.GET)
- 	public ResponseEntity<List<Posts>> findByTitle(@RequestParam(value="text", defaultValue="") String title) {
+ 	public ResponseEntity<List<Post>> findByTitle(@RequestParam(value="text", defaultValue="") String title) {
 		title = URL.decodeParam(title);
-		List<Posts> list = postService.findByTitle(title);
+		List<Post> list = postService.findByTitle(title);
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@RequestMapping(value="/bodysearch", method=RequestMethod.GET)
-	public ResponseEntity<List<Posts>> findByBody(@RequestParam(value="text", defaultValue="") String body) {
+	public ResponseEntity<List<Post>> findByBody(@RequestParam(value="text", defaultValue="") String body) {
 		body = URL.decodeParam(body);
-		List<Posts> list = postService.findByBody(body);
+		List<Post> list = postService.findByBody(body);
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Posts> insert(@RequestBody Posts post, @RequestHeader(value="JWT") String header) {
-		
+	public ResponseEntity<Post> insert(@RequestBody Post post, @RequestHeader(value="JWT") String header) {
 		Jws<Claims> session = Session.session(header);
 		Date created_at = new Date();
 		post.setCreated_at(created_at);
@@ -90,16 +89,13 @@ public class PostResource {
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id, @RequestHeader(value="JWT") String header) {
 		Jws<Claims> session = Session.session(header);
-		
-		
 		Util.isAdmin(session);
-		
 		postService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@RequestMapping(value="/profile/{id}", method=RequestMethod.GET)
-	public ResponseEntity<List<Posts>> getProfilePosts(@PathVariable Integer id) {
+	public ResponseEntity<List<Post>> getProfilePosts(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(postService.getPostByProfileId(id));
 	}
 	
@@ -115,6 +111,8 @@ public class PostResource {
 
 	@RequestMapping(value="/send", method=RequestMethod.POST)
 	public ResponseEntity<ChatGptResponse> sendMessage(@RequestBody BotRequest botRequest) {
-		return ResponseEntity.ok().body(chatGPTService.askQuestion(botRequest));
+		ChatGptResponse cgr = chatGPTService.askQuestion(botRequest);
+		
+		return ResponseEntity.ok().body(cgr);
 	}
 }

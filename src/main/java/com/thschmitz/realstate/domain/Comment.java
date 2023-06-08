@@ -22,17 +22,21 @@ public class Comment implements Serializable {
 	private Date created_at;
 	private Integer author_id;
 	private Integer post_id;
+	private String author_name;
+	private String author_img;
 
 	public Comment() {
 
 	}
 
-	public Comment(Integer id, String body, Date created_at, Integer author_id, Integer post_id) {
+	public Comment(Integer id, String body, Date created_at, Integer author_id, Integer post_id, String author_name, String author_img) {
 		this.id = id;
 		this.body = body;
 		this.created_at = created_at;
 		this.author_id = author_id;
 		this.post_id = post_id;
+		this.author_name = author_name;
+		this.author_img = author_img;
 	}
 
 	public Integer getId() {
@@ -74,6 +78,22 @@ public class Comment implements Serializable {
 	public void setPost(Integer post_id) {
 		this.post_id = post_id;
 	}
+	
+	public String getAuthor_name() {
+		return author_name;
+	}
+
+	public void setAuthor_name(String author_name) {
+		this.author_name = author_name;
+	}
+
+	public String getAuthor_img() {
+		return author_img;
+	}
+
+	public void setAuthor_img(String author_img) {
+		this.author_img = author_img;
+	}
 
 	@Override
 	public int hashCode() {
@@ -93,7 +113,7 @@ public class Comment implements Serializable {
 	}
 	
 	public Boolean isEmpty() {
-		if(this.id != null && this.body != "" && this.created_at != null && this.author_id != null && this.post_id != null) {
+		if(this.id != null && this.body != "" && this.created_at != null && this.author_id != null && this.post_id != null && this.author_name != null && this.author_img != null) {
 			return false;
 		} else {
 			return true;

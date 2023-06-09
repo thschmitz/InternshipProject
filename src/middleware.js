@@ -1,13 +1,15 @@
 import { NextResponse } from "next/server";
 
 export const config = {
-  matcher: '/login'
+  matcher: '/'
 }
 
 export async function middleware(req) {
   const url = req.url;
   const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN_KEY';
   const token = req.cookies.get(ACCESS_TOKEN_KEY)?.value;
+
+  console.log("Passando no Middleware")
 
   const response = await fetch("http://localhost:8080/users/session", {
     method: "GET",
@@ -18,7 +20,8 @@ export async function middleware(req) {
   })
 
   const session = await response.json();
-  
+
+  console.log("middleware>session: ", session)
   
   if(session?.body?.id) {
     if(url.includes("/login") || url.includes("/signup")) {

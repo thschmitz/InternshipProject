@@ -62,6 +62,10 @@ const session = await verifySession(token);
 
 console.log("SESSION: ", session)
 
+if(!session.data) {
+  tokenService.delete(null)
+}
+
 // Selector
 export const selectUserData = (state: RootState) => state.user;
 

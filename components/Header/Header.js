@@ -22,7 +22,7 @@ export const Header = (props) => {
   const authState = useSelector(selectAuthState)
   const [search, setSearch] = useState(props.searchText);
   const userData = useSelector(selectUserData)
-  
+
   useEffect(() => {
     if(props.searchText) {
       setSearch(props.searchText)

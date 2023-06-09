@@ -184,7 +184,7 @@ public class Post implements Serializable {
 	}
 	
 	public Boolean isEmpty() {
-		if(this.id != null && this.created_at != null && this.title != "" && this.body != "" && this.price != null
+		if(this.created_at != null && this.title != "" && this.body != "" && this.price != null
 				&& this.size != null && this.restrooms != null && this.bedrooms != null && this.latitude != null && this.longitude != null
 				&& this.type != "" && this.main_image != "" && this.author_id != null && this.label_id != null) {
 			return false;

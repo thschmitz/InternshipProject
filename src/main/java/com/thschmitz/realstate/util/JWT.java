@@ -44,7 +44,7 @@ public class JWT {
 			        .setSubject(newObj.getName())
 			        .setSubject(role)
 			        .setIssuedAt(Date.from(now))
-			        .setExpiration(Date.from(now.plus(3l, ChronoUnit.HOURS)))
+			        .setExpiration(Date.from(now.plus(10l, ChronoUnit.HOURS)))
 			        .signWith(hmacKey)
 			        .compact();
 			

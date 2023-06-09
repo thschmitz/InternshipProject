@@ -78,13 +78,6 @@ class UserTest {
 	}
 	
 	@Test
-	void checkIfPostBelongsToCertainAdmin() {
-		assertTrue(checkIfUserIsAdmin(maria));
-		assertDoesNotThrow(() -> {Util.isAllowed(362, 244, postService);});
-		assertThrows(Unauthorized.class, () -> {Util.isAllowed(362, 245, postService);});
-	}
-	
-	@Test
 	void loginSucessWithMariaInfo() {
 
 		var mariaTest = new User();

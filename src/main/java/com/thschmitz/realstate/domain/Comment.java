@@ -113,7 +113,7 @@ public class Comment implements Serializable {
 	}
 	
 	public Boolean isEmpty() {
-		if(this.id != null && this.body != "" && this.created_at != null && this.author_id != null && this.post_id != null && this.author_name != null && this.author_img != null) {
+		if(this.body != "" && this.created_at != null && this.author_id != null && this.post_id != null && this.author_name != null && this.author_img != null) {
 			return false;
 		} else {
 			return true;

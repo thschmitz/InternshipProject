@@ -93,7 +93,7 @@ public class Label implements Serializable{
 	}
 	
 	public Boolean isEmpty() {
-		if(this.id != null && this.created_at != null && this.label != "" && this.icon != null && this.description != null) {
+		if(this.created_at != null && this.label != "" && this.icon != null && this.description != null) {
 			return false;
 		} else {
 			return true;

@@ -72,7 +72,7 @@ public class Feedback implements Serializable{
 	}
 
 	public Boolean isEmpty() {
-		if(this.id != null && this.created_at != null && this.author_id != null && this.post_id != null) {
+		if(this.created_at != null && this.author_id != null && this.post_id != null) {
 			return false;
 		} else {
 			return true;

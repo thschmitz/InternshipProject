@@ -132,7 +132,7 @@ public class User implements Serializable {
 	}
 	
 	public Boolean isEmpty() {
-		if(this.id != null && this.name != "" && this.email != "" && this.password != "" && this.created_at!= null && this.image != "") {
+		if(this.name != "" && this.email != "" && this.password != "" && this.created_at!= null && this.image != "") {
 			return false;
 		} else {
 			return true;

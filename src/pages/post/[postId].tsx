@@ -10,6 +10,7 @@ import Info2 from "../../../components/Post/Individual/Info2"
 import Price from "../../../components/Post/Individual/Price"
 import { Header } from "components/Header/Header";
 import Comment from "../../../components/Post/Individual/Comment"
+import {useRouter} from "next/router"
 
 interface postData {
   id: Number,
@@ -59,22 +60,31 @@ interface Address {
 }
 
 const Post = (props:props) => {
-  const [address, setAddress] = useState<Address>({city: "", state: "", country: ""})
-  const [ comments, setComments ] = useState<comment[]>(props.comments)
+  const [ address, setAddress ] = useState<Address>({city: "", state: "", country: ""})
+  const [ commentsArray, setCommentsArray ] = useState(props.comments)
+  const [ refreshCommentsBoolean, setRefreshCommentsBoolean ] = useState(false);
+  const router = useRouter();
   const locationLatLng = {lat: props.post.latitude, lng: props.post.longitude}
 
   async function getFullAddress() {
     const response = await util.addressFromLatitudeAndLongitude(locationLatLng.lat, locationLatLng.lng)
-
     setAddress(response)
 
     return response;
   }
 
+  async function refreshComments() {
+    const comments:any = await commentService.getCommentsByPostId(router?.query?.postId);
+    setCommentsArray(comments)
+  }
+
   useEffect(() => {
     getFullAddress()
-    console.log(props.comments)
   }, [])
+
+  useEffect(() => {
+    refreshComments();
+  }, [refreshCommentsBoolean])
 
   return (
     <>
@@ -90,8 +100,9 @@ const Post = (props:props) => {
             </div>
           </div>
           <hr/>
+          <h2><b>Descrição</b></h2>
           <p className="text-lg font-light text-neutral-500">{props.post.body}</p>
-          <Comment comments={props.comments} users={props.user}/>
+          <Comment comments={commentsArray} users={props.user} postId={router.query.postId} setRefreshCommentsBoolean={setRefreshCommentsBoolean} refreshCommentsBoolean={refreshCommentsBoolean}/>
         </div>
       </div>
     </>

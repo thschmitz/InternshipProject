@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import {feedbackService} from "../../services/feedback/feedbackService"
+import { useNotification } from "use-toast-notification";
+import { Toast } from "services/notification/toast.js";
 
 interface HeartButtonProps {
   postId: Number,
@@ -10,6 +12,7 @@ interface HeartButtonProps {
 const HeartButton: React.FC<HeartButtonProps> = ({postId, authState}) => {
   const [liked, setLiked] = useState(false);
   const [lengthLikes, setLengthLikes] = useState();
+  const notification = useNotification();
 
   useEffect(() => {
     checkIfLiked();
@@ -38,8 +41,11 @@ const HeartButton: React.FC<HeartButtonProps> = ({postId, authState}) => {
 
     if(response.created_at != null) {
       setLiked(true);
+      Toast.notifySuccess(notification, "Liked Successfully!", "You have liked successfully!")      
+
     } else {
       setLiked(false);
+      Toast.notifySuccess(notification, "Unliked Successfully!", "You have unliked successfully!")      
     }
   }
 

@@ -21,7 +21,7 @@ function Login() {
     e.preventDefault();
     const responseData = await authService.loginAdmin({email: email, password: password})
     if(responseData === "Non Authorized") {
-      Toast.notifyError(notification, "Login Error!", "You are not authorized to enter here")
+      Toast.notifyError(notification, "Login Error!", "You are not authorized to enter here!")
     } else {
       if(responseData) {
         dispatch(setAuthState(true))

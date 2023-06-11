@@ -2,9 +2,11 @@ import React, {SetStateAction, useEffect, useState} from "react";
 import TimeAgo from "react-timeago";
 import Skeleton from '@mui/material/Skeleton';
 import { selectAuthState } from "../../../src/store/authSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectUserData } from '../../../src/store/userSlice';
 import { commentService } from "../../../services/comment/commentService"
+import { useNotification } from "use-toast-notification";
+import { Toast } from "services/notification/toast.js";
 
 interface comment {
   map(arg0: (comment: any) => JSX.Element): React.ReactNode;
@@ -39,22 +41,23 @@ interface Comment {
 const Comment = ({comments, users, postId, setRefreshCommentsBoolean, refreshCommentsBoolean}: Comment) => {
   const authState = useSelector(selectAuthState)
   const userData = useSelector(selectUserData)
-
   const [commentValue, setCommentValue] = useState("")
-
-  useEffect(() => {
-    console.log("comment>authstate: ", authState)
-    console.log("comment>userdata: ", userData)
-  }, [])
+  const notification = useNotification();
 
   async function submitComment(e:React.FormEvent<HTMLButtonElement>) {
     e.preventDefault();
-    console.log(commentValue)
 
-    await commentService.comment(commentValue, postId);
+    if(commentValue) {
+      await commentService.comment(commentValue, postId);
+      setRefreshCommentsBoolean(!refreshCommentsBoolean);
+      setCommentValue("")
+  
+      Toast.notifySuccess(notification, "Comment Successfully!", "You have comment successfully!")      
+    } else {
+      Toast.notifyError(notification, "Comment Error!", "You need to write anything to comment!")
+    }
 
-    setRefreshCommentsBoolean(!refreshCommentsBoolean);
-    setCommentValue("")
+
   }
 
   return (

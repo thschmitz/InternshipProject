@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { postService } from 'services/post/postService';
+import { postImageService } from "services/postImage/postImageService"
 import { Informations } from "./Informations"
 import {Localization } from "./Localization"
 import { Label } from "./Label"
@@ -12,12 +13,13 @@ import { DescriptionBody } from "./DescriptionBody"
 export const CreateHub = () => {
   const [ step, setStep ] = useState("Hub");
   const [ type, setType ] = useState();
-  const [ labelId, setLabelId] = useState();
+  const [ labelId, setLabelId] = useState<string>();
   const [ description, setDescription ] = useState();
   const [ restrooms, setRestrooms ] = useState(0);
   const [ bedrooms, setBedrooms ] = useState(0);
   const [ size, setSize ] = useState();
-  const [ image, setImage ] = useState();
+  const [ image, setImage ] = useState<string>();
+  const [ postImages, setPostImages ] = useState<string[]>([])
   const [ price, setPrice ] = useState();
   const [ address, setAddress ] = useState();
   const [ location, setLocation ] = useState({lat: null, lng: null})
@@ -26,7 +28,7 @@ export const CreateHub = () => {
   const [ title, setTitle ] = useState<string>();
   const notification = useNotification();
 
-  function onHandleSubmitDone(e:any) {
+  async function onHandleSubmitDone(e:any) {
     e.preventDefault();
 
     const longitude = location.lng;
@@ -34,9 +36,11 @@ export const CreateHub = () => {
     const listValues = [description, price, size, title, restrooms, bedrooms, type, latitude, longitude, image, labelId];
 
     if(listValues.includes(undefined) || listValues.includes(null)) {
-      Toast.notifyError(notification, "Failed to create a new post!", "Check if all the informations has been fully completed and try again later!")
+      Toast.notifyError(notification, "Failed to create a new post!", "Check if all the informations has been fully completed and check if you are logged in then try again later!")
     } else {
-      postService.createPost({description, price, size, title, restrooms, bedrooms, type, latitude, longitude, image, labelId});
+      const response = await postService.createPost({description, price, size, title, restrooms, bedrooms, type, latitude, longitude, image, labelId});
+      console.log(response);
+      postImageService.insertImagesPost(response.id, postImages)
       Toast.notifySuccess(notification, "Success to create a new post!", "You have successfully created a new post")
     }
   }
@@ -49,7 +53,7 @@ export const CreateHub = () => {
 
   if(step === "Images") {
     return (
-      <Images setStep={setStep} setImage={setImage} image={image}/>
+      <Images setStep={setStep} setImage={setImage} image={image} postImages={postImages} setPostImages={setPostImages}/>
     )
   }
 

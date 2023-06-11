@@ -1,6 +1,4 @@
 import React, {useState, useEffect} from "react";
-import {BsFillHouseFill} from "react-icons/bs"
-import { MdApartment, MdCabin } from "react-icons/md"
 import Heading from "./components/Heading"
 import PreviousNextButton from "./components/PreviousNextButton"
 import { labelService } from "services/label/labelService";
@@ -10,13 +8,9 @@ type LabelPropsType = {
   setStep: (type: string) => void,
 }
 
-
-
 export const Label = ({setLabelId, setStep}:LabelPropsType) => {
-
   const [labels, setLabels] = useState<any>([]);
   const [ label, setLabel] = useState();
-
 
   useEffect(() => {
     getAllLabels();

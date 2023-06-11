@@ -11,10 +11,9 @@ declare global {
 
 interface ImageUploadProps {
   onChange: (value: string) => void,
-  value: string
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({onChange, value}) => {
+const ImageUpload: React.FC<ImageUploadProps> = ({onChange}) => {
 
   const handleUpload = useCallback((result: any) => {
     onChange(result.info.secure_url)
@@ -29,11 +28,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({onChange, value}) => {
             <div className="font-semibold text-lg">
               Click to upload
             </div>
-            {value && (
-              <div className="absolute inset-0 w-auto h-auto">
-                <Image alt="Upload" fill style={{ objectFit: 'cover' }} src={value}/>
-              </div>
-            )}
           </div>
         )
       }}

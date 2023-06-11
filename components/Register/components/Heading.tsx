@@ -9,7 +9,11 @@ interface HeadingData {
 const Heading: React.FC<HeadingData> = ({step, title}) => {
   return (
     <>
-      <p className="bold">Etapa {step}</p>
+      {step !== 0? 
+        <p className="bold">Etapa {step}</p>
+      :   
+        <p></p>
+      }
       <h1 className="font-bold text-4xl mt-5">{title}</h1>
     </>
   )

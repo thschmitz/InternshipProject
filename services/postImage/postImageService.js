@@ -5,12 +5,7 @@ export const postImageService = {
   async insertImagesPost(postId, images){
     try {
       const token = tokenService.get(null);
-      console.log(images);
-      console.log(token)
-      console.log(postId)
       const response = await axios.post(`http://localhost:8080/postimage/${postId}`, images, { headers: {'Content-Type': 'application/json', "JWT": token} })
-
-      console.log(response);
 
       return response.data;
     } catch (error) {
@@ -18,6 +13,18 @@ export const postImageService = {
       return error;
     }
   },
+
+  async getImagesPostByPostId(postId) {
+    try {
+      const response = await axios.get(`http://localhost:8080/postimage/${postId}`, { headers: {'Content-Type': 'application/json'}})
+      console.log(response.data);
+
+      return response.data;
+    } catch(error) {
+      console.log(error);
+      return error;
+    }
+  }
 }
 
 

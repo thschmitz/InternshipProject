@@ -10,7 +10,9 @@ import Info2 from "../../../components/Post/Individual/Info2"
 import Price from "../../../components/Post/Individual/Price"
 import { Header } from "components/Header/Header";
 import Comment from "../../../components/Post/Individual/Comment"
+import PostImages from "../../../components/Post/Individual/PostImages"
 import {useRouter} from "next/router"
+import { postImageService } from 'services/postImage/postImageService';
 
 interface postData {
   id: Number,
@@ -46,11 +48,19 @@ interface comment {
   author_name: string,
 }
 
+interface postImages {
+  id: Number,
+  created_at: Date,
+  image_url: string,
+  postId: Number
+}
+
 interface props {
   post: postData,
   user: any,
   label: label,
-  comments: comment[]
+  comments: comment[],
+  postImages: postImages[],
 }
 
 interface Address {
@@ -102,6 +112,9 @@ const Post = (props:props) => {
           <hr/>
           <h2><b>Descrição</b></h2>
           <p className="text-lg font-light text-neutral-500">{props.post.body}</p>
+          <hr/>
+          <PostImages images={props.postImages}/>
+          <hr/>
           <Comment comments={commentsArray} users={props.user} postId={router.query.postId} setRefreshCommentsBoolean={setRefreshCommentsBoolean} refreshCommentsBoolean={refreshCommentsBoolean}/>
         </div>
       </div>
@@ -114,11 +127,13 @@ export const getServerSideProps = async(ctx:any) => {
   const id = Object.values(ctx.query)[0];
   const post:any = await postService.searchPostById(id)
 
-  const comments:any = await commentService.getCommentsByPostId(post?.data?.id)
+  const comments:any = await commentService.getCommentsByPostId(id)
 
   const user:any = await userService.searchUserById(post?.data?.authorId)
 
   const label:any = await labelService.getLabelById(post?.data?.label_id)
+
+  const postImages: any = await postImageService.getImagesPostByPostId(id)
 
   return {
     props: {
@@ -126,6 +141,7 @@ export const getServerSideProps = async(ctx:any) => {
       user: user.data || {},
       label: label || {},
       comments: comments || [],
+      postImages: postImages || []
     }
   }
 }

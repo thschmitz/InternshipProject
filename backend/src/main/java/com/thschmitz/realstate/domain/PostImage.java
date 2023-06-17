@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
-import org.jetbrains.annotations.NotNull;
 
 @Entity
 @Table(name="PostsImages", uniqueConstraints = {@UniqueConstraint(columnNames={"id"})})
@@ -28,17 +24,6 @@ public class PostImage implements Serializable{
 	private Date created_at;
 	private String image_url;
 	private Integer post_id;
-	
-	/*
-	 * @NotNull me gera um excepção na hora de salvar no banco de dados -> Posso tratá-la com try/catch
-	 * @Column(name="post_id")
-	 * @ManyToOne(fetch = FetchType.LAZY)
-	 * @JoinColumn(name="post.id")
-	 * private Post post
-	 */
-	
-	// Adicionar novas anotações
-	// @NotNull @Column(lenght=50) @Column(name="{name}")
 	
 	public PostImage() {
 		

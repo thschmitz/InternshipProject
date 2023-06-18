@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .navButton {
+    @apply hidden ml-10 rounded-3xl lg:flex items-center cursor-pointer space-x-2 p-3 transition hover:bg-gray-100
+  }
+
+  .navButtonAccount {
+    @apply flex items-center cursor-pointer space-x-2 p-5 transition duration-500 hover:bg-gray-200
+  }
+
+  .navPopup {
+    @apply flex flex-col border border-l-gray-200 border-t-0 mt-3 bg-white
+  }
+
+  .navResponsiveButton {
+    @apply rounded-3xl mt-10 cursor-pointer space-x-2 p-3 transition duration-500 hover:bg-gray-200
+  }
+
+  .navResponsiveButtonClose {
+    @apply rounded-3xl mt-10 cursor-pointer p-3 transition duration-500 hover:bg-red-400
+  }
+
+  .signUpInput {
+    @apply w-full bg-white py-3 px-12 border hover:border-gray-400 rounded shadow text-base font-sans
+  }
+
+  .icon {
+    @apply h-9 w-6 lg:w-9 cursor-pointer rounded-sm lg:p-1 lg:hover:bg-gray-100
+  }
+
+  .icon-sm {
+    @apply h-9 w-6 lg:w-9 cursor-pointer rounded-sm lg:p-1 hover:text-red-400 m-4
+  }
+
+  .voteButtons{
+    @apply h-6 w-6 hover:bg-gray-200 p-1 rounded-md
+  }
+
+  .postButtons{
+    @apply flex items-center space-x-1 text-sm font-semibold p-2 hover:bg-gray-100 cursor-pointer rounded-sm
+  }
+
+  .dateCreated{
+    @apply text-gray-400 text-sm
+  }
+
+  .filterItem{
+    @apply cursor-pointer after:bg-gray-200 rounded-full p-2
+  }
+
+  .typeAdminButton {
+    @apply border border-black border-current rounded-lg max-w-fit p-10 mt-10 cursor-pointer hover:bg-gray-100 hover:border-2 mr-10;
+  }
+
+  .marker-map {
+    @apply -mt-10;
+  }
+
+  .address {
+    @apply box-border border-black w-52 h-12 p-6 rounded-sm font-light relative mt-7 text-sm
+  }
+
+  .inputInfo {
+    @apply border border-black w-52 h-12 p-6 rounded-lg text-sm
+  }
+
+  .inputInfoTitle {
+    @apply border border-black w-96 h-12 p-6 rounded-lg text-sm
+  }
+}

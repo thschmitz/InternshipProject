@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/login.jsx", "services/auth/tokenService.js", "services/auth/authService.js", "src/middleware.js", "src/store/store.js", "src/store/userSlice.js", "src/store/authSlice.js", "src/store/loadingSlice.js", "src/pages/_app.js", "src/pages/index.js", "components/Register/Hub.js", "components/Edit/ImageSlider.js"],
+  "exclude": ["node_modules"]
+}

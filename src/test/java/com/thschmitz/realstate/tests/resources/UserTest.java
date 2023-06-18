@@ -7,9 +7,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
-import java.util.Optional;
-
-import javax.net.ssl.SSLSession;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

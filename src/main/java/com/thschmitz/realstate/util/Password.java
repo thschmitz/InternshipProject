@@ -5,7 +5,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.thschmitz.realstate.domain.User;
 
 public class Password {
-	
 	public static String encodePassword(User obj) {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		String bCryptedPassword = bCryptPasswordEncoder.encode(obj.getPassword());

@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="PostsImages")
+@Table(name="PostsImages", uniqueConstraints = {@UniqueConstraint(columnNames={"id"})})
 public class PostImage implements Serializable{
 	private static final long serialVersionUID = 1L;
 

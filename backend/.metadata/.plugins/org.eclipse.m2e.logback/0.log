@@ -330,6 +330,7 @@
 2023-06-24 07:57:03,884 [Worker-5: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2023-06-24 07:57:03,884 [Worker-5: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
 2023-06-24 07:57:03,884 [Worker-5: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /media/ssd-home/thomas/Projetos/GitHub/RealStateServer/realstate/src/test/resources
+<<<<<<< HEAD
 2023-06-24 08:23:57,207 [Worker-18: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2023-06-24 08:23:57,208 [Worker-18: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
 2023-06-24 08:23:57,210 [Worker-18: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
@@ -918,3 +919,5 @@
 2023-06-24 09:19:44,268 [Worker-43: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2023-06-24 09:19:44,268 [Worker-43: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
 2023-06-24 09:19:44,268 [Worker-43: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /media/ssd-home/thomas/Projetos/GitHub/RealStateServer/realstate/src/test/resources
+=======
+>>>>>>> 95a2b300b9bdb3935ae9dd34bfa5c51165685e40

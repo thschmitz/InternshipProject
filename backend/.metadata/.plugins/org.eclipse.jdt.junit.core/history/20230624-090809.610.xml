@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="UserTest" project="backend" tests="2" started="2" failures="0" errors="0" ignored="0">
+  <testsuite name="com.thschmitz.realstate.tests.resources.UserTest" time="0.679" displayname="UserTest" uniqueid="[engine:junit-jupiter]/[class:com.thschmitz.realstate.tests.resources.UserTest]">
+    <testcase name="returningMissingRequestHeaderExceptionWhenAccessingTheSession" classname="com.thschmitz.realstate.tests.resources.UserTest" time="0.665" displayname="Assegurando que me retorna um erro de sessão - MissingRequestHeaderException" uniqueid="[engine:junit-jupiter]/[class:com.thschmitz.realstate.tests.resources.UserTest]/[method:returningMissingRequestHeaderExceptionWhenAccessingTheSession()]"/>
+    <testcase name="testingStatusCodeOfFindAllUsers" classname="com.thschmitz.realstate.tests.resources.UserTest" time="0.013" displayname="Assegurando que o user findAll está conectado" uniqueid="[engine:junit-jupiter]/[class:com.thschmitz.realstate.tests.resources.UserTest]/[method:testingStatusCodeOfFindAllUsers()]"/>
+  </testsuite>
+</testrun>

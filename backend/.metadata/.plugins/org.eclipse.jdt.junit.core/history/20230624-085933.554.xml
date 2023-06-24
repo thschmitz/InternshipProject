@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="FeedbackTest" project="backend" tests="2" started="2" failures="0" errors="0" ignored="0">
+  <testsuite name="com.thschmitz.realstate.tests.services.FeedbackTest" time="0.255" displayname="FeedbackTest" uniqueid="[engine:junit-jupiter]/[class:com.thschmitz.realstate.tests.services.FeedbackTest]">
+    <testcase name="doTheLikeButHaveAlreadyDoneIt" classname="com.thschmitz.realstate.tests.services.FeedbackTest" time="0.211" displayname="Desmarcando o like" uniqueid="[engine:junit-jupiter]/[class:com.thschmitz.realstate.tests.services.FeedbackTest]/[method:doTheLikeButHaveAlreadyDoneIt()]"/>
+    <testcase name="doTheLikeAndHaventDoneItYet" classname="com.thschmitz.realstate.tests.services.FeedbackTest" time="0.038" displayname="Realizar o like, sem ter dado like anteriormente" uniqueid="[engine:junit-jupiter]/[class:com.thschmitz.realstate.tests.services.FeedbackTest]/[method:doTheLikeAndHaventDoneItYet()]"/>
+  </testsuite>
+</testrun>

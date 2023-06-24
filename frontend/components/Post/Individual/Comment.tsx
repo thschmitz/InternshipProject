@@ -74,7 +74,7 @@ const Comment = ({comments, users, postId, setRefreshCommentsBoolean, refreshCom
                 <>
                   <img
                     className="rounded-full object-cover"
-                    src={comment.author_img}
+                    src={comment.author.image}
                   />
                 </>
               ) : (
@@ -84,11 +84,11 @@ const Comment = ({comments, users, postId, setRefreshCommentsBoolean, refreshCom
             <div className="flex flex-col">
               <p className="py-2 text-xs text-gray-400">
                 <span className="font-semibold text-gray-600 ml-2">
-                  {comment.author_name}
+                  {comment.author.name}
                 </span>{" "}
                 • <TimeAgo date={comment.created_at} />
               </p>
-              <p className="mt-2">{comment.text}</p>
+              <p className="mt-2">{comment.body}</p>
             </div>
           </div>
         ))}

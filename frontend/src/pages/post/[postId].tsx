@@ -77,7 +77,9 @@ const Post = (props:props) => {
   const locationLatLng = {lat: props.post.latitude, lng: props.post.longitude}
 
   async function getFullAddress() {
+    console.log("LOCATION; ", locationLatLng)
     const response = await util.addressFromLatitudeAndLongitude(locationLatLng.lat, locationLatLng.lng)
+    console.log(response)
     setAddress(response)
 
     return response;
@@ -103,7 +105,7 @@ const Post = (props:props) => {
         <div className="flex flex-col gap-6">
           <Heading title={props.post.title} locationValue={address} imageSrc={props.post.main_image} id={props.post.id}/>
           <div className="grid grid-cols-1 md:grid-cols-7 md:gap-10 mt-6">
-            <Info1 user={props.user} category={props.post.type} locationValue={locationLatLng} label={props.label} created_at={props.post.created_at}/>
+            <Info1 user={props.post.author} category={props.post.type} locationValue={locationLatLng} label={props.label} created_at={props.post.created_at}/>
             <div className="order-1 mb-10 md:order-last md:col-span-3">
               <Price price={props.post.price} />
               <Info2 bedrooms={props.post.bedrooms} restrooms={props.post.restrooms} size={props.post.size}/>
@@ -115,7 +117,7 @@ const Post = (props:props) => {
           <hr/>
           <PostImages images={props.postImages}/>
           <hr/>
-          <Comment comments={commentsArray} users={props.user} postId={router.query.postId} setRefreshCommentsBoolean={setRefreshCommentsBoolean} refreshCommentsBoolean={refreshCommentsBoolean}/>
+          <Comment comments={commentsArray} users={props.post.author} postId={router.query.postId} setRefreshCommentsBoolean={setRefreshCommentsBoolean} refreshCommentsBoolean={refreshCommentsBoolean}/>
         </div>
       </div>
     </>
@@ -129,16 +131,13 @@ export const getServerSideProps = async(ctx:any) => {
 
   const comments:any = await commentService.getCommentsByPostId(id)
 
-  const user:any = await userService.searchUserById(post?.data?.authorId)
-
-  const label:any = await labelService.getLabelById(post?.data?.label_id)
+  const label:any = await labelService.getLabelById(post?.data?.label?.id)
 
   const postImages: any = await postImageService.getImagesPostByPostId(id)
 
   return {
     props: {
       post: post.data || {},
-      user: user.data || {},
       label: label || {},
       comments: comments || [],
       postImages: postImages || []

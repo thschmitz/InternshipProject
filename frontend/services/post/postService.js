@@ -104,6 +104,8 @@ export const postService = {
     try {
       const response = await axios.get(`http://localhost:8080/posts/${id}`, {headers: {"Content-Type": "application/json"}})
 
+      console.log("Response> postService SerachPostById: ", response.data)
+
       return response;
     } catch(error) {
       console.log(error)

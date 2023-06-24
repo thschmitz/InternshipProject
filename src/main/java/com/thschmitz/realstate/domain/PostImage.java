@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.jetbrains.annotations.NotNull;
+
 @Entity
 @Table(name="PostsImages", uniqueConstraints = {@UniqueConstraint(columnNames={"id"})})
 public class PostImage implements Serializable{
@@ -23,18 +25,21 @@ public class PostImage implements Serializable{
 	private Integer id;
 	private Date created_at;
 	private String image_url;
-	private Integer post_id;
+	@ManyToOne
+	@JoinColumn(name="post_id")
+	@NotNull
+	private Post post;
 	
 	public PostImage() {
 		
 	}
 	
-	public PostImage(Integer id, Date created_at, String image_url, Integer post_id) {
+	public PostImage(Integer id, Date created_at, String image_url, Post post) {
 		super();
 		this.id = id;
 		this.created_at = created_at;
 		this.setImage_url(image_url);
-		this.post_id = post_id;
+		this.post = post;
 	}
 
 	public Integer getId() {
@@ -53,20 +58,20 @@ public class PostImage implements Serializable{
 		this.created_at = created_at;
 	}
 
-	public Integer getPostId() {
-		return post_id;
-	}
-
-	public void setPostId(Integer post_id) {
-		this.post_id = post_id;
-	}
-	
 	public String getImage_url() {
 		return image_url;
 	}
 
 	public void setImage_url(String image_url) {
 		this.image_url = image_url;
+	}
+
+	public Post getPost() {
+		return post;
+	}
+
+	public void setPost(Post post) {
+		this.post = post;
 	}
 
 	@Override
@@ -87,7 +92,7 @@ public class PostImage implements Serializable{
 	}
 
 	public Boolean isEmpty() {
-		if(this.created_at != null && this.image_url != "" && this.image_url != null && this.post_id != null) {
+		if(this.created_at != null && this.image_url != "" && this.image_url != null && !this.post.isEmpty()) {
 			return false;
 		} else {
 			return true;

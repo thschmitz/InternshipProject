@@ -45,11 +45,9 @@ public class CommentResource {
 	@RequestMapping(value="/{id}", method=RequestMethod.POST)
 	public ResponseEntity<Comment> create(@RequestBody Comment comment, @PathVariable Integer id, @RequestHeader(value="JWT") String header) {
 		System.out.println("Entrou dentro do commentPost");
-		System.out.println(comment.getText());
+		System.out.println(comment.getBody());
 		Jws<Claims> session = Session.session(header);
 		Integer author_id = Session.getSessionId(session);
-		
-		
 		
 		return ResponseEntity.ok().body(commentService.create(id, comment, author_id));
 	}

@@ -1,7 +1,6 @@
 package com.thschmitz.realstate.tests.services;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -24,13 +23,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.exception.AuthenticationException;
-import com.thschmitz.realstate.exception.Unauthorized;
 import com.thschmitz.realstate.repository.UserRepository;
 import com.thschmitz.realstate.services.PostService;
 import com.thschmitz.realstate.services.UserService;
 import com.thschmitz.realstate.util.JWT;
 import com.thschmitz.realstate.util.Password;
-import com.thschmitz.realstate.util.Util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

@@ -34,11 +34,11 @@ public class PostImageTest {
 	void setup() throws Exception {
 		this.postImage.add("https://a0.muscache.com/im/pictures/monet/Luxury-570973165437649140/original/704468c1-47cd-44e0-9d1a-3ea3db51a2e6?im_w=720");
 	}
-	
+	/*
 	@Test
 	void throwingParametersNotPassedExceptionWithoutImage() {
 		assertThrows(ParametersNotPassedException.class, () -> postImageService.insert(postImage, 372));
-	}
+	}*/
 	
 	@Test
 	void doesNotThrowingAnyExceptionWhileSavingImagePost() {

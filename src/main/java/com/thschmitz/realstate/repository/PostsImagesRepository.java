@@ -9,6 +9,6 @@ import com.thschmitz.realstate.domain.PostImage;
 
 public interface PostsImagesRepository extends JpaRepository<PostImage, Integer> {
 
-	@Query("SELECT p from PostImage p WHERE p.post_id = :id")
+	@Query("SELECT p from PostImage p WHERE p.post.id = :id")
 	List<PostImage> findPostImagesByPostId(Integer id);
 }

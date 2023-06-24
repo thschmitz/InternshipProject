@@ -50,7 +50,7 @@ public class Instantiation implements CommandLineRunner {
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 		
 		System.out.println("Aplicação Iniciada Com Sucesso!");
-		
+		/*
 		postsImagesRepository.deleteAll();
 		feedbackRepository.deleteAll();
 		userRepository.deleteAll(); // AQUI TA DELETANDO TUDOOOO
@@ -95,15 +95,17 @@ public class Instantiation implements CommandLineRunner {
 		Comment c2 = new Comment(null, "Post2Comment", sdf.parse("19/07/2020"), bob.getId(), post2.getId(), bob.getName(), alex.getImage());
 		Comment c3 = new Comment(null, "Post3Comment", sdf.parse("11/02/2021"), maria.getId(), post3.getId(), maria.getName(), maria.getImage());
 		
-		Feedback f1 = new Feedback(sdf.parse("14/04/2019"), maria.getId(), post4.getId());
-		Feedback f2 = new Feedback(sdf.parse("19/09/2020"), alex.getId(), post5.getId());
-		Feedback f3 = new Feedback(sdf.parse("10/06/2018"), bob.getId(), post2.getId());
-		Feedback f4 = new Feedback(sdf.parse("05/07/2019"), maria.getId(), post1.getId());
-		Feedback f5 = new Feedback(sdf.parse("15/10/2020"), alex.getId(), post6.getId());
-		
 		postRepository.saveAll(Arrays.asList(post1, post2, post3));
+		
+		Feedback f1 = new Feedback(sdf.parse("14/04/2019"), maria.getId(), post4);
+		Feedback f2 = new Feedback(sdf.parse("19/09/2020"), alex.getId(), post5);
+		Feedback f3 = new Feedback(sdf.parse("10/06/2018"), bob.getId(), post2);
+		Feedback f4 = new Feedback(sdf.parse("05/07/2019"), maria.getId(), post1);
+		Feedback f5 = new Feedback(sdf.parse("15/10/2020"), alex.getId(), post6);
+		
+		
 		commentRepository.saveAll(Arrays.asList(c1, c2, c3));
 		feedbackRepository.saveAll(Arrays.asList(f1, f2, f3, f4, f5));
-		
+		*/
 	}
 }

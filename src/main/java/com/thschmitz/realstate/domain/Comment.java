@@ -8,7 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.jetbrains.annotations.NotNull;
 
 @Entity
 @Table(name="Comments")
@@ -20,23 +24,20 @@ public class Comment implements Serializable {
 	private Integer id;
 	private String body;
 	private Date created_at;
-	private Integer author_id;
-	private Integer post_id;
-	private String author_name;
-	private String author_img;
+	@ManyToOne
+	@JoinColumn(name="author_id")
+	@NotNull
+	private User author;
+	// private Integer author_id;
+	@ManyToOne
+	@JoinColumn(name="post_id")
+	@NotNull
+	private Post post;
+	//private String author_name;
+	//private String author_img;
 
 	public Comment() {
 
-	}
-
-	public Comment(Integer id, String body, Date created_at, Integer author_id, Integer post_id, String author_name, String author_img) {
-		this.id = id;
-		this.body = body;
-		this.created_at = created_at;
-		this.author_id = author_id;
-		this.post_id = post_id;
-		this.author_name = author_name;
-		this.author_img = author_img;
 	}
 
 	public Integer getId() {
@@ -47,11 +48,11 @@ public class Comment implements Serializable {
 		this.id = id;
 	}
 
-	public String getText() {
+	public String getBody() {
 		return body;
 	}
 
-	public void setText(String body) {
+	public void setBody(String body) {
 		this.body = body;
 	}
 
@@ -63,57 +64,24 @@ public class Comment implements Serializable {
 		this.created_at = created_at;
 	}
 
-	public Integer getAuthor() {
-		return author_id;
+	public User getAuthor() {
+		return author;
 	}
 
-	public void setAuthor(Integer author_id) {
-		this.author_id = author_id;
+	public void setAuthor(User author) {
+		this.author = author;
 	}
 
-	public Integer getPost() {
-		return post_id;
+	public Post getPost() {
+		return post;
 	}
 
-	public void setPost(Integer post_id) {
-		this.post_id = post_id;
-	}
-	
-	public String getAuthor_name() {
-		return author_name;
+	public void setPost(Post post) {
+		this.post = post;
 	}
 
-	public void setAuthor_name(String author_name) {
-		this.author_name = author_name;
-	}
-
-	public String getAuthor_img() {
-		return author_img;
-	}
-
-	public void setAuthor_img(String author_img) {
-		this.author_img = author_img;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Comment other = (Comment) obj;
-		return Objects.equals(id, other.id);
-	}
-	
 	public Boolean isEmpty() {
-		if(this.body != "" && this.created_at != null && this.author_id != null && this.post_id != null && this.author_name != null && this.author_img != null) {
+		if(this.body != "" && this.created_at != null && !this.author.isEmpty() && !this.post.isEmpty()) {
 			return false;
 		} else {
 			return true;

@@ -59,7 +59,7 @@ public class PostService {
 		Integer author_id = Session.getSessionId(session);
 
 		User user = service.findById(author_id);
-		post.setAuthorId(user.getId());
+		post.getAuthor().setId(user.getId());
 		
 		return postRepository.save(post);
 	}

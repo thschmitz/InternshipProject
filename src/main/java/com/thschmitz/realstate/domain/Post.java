@@ -46,6 +46,26 @@ public class Post implements Serializable {
 		
 	}
 	
+	public Post(Integer id, Date created_at, String title, String body, Double price, Double size, User author,
+			Integer restrooms, Integer bedrooms, String longitude, String latitude, String type, String main_image,
+			Label label) {
+		super();
+		this.id = id;
+		this.created_at = created_at;
+		this.title = title;
+		this.body = body;
+		this.price = price;
+		this.size = size;
+		this.author = author;
+		this.restrooms = restrooms;
+		this.bedrooms = bedrooms;
+		this.longitude = longitude;
+		this.latitude = latitude;
+		this.type = type;
+		this.main_image = main_image;
+		this.label = label;
+	}
+
 	public Integer getId() {
 		return id;
 	}

@@ -28,16 +28,22 @@ public class Comment implements Serializable {
 	@JoinColumn(name="author_id")
 	@NotNull
 	private User author;
-	// private Integer author_id;
 	@ManyToOne
 	@JoinColumn(name="post_id")
 	@NotNull
 	private Post post;
-	//private String author_name;
-	//private String author_img;
 
 	public Comment() {
 
+	}
+	
+	public Comment(Integer id, String body, Date created_at, User author, Post post) {
+		super();
+		this.id = id;
+		this.body = body;
+		this.created_at = created_at;
+		this.author = author;
+		this.post = post;
 	}
 
 	public Integer getId() {

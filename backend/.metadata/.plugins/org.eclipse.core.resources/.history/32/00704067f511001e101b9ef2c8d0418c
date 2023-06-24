@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.thschmitz.realstate.domain.Feedback;
 import com.thschmitz.realstate.services.FeedbackService;
+import com.thschmitz.realstate.services.PostService;
 import com.thschmitz.realstate.util.Session;
 
 import io.jsonwebtoken.Claims;
@@ -26,6 +27,9 @@ public class FeedbackResource {
 	@Autowired
 	private FeedbackService feedbackService;
 	
+	@Autowired
+	private PostService postService;
+	
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<Feedback>> findAll() {
 		return ResponseEntity.ok().body(feedbackService.findAll());
@@ -35,7 +39,7 @@ public class FeedbackResource {
 	public ResponseEntity<Feedback> like(@PathVariable Integer id, @RequestHeader(value="JWT") String header) {
 		Jws<Claims> session = Session.session(header);
 		Integer author_id = Session.getSessionId(session);
-		return ResponseEntity.ok().body(feedbackService.like(id, author_id));
+		return ResponseEntity.ok().body(feedbackService.like(postService, id, author_id));
 	}
 	
 	@RequestMapping(value="/post/{id}", method=RequestMethod.GET)

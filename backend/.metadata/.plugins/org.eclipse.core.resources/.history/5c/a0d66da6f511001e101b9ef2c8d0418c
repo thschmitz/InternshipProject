@@ -98,16 +98,6 @@ public class PostResource {
 	public ResponseEntity<List<Post>> getProfilePosts(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(postService.getPostByProfileId(id));
 	}
-	
-	@RequestMapping(value="/feedback/{id}", method=RequestMethod.POST) 
-	public ResponseEntity<Void> feedback(@PathVariable Integer id, @RequestHeader(value="JWT") String header) {
-		Jws<Claims> session = Session.session(header);
-		Integer author_id = Session.getSessionId(session);
-
-		feedbackService.like(id, author_id);
-		
-		return ResponseEntity.noContent().build();
-	}
 
 	@RequestMapping(value="/send", method=RequestMethod.POST)
 	public ResponseEntity<ChatGptResponse> sendMessage(@RequestBody BotRequest botRequest) {

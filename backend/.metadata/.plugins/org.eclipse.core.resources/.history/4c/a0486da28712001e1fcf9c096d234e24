@@ -34,13 +34,13 @@ public class CommentService {
 	
 	public Comment create(Integer post_id, Comment comment, Integer author_id) {
 		comment.setCreated_at(new Date());
-		comment.setAuthor(author_id);
-		comment.setPost(post_id);
+		comment.getAuthor().setId(author_id);
+		comment.getPost().setId(post_id);
 		
 		User author = userService.findById(author_id);
 		
-		comment.setAuthor_name(author.getName());
-		comment.setAuthor_img(author.getImage());
+		comment.getAuthor().setName(author.getName());
+		comment.getAuthor().setImage(author.getImage());
 		
 		if(comment.isEmpty()) {
 			throw new ParametersNotPassedException("Você precisa incluir todas as informações para concluir a operação!");

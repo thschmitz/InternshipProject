@@ -33,7 +33,7 @@ public class PostImageService {
 			System.out.println(images.get(i).getImage_url());
 
 			images.get(i).setCreated_at(created_at);
-			images.get(i).setPostId(id);
+			images.get(i).getPost().setId(id);
 			
 			if(images.isEmpty()) {
 				throw new ParametersNotPassedException("Você precisa informar a URL da imagem para realizar a operação!");

@@ -2,7 +2,6 @@ package com.thschmitz.realstate.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -10,8 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.jetbrains.annotations.NotNull;
 
 @Entity
 @Table(name="Posts")
@@ -26,37 +27,25 @@ public class Post implements Serializable {
 	private String body;
 	private Double price;
 	private Double size;
-	private Integer author_id;
+	@ManyToOne
+	@JoinColumn(name="author_id")
+	@NotNull
+	private User author;
 	private Integer restrooms;
 	private Integer bedrooms;
 	private String longitude;
 	private String latitude;
 	private String type;
 	private String main_image;
-	private Integer label_id;
+	@ManyToOne
+	@JoinColumn(name="label_id")
+	@NotNull
+	private Label label;
 	
 	public Post() {
 		
 	}
-
-	public Post(Integer id, Date created_at, String title, String body, Double price, Double size,
-		Integer author_id, Integer restrooms, Integer bedrooms, String latitude, String longitude, String type, String main_image, Integer label_id) {
-		this.id = id;
-		this.created_at = created_at;
-		this.title = title;
-		this.body = body;
-		this.price = price;
-		this.size = size;
-		this.author_id = author_id;
-		this.restrooms = restrooms;
-		this.bedrooms = bedrooms;
-		this.longitude = longitude;
-		this.latitude = latitude;
-		this.type = type;
-		this.main_image = main_image;
-		this.setLabel_id(label_id);
-	}
-
+	
 	public Integer getId() {
 		return id;
 	}
@@ -104,13 +93,13 @@ public class Post implements Serializable {
 	public void setSize(Double size) {
 		this.size = size;
 	}
-	
-	public Integer getAuthorId() {
-		return author_id;
+
+	public User getAuthor() {
+		return author;
 	}
 
-	public void setAuthorId(Integer author_id) {
-		this.author_id = author_id;
+	public void setAuthor(User author) {
+		this.author = author;
 	}
 
 	public Integer getRestrooms() {
@@ -161,14 +150,14 @@ public class Post implements Serializable {
 		this.main_image = main_image;
 	}
 
-	public Integer getLabel_id() {
-		return label_id;
+	public Label getLabel() {
+		return label;
 	}
 
-	public void setLabel_id(Integer label_id) {
-		this.label_id = label_id;
+	public void setLabel(Label label) {
+		this.label = label;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -189,7 +178,7 @@ public class Post implements Serializable {
 	public Boolean isEmpty() {
 		if(this.created_at != null && this.title != "" && this.body != "" && this.price != null
 				&& this.size != null && this.restrooms != null && this.bedrooms != null && this.latitude != null && this.longitude != null
-				&& this.type != "" && this.main_image != "" && this.author_id != null && this.label_id != null) {
+				&& this.type != "" && this.main_image != "" && !this.author.isEmpty() && !this.label.isEmpty()) {
 			return false;
 		} else {
 			return true;

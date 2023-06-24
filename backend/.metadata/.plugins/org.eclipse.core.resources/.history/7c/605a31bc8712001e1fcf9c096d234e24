@@ -9,6 +9,6 @@ import com.thschmitz.realstate.domain.Comment;
 
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
-	@Query("SELECT c from Comment c WHERE c.post_id = :id")
+	@Query("SELECT c from Comment c WHERE c.post.id = :id")
 	List<Comment> findCommentsByPostId(Integer id);
 }

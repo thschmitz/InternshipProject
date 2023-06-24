@@ -16,7 +16,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 	
 	List<Post> findByBodyContainingIgnoreCase(String body);
 	
-	@Query("SELECT p from Post p WHERE p.author_id = :authorId")
+	@Query("SELECT p from Post p WHERE p.author.id = :authorId")
 	List<Post> findByAuthorId(Integer authorId);
 
 }

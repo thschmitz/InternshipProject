@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.thschmitz.realstate.domain.Feedback;
+import com.thschmitz.realstate.domain.Post;
+import com.thschmitz.realstate.domain.User;
 import com.thschmitz.realstate.repository.FeedbackRepository;
 
 @Service
@@ -14,25 +16,27 @@ public class FeedbackService {
 
 	@Autowired
 	private FeedbackRepository feedbackRepository;
-	
+
+	@Autowired
+	private UserService userService;
 	
 	public List<Feedback> findAll() {
 		return (List<Feedback>) feedbackRepository.findAll();
 	}
 	
-	public Feedback like(Integer post_id, Integer author_id) {
+	public Feedback like(PostService postService, Integer post_id, Integer author_id) {
 		Date created_at = new Date();
 		Feedback feedback = new Feedback();
-		
+		Post post = postService.findById(post_id);
+		User user = userService.findById(author_id);
 		Feedback feedbackQuery = feedbackRepository.findByAuthorAndPostId(author_id, post_id);
 		
 		if(feedbackQuery != null) {
 			feedbackRepository.deleteById(feedbackQuery.getId());
 		} else {
 			feedback.setCreated_at(created_at);
-			feedback.setPost(post_id);
-			feedback.setAuthor(author_id);
-			
+			feedback.setPost(post);
+			feedback.setAuthor(user);
 			feedbackRepository.save(feedback);
 		}
 		

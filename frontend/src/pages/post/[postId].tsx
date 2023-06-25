@@ -79,7 +79,7 @@ const Post = (props:props) => {
   async function getFullAddress() {
     console.log("LOCATION; ", locationLatLng)
     const response = await util.addressFromLatitudeAndLongitude(locationLatLng.lat, locationLatLng.lng)
-    console.log(response)
+    console.log("RESPONSE: ", response)
     setAddress(response)
 
     return response;

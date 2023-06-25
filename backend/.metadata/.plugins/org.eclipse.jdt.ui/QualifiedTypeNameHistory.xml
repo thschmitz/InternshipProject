@@ -2,4 +2,6 @@
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="com.thschmitz.realstate.domain.Post"/>
+    <fullyQualifiedTypeName name="com.thschmitz.realstate.services.UserService"/>
+    <fullyQualifiedTypeName name="com.thschmitz.realstate.domain.User"/>
 </qualifiedTypeNameHistroy>

@@ -24,7 +24,7 @@ const Heading: React.FC<HeadProps> = ({title, locationValue, imageSrc, id}) => {
           {title}
         </div>
         <div className="font-light text-neutral-500 mt-2">
-          {locationValue.state}, {locationValue.city}
+          {locationValue?.state}, {locationValue?.city}
         </div>
       </div>
       <div className="w-full h-[60vh] overflow-hidden rounded-xl relative">

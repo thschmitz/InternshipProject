@@ -18,10 +18,13 @@ export const util = {
   },
 
   addressFromLatitudeAndLongitude(latitude, longitude) {
+    console.log("API KEY for address> ", process.env.NEXT_PUBLIC_MAP_API_KEY)
     Geocode.setApiKey(process.env.NEXT_PUBLIC_MAP_API_KEY || "")
+    Geocode.setLocationType("ROOFTOP");
     const response = Geocode.fromLatLng(latitude, longitude).then(
       (response) => {
         console.log(response)
+        const address = response.results[0].formatted_address;
         let city, state, country;
         for (let i = 0; i < response.results[0].address_components.length; i++) {
           for (let j = 0; j < response.results[0].address_components[i].types.length; j++) {
@@ -38,6 +41,7 @@ export const util = {
             }
           }
         }
+        console.log(city, state, country, address)
         return {city, state, country}
       },
       (error) => {

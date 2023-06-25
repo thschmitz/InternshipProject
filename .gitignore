@@ -42,3 +42,7 @@ secrets.yml
 .sts4-cache
 .env*
 .env
+backend/src/main/java/com/thschmitz/realstate/config/ChatGPTConfig.java
+backend/src/main/resources/
+ChatGPTConfig.java
+resources/

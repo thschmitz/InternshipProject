@@ -1957,3 +1957,6 @@ Caused by: java.lang.IllegalStateException: Begin size -1 is not equal to fixed 
 	at org.eclipse.lsp4e.LanguageServiceAccessor.lambda$18(LanguageServiceAccessor.java:626)
 	at java.base/java.util.concurrent.CompletableFuture$UniCompose.tryFire(CompletableFuture.java:1150)
 	... 6 more
+
+!ENTRY org.eclipse.ui 2 2 2023-06-25 09:49:40.859
+!MESSAGE Invalid property category path: org.springframework.ide.eclipse.beans.ui.properties.ProjectPropertyPage (bundle: org.springframework.ide.eclipse.xml.namespaces, propertyPage: org.springframework.ide.eclipse.beans.ui.namespaces.projectPropertyPage)

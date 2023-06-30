@@ -102,7 +102,6 @@ public class PostResource {
 	@RequestMapping(value="/send", method=RequestMethod.POST)
 	public ResponseEntity<ChatGptResponse> sendMessage(@RequestBody BotRequest botRequest) {
 		ChatGptResponse cgr = chatGPTService.askQuestion(botRequest);
-		
 		return ResponseEntity.ok().body(cgr);
 	}
 }

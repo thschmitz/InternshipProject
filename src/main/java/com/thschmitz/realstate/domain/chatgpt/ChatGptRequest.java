@@ -1,7 +1,5 @@
 package com.thschmitz.realstate.domain.chatgpt;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;

@@ -57,9 +57,9 @@ public class PostService {
 	public Post insert(Post post, Jws<Claims> session) {
 		
 		Integer author_id = Session.getSessionId(session);
-
 		User user = service.findById(author_id);
-		post.getAuthor().setId(user.getId());
+		
+		post.setAuthor(user);
 		
 		return postRepository.save(post);
 	}

@@ -24,6 +24,7 @@ public class ChatGPTServiceImpl implements ChatGPTService{
     
     //    Build headers
     public HttpEntity<ChatGptRequest> buildHttpEntity(ChatGptRequest chatRequest) {
+    	System.out.println("API_KEY: " + ChatGPTConfig.API_KEY);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(ChatGPTConfig.MEDIA_TYPE));
         headers.add(ChatGPTConfig.AUTHORIZATION, ChatGPTConfig.BEARER + ChatGPTConfig.API_KEY);
@@ -43,15 +44,19 @@ public class ChatGPTServiceImpl implements ChatGPTService{
     public ChatGptResponse askQuestion(BotRequest botRequest) {
     	System.out.println(ChatGPTConfig.MODEL);
     	System.out.println(botRequest.getMessage());
-    	System.out.println(ChatGPTConfig.TEMPERATURE);
-    	System.out.println(ChatGPTConfig.TOP_P);
-        return this.getResponse(
-                this.buildHttpEntity(
-                        new ChatGptRequest(
-                                ChatGPTConfig.MODEL,
-                                botRequest.getMessage(),
-                                ChatGPTConfig.TEMPERATURE,
-                                ChatGPTConfig.MAX_TOKEN,
-                                ChatGPTConfig.TOP_P)));
+    	try {
+    		return this.getResponse(
+                    this.buildHttpEntity(
+                            new ChatGptRequest(
+                                    ChatGPTConfig.MODEL,
+                                    botRequest.getMessage(),
+                                    ChatGPTConfig.TEMPERATURE,
+                                    ChatGPTConfig.MAX_TOKEN,
+                                    ChatGPTConfig.TOP_P)));
+    	} catch(Exception error) {
+    		System.out.println(error);
+    	}
+    	ChatGptResponse cgr = new ChatGptResponse();
+    	return cgr;
     }
 }

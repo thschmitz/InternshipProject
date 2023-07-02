@@ -40,7 +40,7 @@ export const Post = ({post, editor, deletor, setShowFields, setData, deleted, se
   async function getAddress() {
     const response = await util.addressFromLatitudeAndLongitude(post.latitude, post.longitude);
     setCity(response?.city)
-    setState(response?.state)
+    setState(response?.principalSubdivision)
     setCountry(response?.country)
 
     return response;

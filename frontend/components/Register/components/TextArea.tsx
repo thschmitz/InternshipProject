@@ -21,7 +21,7 @@ const TextArea: React.FC<textArea>  = ({nearbySearch, textValue, setTextValue}) 
     const stringForChatGPT = "Corrija o seguinte texto: " + text;
 
     const response = await postService.generateTextWithChatGPT(stringForChatGPT);
-    setTextValue(response?.data.choices[0].text) 
+    setTextValue(response?.data?.choices[0].text) 
     setIsDisabled(false)
   }
 
@@ -61,7 +61,9 @@ const TextArea: React.FC<textArea>  = ({nearbySearch, textValue, setTextValue}) 
       setTextValue("ChatGPT Digitando....");
       const response = await postService.generateTextWithChatGPT(stringForChatGPT);
   
-      grammarChecker(response?.data.choices[0].text);
+      console.log(response)
+
+      grammarChecker(response?.data?.choices[0].text);
     } else {
       Toast.notifyError(notification, "Error to call ChatGPT", "You have to mark any location in the map to complete this action!")
       setIsDisabled(false)

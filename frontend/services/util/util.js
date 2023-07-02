@@ -1,4 +1,6 @@
 import Geocode from "react-geocode";
+import axios from "axios"
+import OpenLocationCode from 'open-location-code';
 
 export const util = {
   removeDuplicatesFromArray(array){
@@ -17,39 +19,48 @@ export const util = {
     return new_array;
   },
 
-  addressFromLatitudeAndLongitude(latitude, longitude) {
-    console.log("API KEY for address> ", process.env.NEXT_PUBLIC_MAP_API_KEY)
-    Geocode.setApiKey(process.env.NEXT_PUBLIC_MAP_API_KEY || "")
-    Geocode.setLocationType("ROOFTOP");
-    const response = Geocode.fromLatLng(latitude, longitude).then(
-      (response) => {
-        console.log(response)
-        const address = response.results[0].formatted_address;
-        let city, state, country;
-        for (let i = 0; i < response.results[0].address_components.length; i++) {
-          for (let j = 0; j < response.results[0].address_components[i].types.length; j++) {
-            switch (response.results[0].address_components[i].types[j]) {
-              case "administrative_area_level_2":
-                city = response.results[0].address_components[i].long_name;
-                break;
-              case "administrative_area_level_1":
-                state = response.results[0].address_components[i].long_name;
-                break;
-              case "country":
-                country = response.results[0].address_components[i].long_name;
-                break;
-            }
+  async addressFromLatitudeAndLongitude(latitude, longitude) {
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.NEXT_PUBLIC_MAP_API_KEY}`
+
+    try {
+      const response = await axios.get(url);
+      const data = response.data;
+      if (data.status === 'OK') {
+        const result = data.results[0];
+        const addressComponents = result.address_components;
+        const address = result.formatted_address;
+        let city = '';
+        let street = '';
+        let principalSubdivision = '';
+        let country = '';
+  
+        for (let i = 0; i < addressComponents.length; i++) {
+          const component = addressComponents[i];
+          const componentTypes = component.types;
+  
+          if (componentTypes.includes('administrative_area_level_2')) {
+            city = component.long_name;
+          } else if (componentTypes.includes('route')) {
+            street = component.long_name;
+          } else if (componentTypes.includes('administrative_area_level_1')) {
+            principalSubdivision = component.long_name;
+          } else if (componentTypes.includes('country')) {
+            country = component.long_name;
           }
         }
-        console.log(city, state, country, address)
-        return {city, state, country}
-      },
-      (error) => {
-        console.error(error);
+  
+        return {
+          address,
+          city,
+          street,
+          principalSubdivision,
+          country
+        };
       }
-    );
-
-    return response;
+    } catch (error) {
+      console.error('Error retrieving address:', error);
+    }
+    return null;
   }
 }
 

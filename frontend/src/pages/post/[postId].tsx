@@ -64,25 +64,28 @@ interface props {
 }
 
 interface Address {
-  city: string,
-  state: string,
-  country: string
+  route: string | undefined,
+  city: string | undefined,
+  principalSubdivision: string | undefined,
+  countryName: string | undefined
 }
 
 const Post = (props:props) => {
-  const [ address, setAddress ] = useState<Address>({city: "", state: "", country: ""})
+  const [ address, setAddress ] = useState<Address>({route: "", city: "", principalSubdivision: "", countryName: ""})
   const [ commentsArray, setCommentsArray ] = useState(props.comments)
   const [ refreshCommentsBoolean, setRefreshCommentsBoolean ] = useState(false);
   const router = useRouter();
   const locationLatLng = {lat: props.post.latitude, lng: props.post.longitude}
 
   async function getFullAddress() {
-    console.log("LOCATION; ", locationLatLng)
     const response = await util.addressFromLatitudeAndLongitude(locationLatLng.lat, locationLatLng.lng)
-    console.log("RESPONSE: ", response)
-    setAddress(response)
-
-    return response;
+    const address = {
+      route: response?.address,
+      city: response?.city,
+      principalSubdivision: response?.principalSubdivision,
+      countryName: response?.country
+    }
+    setAddress(address)    
   }
 
   async function refreshComments() {
@@ -109,6 +112,7 @@ const Post = (props:props) => {
             <div className="order-1 mb-10 md:order-last md:col-span-3">
               <Price price={props.post.price} />
               <Info2 bedrooms={props.post.bedrooms} restrooms={props.post.restrooms} size={props.post.size}/>
+              <p className="mt-10">{address.route}</p>
             </div>
           </div>
           <hr/>

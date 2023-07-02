@@ -81,6 +81,8 @@ const Info1: React.FC<Info> = ({user, category, locationValue, label, created_at
         <></>
       </GoogleMap>
       }
+
+      
       
     </div>
   )

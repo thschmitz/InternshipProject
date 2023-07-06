@@ -37,6 +37,7 @@ public class Comment implements Serializable {
 
 	}
 	
+	
 	public Comment(Integer id, String body, Date created_at, User author, Post post) {
 		super();
 		this.id = id;
